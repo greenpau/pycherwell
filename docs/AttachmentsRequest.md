@@ -1,0 +1,17 @@
+# AttachmentsRequest
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**attachment_id** | **str** |  | [optional] 
+**attachment_types** | **list[str]** |  | [optional] 
+**bus_ob_id** | **str** |  | [optional] 
+**bus_ob_name** | **str** |  | [optional] 
+**bus_ob_public_id** | **str** |  | [optional] 
+**bus_ob_rec_id** | **str** |  | [optional] 
+**include_links** | **bool** |  | [optional] 
+**types** | **list[str]** |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

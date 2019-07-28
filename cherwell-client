@@ -1,0 +1,102 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+'''
+This tool queries information from Cherwell via API.
+'''
+
+from __future__ import (absolute_import, division, print_function)
+
+import os
+import sys
+import argparse
+import yaml
+import json
+import time
+
+from pycherwell.app_client import CherwellClient
+
+__author__ = "Paul Greenberg @greenpau"
+__version__ = "1.0"
+__maintainer__ = "Paul Greenberg"
+__email__ = "greenpau@outlook.com"
+__status__ = "Alpha"
+
+def main():
+    '''
+    Main function.
+    '''
+    descr = str(os.path.basename(__file__)) + ' - Cherwell API Client \n\n'
+    epil = '\ndocumentation: https://github.com/greenpau/pycherwell\n\n'
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     add_help=True, description=descr, epilog=epil)
+
+    main_group = parser.add_argument_group(None)
+    main_group.add_argument('-c', '--config', dest='config_file', default=None,
+                            help='the path to configuration file')
+    main_group.add_argument('--profile', dest='profile', default=None,
+                            help='the name of configuration file section')
+    main_group.add_argument('-o', metavar='output', dest='output', type=argparse.FileType('w'),
+                            default=sys.stdout, help='Write to output file (or stdout)')
+
+    action_arg_group = parser.add_argument_group('Actions')
+    action_group = action_arg_group.add_mutually_exclusive_group(required=True)
+    action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get assets')
+    action_group.add_argument('--get-incident', dest='get_incident_by_id', metavar='ID', type=int,
+                              help='get incident by its id')
+    action_group.add_argument('--version', dest='display_version', action='store_true',
+                              help='Display version')
+    filter_arg_group = parser.add_argument_group('Miscellaneous')
+    filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
+                                  action='append', help='Object filters, e.g. field:regex')
+    filter_arg_group.add_argument('--limit', dest='limit', metavar='NUMBER', type=int,
+                                  default=None, help='limit the number of output items')
+    filter_arg_group.add_argument('--without-header', dest='without_header',
+                                  action='store_true', help='outputs data as a list of objects')
+    main_group.add_argument('--format', dest='output_format', choices=['json', 'csv', 'yaml'],
+                            default="json", help='Output format')
+    main_group.add_argument('--debug', dest='enable_debug', action='store_true',
+                              help='Enable debugging')
+    args = parser.parse_args()
+
+    opts = {}
+    opts['output_format'] = args.output_format
+    if args.limit:
+        opts['limit'] = args.limit
+    if args.without_header:
+        opts['without_header'] = args.without_header
+        
+    cli = CherwellClient()
+    if args.enable_debug:
+        cli.debug()
+    if args.config_file:
+        cli.set_config_file(args.config_file)
+    if args.profile:
+        cli.set_profile(args.profile)
+    cli.set_output_format(args.output_format)
+
+    if args.display_version:
+        version = cli.get_version()
+        args.output.write(version + '\n')
+        return
+
+    data = None
+    if args.get_incidents:
+        data = cli.get_incidents(opts)
+    elif args.get_incident_by_id:
+        opts['incident_id'] = args.get_incident_by_id
+        data = cli.get_incident(opts)
+    else:
+        raise Exception('parser', 'unsupported argument')
+
+    if args.output_format == 'yaml':
+        yaml.dump(data, args.output, default_flow_style=False)
+    elif args.output_format == 'csv':
+        args.output.write(data)
+    else:
+        json.dump(data, args.output, sort_keys=True, indent=4, separators=(',', ': '))
+    args.output.write('\n')
+    return
+
+if __name__ == '__main__':
+    main()
