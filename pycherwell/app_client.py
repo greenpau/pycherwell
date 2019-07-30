@@ -110,52 +110,12 @@ class CherwellClient(object):
     def set_output_format(self, output_format='json'):
         self.output_format = output_format
 
-    def _decode_response(self, data):
-        response = {}
-        if self.output_format not in ['json', 'yaml']:
-            return {}
-        try:
-            response = yaml.load('%s' % (data), Loader=yaml.FullLoader)
-            #response = self._remove_unicode(response)
-        except:
-            self.log.error('erred processing data: %s', data)
-            return {}
-        return response
-
     def get_version(self):
         self._configure()
         return self.user_agent
 
-    def _remove_unicode(self, data):
-        if isinstance(data, (dict)):
-            new_data = {}
-            for k in data:
-                if isinstance(k, (unicode)):
-                    new_data[str(k)] = self._remove_unicode(data[k])
-                    continue
-                new_data[k] = self._remove_unicode(data[k])
-            return new_data
-        if isinstance(data, (list)):
-            new_data = []
-            for entry in data:
-                new_data.append(self._remove_unicode(entry))
-            return new_data
-        elif isinstance(data, (unicode)):
-            s = ''
-            try:
-                s = str(data)
-            except:
-                s = ''.join([i if ord(i) < 128 else ' ' for i in data])
-            return str(s)
-        elif isinstance(data, (long)):
-            return str(data)
-        elif isinstance(data, (datetime)):
-            return (data - datetime(1970,1,1)).total_seconds()
-        else:
-            pass
-        return data
-
     def get_service_info(self, opts={}):
+        data = {}
         api_response = None
         self._enable()
         try:
@@ -163,7 +123,10 @@ class CherwellClient(object):
             api_response = api_instance.service_get_service_info_v1()
         except ApiException as e:
             self.log.error('Exception when calling ServiceApi->service_get_service_info_v1: %s' % e)
-        data = self._decode_response(api_response)
+        data['api_version'] = api_response.api_version
+        data['csm_culture'] = api_response.csm_culture
+        data['csm_version'] = api_response.csm_version
+        data['system_date_time'] = str(api_response.system_date_time)
         return {'service_info': data}
 
     def get_incident(self, opts={}):
