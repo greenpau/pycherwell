@@ -41,9 +41,10 @@ def main():
 
     action_arg_group = parser.add_argument_group('Actions')
     action_group = action_arg_group.add_mutually_exclusive_group(required=True)
-    action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get assets')
+    action_group.add_argument('--get-service-info', dest='get_service_info', action='store_true', help='get service info')
+    action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get incidents')
     action_group.add_argument('--get-incident', dest='get_incident_by_id', metavar='ID', type=int,
-                              help='get incident by its id')
+                              help='get incident by id')
     action_group.add_argument('--version', dest='display_version', action='store_true',
                               help='Display version')
     filter_arg_group = parser.add_argument_group('Miscellaneous')
@@ -81,7 +82,9 @@ def main():
         return
 
     data = None
-    if args.get_incidents:
+    if args.get_service_info:
+        data = cli.get_service_info(opts)
+    elif args.get_incidents:
         data = cli.get_incidents(opts)
     elif args.get_incident_by_id:
         opts['incident_id'] = args.get_incident_by_id

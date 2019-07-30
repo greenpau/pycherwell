@@ -133,14 +133,16 @@ class AppConfiguration(object):
                 self.settings[cfg_key] = self.settings[cfg_key].strip("'").strip('"')
         return
 
+    def get_host(self):
+        if self.settings['protocol'] == 'https' and self.settings['port'] == '443':
+            return '%s://%s/%s' % (self.settings['protocol'], self.settings['host'], self.settings['basepath'])
+        else:
+            return '%s://%s:%s/%s' % (self.settings['protocol'], self.settings['host'], self.settings['port'], self.settings['basepath'])
+
     def get_auth_url(self):
         ''' Return base path URL. '''
-        base = None
-        if self.settings['protocol'] == 'https' and self.settings['port'] == '443':
-            base = '%s://%s' % (self.settings['protocol'], self.settings['host'])
-        else:
-            base = '%s://%s:%s/%s' % (self.settings['protocol'], self.settings['host'], self.settings['port'])
-        base += self.settings['basepath'] + '/token?'
+        base = self.get_host()
+        base += '/token?'
         base += 'auth_mode=' + self.settings['auth_mode']
         base += '&api_key=' + self.settings['client_id']
         return base

@@ -21,7 +21,7 @@ from six.moves.urllib.parse import quote
 
 #import pycherwell
 #from pycherwell.rest import ApiException
-from pycherwell import ApiClient, Configuration
+from pycherwell import ApiClient, Configuration, ServiceApi, ApiException
 from pycherwell.app_configuration import AppConfiguration
 import urllib3
 urllib3.disable_warnings()
@@ -69,6 +69,8 @@ class CherwellClient(object):
             self.config.debug_enabled = True
         self.config.load()
         self.api_configuration = Configuration()
+        if self.debug_enabled:
+            self.api_configuration.debug = True
         self.api_configuration.verify_ssl = self.config.get_verify_ssl()
         self.api_configuration.ssl_ca_cert = self.config.get_ssl_ca_cert()
         self.api_configuration.assert_hostname = self.config.get_assert_hostname()
@@ -77,6 +79,7 @@ class CherwellClient(object):
         self.api_configuration.cert_file = self.config.get_cert_file()
         self.api_configuration.key_file = self.config.get_key_file()
         self.api_configuration.safe_chars_for_path_param = self.config.get_safe_chars_for_path_param()
+        self.api_configuration.host = self.config.get_host()
         self.user_agent = self.config.get_user_agent()
         return
 
@@ -107,10 +110,61 @@ class CherwellClient(object):
     def set_output_format(self, output_format='json'):
         self.output_format = output_format
 
+    def _decode_response(self, data):
+        response = {}
+        if self.output_format not in ['json', 'yaml']:
+            return {}
+        try:
+            response = yaml.load('%s' % (data), Loader=yaml.FullLoader)
+            #response = self._remove_unicode(response)
+        except:
+            self.log.error('erred processing data: %s', data)
+            return {}
+        return response
 
     def get_version(self):
         self._configure()
         return self.user_agent
+
+    def _remove_unicode(self, data):
+        if isinstance(data, (dict)):
+            new_data = {}
+            for k in data:
+                if isinstance(k, (unicode)):
+                    new_data[str(k)] = self._remove_unicode(data[k])
+                    continue
+                new_data[k] = self._remove_unicode(data[k])
+            return new_data
+        if isinstance(data, (list)):
+            new_data = []
+            for entry in data:
+                new_data.append(self._remove_unicode(entry))
+            return new_data
+        elif isinstance(data, (unicode)):
+            s = ''
+            try:
+                s = str(data)
+            except:
+                s = ''.join([i if ord(i) < 128 else ' ' for i in data])
+            return str(s)
+        elif isinstance(data, (long)):
+            return str(data)
+        elif isinstance(data, (datetime)):
+            return (data - datetime(1970,1,1)).total_seconds()
+        else:
+            pass
+        return data
+
+    def get_service_info(self, opts={}):
+        api_response = None
+        self._enable()
+        try:
+            api_instance = ServiceApi(self.api_client)
+            api_response = api_instance.service_get_service_info_v1()
+        except ApiException as e:
+            self.log.error('Exception when calling ServiceApi->service_get_service_info_v1: %s' % e)
+        data = self._decode_response(api_response)
+        return {'service_info': data}
 
     def get_incident(self, opts={}):
         if 'incident_id' not in opts:
