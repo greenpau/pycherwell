@@ -36,7 +36,10 @@ class AppConfiguration(object):
         self.app_version = __version__
         self.config_file = config_file
         if not self.config_file:
-            self.config_file = '~/.%s.rc' % (self.app_name)
+            self.app_conf_dir = os.path.expanduser('~/.%s' % (self.app_name.lstrip('py')))
+            self.config_file = os.path.join(self.app_conf_dir, 'config')
+        else:
+            self.app_conf_dir = os.path.dirname(config_file)
         self.profile = profile
         self.settings = {}
         self.log = logging.getLogger('%s-config' % (self.app_name))
@@ -67,8 +70,8 @@ class AppConfiguration(object):
         self.key_file = None
         self.safe_chars_for_path_param = ''
         self.app_conf_file_names = {
-            'token': os.path.expanduser('~/.%s.token' % (self.app_name)),
-            'summaries': os.path.expanduser('~/.%s.summaries' % (self.app_name)),
+            'token': os.path.join(self.app_conf_dir, 'token.json'),
+            'business_objects': os.path.join(self.app_conf_dir, 'business_objects.json'),
         }
         self.app = {}
         for k in self.app_conf_file_names:
@@ -270,6 +273,11 @@ class AppConfiguration(object):
             return
         fn = self.app_conf_file_names[section]
         self.log.debug('Saving app config %s section from %s', section, fn)
+        try:
+            if not os.path.exists(self.app_conf_dir):
+                os.makedirs(self.app_conf_dir)
+        except:
+            pass
         if section == 'token':
             data['expires_at_timestamp'] = int(time.time()) + data['expires_in']
         with open(fn, 'w') as f:

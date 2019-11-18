@@ -163,7 +163,7 @@ class CherwellClient(object):
         for entry in api_response:
             data.append(entry.to_dict())
         if 'save_app_section' in opts and summary_type == 'All':
-            self.config.save_app_section('summaries', data)
+            self.config.save_app_section('business_objects', data)
         return self._wrap_return(opts, 'business_object_summaries', data)
 
     def get_incident(self, opts={}):
@@ -173,12 +173,12 @@ class CherwellClient(object):
             raise Exception('client', 'incident_id not found')
         incident_id = str(opts['incident_id'])
         self._enable()
-        if not self.config.app['summaries']:
+        if not self.config.app['business_objects']:
             self.get_business_object_summaries({'summary_type': 'All', 'save_app_section': True})
 
 
         
-        raise Exception('xxx', self.config.app['summaries'])
+        raise Exception('xxx', self.config.app['business_objects'])
             
         raise Exception('xxx', 'xxx')
 
