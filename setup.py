@@ -28,11 +28,12 @@ setup(
     name=NAME,
     version=VERSION,
     description="Cherwell REST API",
+    author="Paul Greenberg",
     author_email="See AUTHORS.",
     url="https://github.com/greenpau/pycherwell",
     keywords=["OpenAPI", "OpenAPI-Generator", "Cherwell REST API"],
     install_requires=REQUIRES,
-    packages=find_packages(),
+    packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description="""\
     Unofficial Python Cherwell REST API library.  # noqa: E501

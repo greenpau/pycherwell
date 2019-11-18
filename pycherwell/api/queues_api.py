@@ -104,8 +104,8 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'add_item_to_queue_request' is set
-        if ('add_item_to_queue_request' not in local_var_params or
-                local_var_params['add_item_to_queue_request'] is None):
+        if self.api_client.client_side_validation and ('add_item_to_queue_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['add_item_to_queue_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `add_item_to_queue_request` when calling `queues_add_item_to_queue_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -216,8 +216,8 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'check_in_queue_item_request' is set
-        if ('check_in_queue_item_request' not in local_var_params or
-                local_var_params['check_in_queue_item_request'] is None):
+        if self.api_client.client_side_validation and ('check_in_queue_item_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['check_in_queue_item_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `check_in_queue_item_request` when calling `queues_check_in_queue_item_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -328,8 +328,8 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'check_out_queue_item_request' is set
-        if ('check_out_queue_item_request' not in local_var_params or
-                local_var_params['check_out_queue_item_request'] is None):
+        if self.api_client.client_side_validation and ('check_out_queue_item_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['check_out_queue_item_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `check_out_queue_item_request` when calling `queues_check_out_queue_item_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -446,16 +446,16 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `queues_get_queues_folder_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `queues_get_queues_folder_v1`")  # noqa: E501
         # verify the required parameter 'folder' is set
-        if ('folder' not in local_var_params or
-                local_var_params['folder'] is None):
+        if self.api_client.client_side_validation and ('folder' not in local_var_params or  # noqa: E501
+                                                        local_var_params['folder'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `folder` when calling `queues_get_queues_folder_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -469,7 +469,7 @@ class QueuesApi(object):
             path_params['folder'] = local_var_params['folder']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -572,12 +572,12 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `queues_get_queues_scope_owner_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `queues_get_queues_scope_owner_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -589,7 +589,7 @@ class QueuesApi(object):
             path_params['scopeowner'] = local_var_params['scopeowner']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -690,8 +690,8 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `queues_get_queues_scope_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -701,7 +701,7 @@ class QueuesApi(object):
             path_params['scope'] = local_var_params['scope']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -805,7 +805,7 @@ class QueuesApi(object):
         path_params = {}
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -904,8 +904,8 @@ class QueuesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'remove_item_from_queue_request' is set
-        if ('remove_item_from_queue_request' not in local_var_params or
-                local_var_params['remove_item_from_queue_request'] is None):
+        if self.api_client.client_side_validation and ('remove_item_from_queue_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['remove_item_from_queue_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `remove_item_from_queue_request` when calling `queues_remove_item_from_queue_v1`")  # noqa: E501
 
         collection_formats = {}

@@ -18,6 +18,13 @@ import pprint
 import time
 import json
 
+__pkg_name__ = 'pycherwell'
+__author__ = 'Paul Greenberg @greenpau'
+__version__ = u'1.0.1'
+__maintainer__ = 'Paul Greenberg'
+__email__ = 'greenpau@outlook.com'
+__status__ = 'Alpha'
+
 class AppConfiguration(object):
     '''
     This class implements the client application configuration.
@@ -25,8 +32,8 @@ class AppConfiguration(object):
 
     def __init__(self, config_file, profile):
         ''' Initializes the class. '''
-        self.app_name = 'pycherwell'
-        self.app_version = '1.0'
+        self.app_name = __pkg_name__
+        self.app_version = __version__
         self.config_file = config_file
         if not self.config_file:
             self.config_file = '~/.%s.rc' % (self.app_name)

@@ -104,8 +104,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'batch_delete_request' is set
-        if ('batch_delete_request' not in local_var_params or
-                local_var_params['batch_delete_request'] is None):
+        if self.api_client.client_side_validation and ('batch_delete_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['batch_delete_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `batch_delete_request` when calling `business_object_delete_business_object_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -218,12 +218,12 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_delete_business_object_by_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_delete_business_object_by_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -334,12 +334,12 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_delete_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_delete_business_object_by_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -454,20 +454,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'parentbusobid' is set
-        if ('parentbusobid' not in local_var_params or
-                local_var_params['parentbusobid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobid` when calling `business_object_delete_related_business_object_by_public_id_v1`")  # noqa: E501
         # verify the required parameter 'parentbusobrecid' is set
-        if ('parentbusobrecid' not in local_var_params or
-                local_var_params['parentbusobrecid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobrecid` when calling `business_object_delete_related_business_object_by_public_id_v1`")  # noqa: E501
         # verify the required parameter 'relationshipid' is set
-        if ('relationshipid' not in local_var_params or
-                local_var_params['relationshipid'] is None):
+        if self.api_client.client_side_validation and ('relationshipid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['relationshipid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `relationshipid` when calling `business_object_delete_related_business_object_by_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_delete_related_business_object_by_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -586,20 +586,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'parentbusobid' is set
-        if ('parentbusobid' not in local_var_params or
-                local_var_params['parentbusobid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobid` when calling `business_object_delete_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'parentbusobrecid' is set
-        if ('parentbusobrecid' not in local_var_params or
-                local_var_params['parentbusobrecid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobrecid` when calling `business_object_delete_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'relationshipid' is set
-        if ('relationshipid' not in local_var_params or
-                local_var_params['relationshipid'] is None):
+        if self.api_client.client_side_validation and ('relationshipid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['relationshipid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `relationshipid` when calling `business_object_delete_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_delete_related_business_object_by_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -712,8 +712,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'field_values_lookup_request' is set
-        if ('field_values_lookup_request' not in local_var_params or
-                local_var_params['field_values_lookup_request'] is None):
+        if self.api_client.client_side_validation and ('field_values_lookup_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['field_values_lookup_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `field_values_lookup_request` when calling `business_object_field_values_lookup_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -828,16 +828,16 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'attachmentid' is set
-        if ('attachmentid' not in local_var_params or
-                local_var_params['attachmentid'] is None):
+        if self.api_client.client_side_validation and ('attachmentid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmentid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmentid` when calling `business_object_get_business_object_attachment_by_attachment_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_attachment_by_attachment_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_get_business_object_attachment_by_attachment_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -956,20 +956,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_attachments_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_get_business_object_attachments_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'type' is set
-        if ('type' not in local_var_params or
-                local_var_params['type'] is None):
+        if self.api_client.client_side_validation and ('type' not in local_var_params or  # noqa: E501
+                                                        local_var_params['type'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `type` when calling `business_object_get_business_object_attachments_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'attachmenttype' is set
-        if ('attachmenttype' not in local_var_params or
-                local_var_params['attachmenttype'] is None):
+        if self.api_client.client_side_validation and ('attachmenttype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmenttype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmenttype` when calling `business_object_get_business_object_attachments_by_id_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -985,7 +985,7 @@ class BusinessObjectApi(object):
             path_params['attachmenttype'] = local_var_params['attachmenttype']  # noqa: E501
 
         query_params = []
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -1092,20 +1092,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_attachments_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_get_business_object_attachments_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'type' is set
-        if ('type' not in local_var_params or
-                local_var_params['type'] is None):
+        if self.api_client.client_side_validation and ('type' not in local_var_params or  # noqa: E501
+                                                        local_var_params['type'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `type` when calling `business_object_get_business_object_attachments_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'attachmenttype' is set
-        if ('attachmenttype' not in local_var_params or
-                local_var_params['attachmenttype'] is None):
+        if self.api_client.client_side_validation and ('attachmenttype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmenttype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmenttype` when calling `business_object_get_business_object_attachments_by_id_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1121,7 +1121,7 @@ class BusinessObjectApi(object):
             path_params['attachmenttype'] = local_var_params['attachmenttype']  # noqa: E501
 
         query_params = []
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -1228,20 +1228,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_get_business_object_attachments_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_get_business_object_attachments_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'type' is set
-        if ('type' not in local_var_params or
-                local_var_params['type'] is None):
+        if self.api_client.client_side_validation and ('type' not in local_var_params or  # noqa: E501
+                                                        local_var_params['type'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `type` when calling `business_object_get_business_object_attachments_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'attachmenttype' is set
-        if ('attachmenttype' not in local_var_params or
-                local_var_params['attachmenttype'] is None):
+        if self.api_client.client_side_validation and ('attachmenttype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmenttype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmenttype` when calling `business_object_get_business_object_attachments_by_name_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1257,7 +1257,7 @@ class BusinessObjectApi(object):
             path_params['attachmenttype'] = local_var_params['attachmenttype']  # noqa: E501
 
         query_params = []
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -1364,20 +1364,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_get_business_object_attachments_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_get_business_object_attachments_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'type' is set
-        if ('type' not in local_var_params or
-                local_var_params['type'] is None):
+        if self.api_client.client_side_validation and ('type' not in local_var_params or  # noqa: E501
+                                                        local_var_params['type'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `type` when calling `business_object_get_business_object_attachments_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'attachmenttype' is set
-        if ('attachmenttype' not in local_var_params or
-                local_var_params['attachmenttype'] is None):
+        if self.api_client.client_side_validation and ('attachmenttype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmenttype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmenttype` when calling `business_object_get_business_object_attachments_by_name_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1393,7 +1393,7 @@ class BusinessObjectApi(object):
             path_params['attachmenttype'] = local_var_params['attachmenttype']  # noqa: E501
 
         query_params = []
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -1492,8 +1492,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'attachments_request' is set
-        if ('attachments_request' not in local_var_params or
-                local_var_params['attachments_request'] is None):
+        if self.api_client.client_side_validation and ('attachments_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachments_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachments_request` when calling `business_object_get_business_object_attachments_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1604,8 +1604,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'batch_read_request' is set
-        if ('batch_read_request' not in local_var_params or
-                local_var_params['batch_read_request'] is None):
+        if self.api_client.client_side_validation and ('batch_read_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['batch_read_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `batch_read_request` when calling `business_object_get_business_object_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1718,12 +1718,12 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_by_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_get_business_object_by_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1834,12 +1834,12 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_get_business_object_by_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1950,12 +1950,12 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scan_code' is set
-        if ('scan_code' not in local_var_params or
-                local_var_params['scan_code'] is None):
+        if self.api_client.client_side_validation and ('scan_code' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scan_code'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scan_code` when calling `business_object_get_business_object_by_scan_code_bus_ob_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_by_scan_code_bus_ob_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2066,12 +2066,12 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scan_code' is set
-        if ('scan_code' not in local_var_params or
-                local_var_params['scan_code'] is None):
+        if self.api_client.client_side_validation and ('scan_code' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scan_code'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scan_code` when calling `business_object_get_business_object_by_scan_code_bus_ob_name_v1`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_get_business_object_by_scan_code_bus_ob_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2182,8 +2182,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busob_id' is set
-        if ('busob_id' not in local_var_params or
-                local_var_params['busob_id'] is None):
+        if self.api_client.client_side_validation and ('busob_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busob_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busob_id` when calling `business_object_get_business_object_schema_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2193,7 +2193,7 @@ class BusinessObjectApi(object):
             path_params['busobId'] = local_var_params['busob_id']  # noqa: E501
 
         query_params = []
-        if 'includerelationships' in local_var_params:
+        if 'includerelationships' in local_var_params and local_var_params['includerelationships'] is not None:  # noqa: E501
             query_params.append(('includerelationships', local_var_params['includerelationships']))  # noqa: E501
 
         header_params = {}
@@ -2292,8 +2292,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'type' is set
-        if ('type' not in local_var_params or
-                local_var_params['type'] is None):
+        if self.api_client.client_side_validation and ('type' not in local_var_params or  # noqa: E501
+                                                        local_var_params['type'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `type` when calling `business_object_get_business_object_summaries_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2400,8 +2400,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_get_business_object_summary_by_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2508,8 +2508,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_get_business_object_summary_by_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2616,8 +2616,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'template_request' is set
-        if ('template_request' not in local_var_params or
-                local_var_params['template_request'] is None):
+        if self.api_client.client_side_validation and ('template_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['template_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `template_request` when calling `business_object_get_business_object_template_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2730,8 +2730,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'related_business_object_request' is set
-        if ('related_business_object_request' not in local_var_params or
-                local_var_params['related_business_object_request'] is None):
+        if self.api_client.client_side_validation and ('related_business_object_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['related_business_object_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `related_business_object_request` when calling `business_object_get_related_business_object_by_request_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2739,7 +2739,7 @@ class BusinessObjectApi(object):
         path_params = {}
 
         query_params = []
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -2858,16 +2858,16 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'parentbusobid' is set
-        if ('parentbusobid' not in local_var_params or
-                local_var_params['parentbusobid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobid` when calling `business_object_get_related_business_object_v1`")  # noqa: E501
         # verify the required parameter 'parentbusobrecid' is set
-        if ('parentbusobrecid' not in local_var_params or
-                local_var_params['parentbusobrecid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobrecid` when calling `business_object_get_related_business_object_v1`")  # noqa: E501
         # verify the required parameter 'relationshipid' is set
-        if ('relationshipid' not in local_var_params or
-                local_var_params['relationshipid'] is None):
+        if self.api_client.client_side_validation and ('relationshipid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['relationshipid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `relationshipid` when calling `business_object_get_related_business_object_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2881,15 +2881,15 @@ class BusinessObjectApi(object):
             path_params['relationshipid'] = local_var_params['relationshipid']  # noqa: E501
 
         query_params = []
-        if 'page_number' in local_var_params:
+        if 'page_number' in local_var_params and local_var_params['page_number'] is not None:  # noqa: E501
             query_params.append(('pageNumber', local_var_params['page_number']))  # noqa: E501
-        if 'page_size' in local_var_params:
+        if 'page_size' in local_var_params and local_var_params['page_size'] is not None:  # noqa: E501
             query_params.append(('pageSize', local_var_params['page_size']))  # noqa: E501
-        if 'allfields' in local_var_params:
+        if 'allfields' in local_var_params and local_var_params['allfields'] is not None:  # noqa: E501
             query_params.append(('allfields', local_var_params['allfields']))  # noqa: E501
-        if 'usedefaultgrid' in local_var_params:
+        if 'usedefaultgrid' in local_var_params and local_var_params['usedefaultgrid'] is not None:  # noqa: E501
             query_params.append(('usedefaultgrid', local_var_params['usedefaultgrid']))  # noqa: E501
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -3000,20 +3000,20 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'parentbusobid' is set
-        if ('parentbusobid' not in local_var_params or
-                local_var_params['parentbusobid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobid` when calling `business_object_get_related_business_object_with_custom_grid_v1`")  # noqa: E501
         # verify the required parameter 'parentbusobrecid' is set
-        if ('parentbusobrecid' not in local_var_params or
-                local_var_params['parentbusobrecid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobrecid` when calling `business_object_get_related_business_object_with_custom_grid_v1`")  # noqa: E501
         # verify the required parameter 'relationshipid' is set
-        if ('relationshipid' not in local_var_params or
-                local_var_params['relationshipid'] is None):
+        if self.api_client.client_side_validation and ('relationshipid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['relationshipid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `relationshipid` when calling `business_object_get_related_business_object_with_custom_grid_v1`")  # noqa: E501
         # verify the required parameter 'gridid' is set
-        if ('gridid' not in local_var_params or
-                local_var_params['gridid'] is None):
+        if self.api_client.client_side_validation and ('gridid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['gridid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `gridid` when calling `business_object_get_related_business_object_with_custom_grid_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3029,11 +3029,11 @@ class BusinessObjectApi(object):
             path_params['gridid'] = local_var_params['gridid']  # noqa: E501
 
         query_params = []
-        if 'page_number' in local_var_params:
+        if 'page_number' in local_var_params and local_var_params['page_number'] is not None:  # noqa: E501
             query_params.append(('pageNumber', local_var_params['page_number']))  # noqa: E501
-        if 'page_size' in local_var_params:
+        if 'page_size' in local_var_params and local_var_params['page_size'] is not None:  # noqa: E501
             query_params.append(('pageSize', local_var_params['page_size']))  # noqa: E501
-        if 'includelinks' in local_var_params:
+        if 'includelinks' in local_var_params and local_var_params['includelinks'] is not None:  # noqa: E501
             query_params.append(('includelinks', local_var_params['includelinks']))  # noqa: E501
 
         header_params = {}
@@ -3140,24 +3140,24 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'parentbusobid' is set
-        if ('parentbusobid' not in local_var_params or
-                local_var_params['parentbusobid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobid` when calling `business_object_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'parentbusobrecid' is set
-        if ('parentbusobrecid' not in local_var_params or
-                local_var_params['parentbusobrecid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobrecid` when calling `business_object_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'relationshipid' is set
-        if ('relationshipid' not in local_var_params or
-                local_var_params['relationshipid'] is None):
+        if self.api_client.client_side_validation and ('relationshipid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['relationshipid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `relationshipid` when calling `business_object_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_link_related_business_object_by_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3276,16 +3276,16 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'attachmentid' is set
-        if ('attachmentid' not in local_var_params or
-                local_var_params['attachmentid'] is None):
+        if self.api_client.client_side_validation and ('attachmentid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmentid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmentid` when calling `business_object_remove_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_remove_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_remove_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3396,16 +3396,16 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'attachmentid' is set
-        if ('attachmentid' not in local_var_params or
-                local_var_params['attachmentid'] is None):
+        if self.api_client.client_side_validation and ('attachmentid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmentid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmentid` when calling `business_object_remove_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_remove_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_remove_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3516,16 +3516,16 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'attachmentid' is set
-        if ('attachmentid' not in local_var_params or
-                local_var_params['attachmentid'] is None):
+        if self.api_client.client_side_validation and ('attachmentid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmentid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmentid` when calling `business_object_remove_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_remove_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_remove_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3636,16 +3636,16 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'attachmentid' is set
-        if ('attachmentid' not in local_var_params or
-                local_var_params['attachmentid'] is None):
+        if self.api_client.client_side_validation and ('attachmentid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attachmentid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `attachmentid` when calling `business_object_remove_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_remove_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_remove_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3752,8 +3752,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_bus_ob_attachment_request' is set
-        if ('save_bus_ob_attachment_request' not in local_var_params or
-                local_var_params['save_bus_ob_attachment_request'] is None):
+        if self.api_client.client_side_validation and ('save_bus_ob_attachment_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_bus_ob_attachment_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_bus_ob_attachment_request` when calling `business_object_save_business_object_attachment_bus_ob_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3864,8 +3864,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_link_attachment_request' is set
-        if ('save_link_attachment_request' not in local_var_params or
-                local_var_params['save_link_attachment_request'] is None):
+        if self.api_client.client_side_validation and ('save_link_attachment_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_link_attachment_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_link_attachment_request` when calling `business_object_save_business_object_attachment_link_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -3976,8 +3976,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_url_attachment_request' is set
-        if ('save_url_attachment_request' not in local_var_params or
-                local_var_params['save_url_attachment_request'] is None):
+        if self.api_client.client_side_validation and ('save_url_attachment_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_url_attachment_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_url_attachment_request` when calling `business_object_save_business_object_attachment_url_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4088,8 +4088,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'batch_save_request' is set
-        if ('batch_save_request' not in local_var_params or
-                local_var_params['batch_save_request'] is None):
+        if self.api_client.client_side_validation and ('batch_save_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['batch_save_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `batch_save_request` when calling `business_object_save_business_object_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4200,8 +4200,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_request' is set
-        if ('save_request' not in local_var_params or
-                local_var_params['save_request'] is None):
+        if self.api_client.client_side_validation and ('save_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_request` when calling `business_object_save_business_object_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4312,8 +4312,8 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'related_save_request' is set
-        if ('related_save_request' not in local_var_params or
-                local_var_params['related_save_request'] is None):
+        if self.api_client.client_side_validation and ('related_save_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['related_save_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `related_save_request` when calling `business_object_save_related_business_object_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4432,24 +4432,24 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'parentbusobid' is set
-        if ('parentbusobid' not in local_var_params or
-                local_var_params['parentbusobid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobid` when calling `business_object_un_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'parentbusobrecid' is set
-        if ('parentbusobrecid' not in local_var_params or
-                local_var_params['parentbusobrecid'] is None):
+        if self.api_client.client_side_validation and ('parentbusobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['parentbusobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `parentbusobrecid` when calling `business_object_un_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'relationshipid' is set
-        if ('relationshipid' not in local_var_params or
-                local_var_params['relationshipid'] is None):
+        if self.api_client.client_side_validation and ('relationshipid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['relationshipid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `relationshipid` when calling `business_object_un_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_un_link_related_business_object_by_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_un_link_related_business_object_by_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4578,28 +4578,28 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'filename' is set
-        if ('filename' not in local_var_params or
-                local_var_params['filename'] is None):
+        if self.api_client.client_side_validation and ('filename' not in local_var_params or  # noqa: E501
+                                                        local_var_params['filename'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `filename` when calling `business_object_upload_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_upload_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_upload_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'offset' is set
-        if ('offset' not in local_var_params or
-                local_var_params['offset'] is None):
+        if self.api_client.client_side_validation and ('offset' not in local_var_params or  # noqa: E501
+                                                        local_var_params['offset'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `offset` when calling `business_object_upload_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'totalsize' is set
-        if ('totalsize' not in local_var_params or
-                local_var_params['totalsize'] is None):
+        if self.api_client.client_side_validation and ('totalsize' not in local_var_params or  # noqa: E501
+                                                        local_var_params['totalsize'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `totalsize` when calling `business_object_upload_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in local_var_params or
-                local_var_params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
+                                                        local_var_params['body'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `body` when calling `business_object_upload_business_object_attachment_by_id_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4617,9 +4617,9 @@ class BusinessObjectApi(object):
             path_params['totalsize'] = local_var_params['totalsize']  # noqa: E501
 
         query_params = []
-        if 'attachmentid' in local_var_params:
+        if 'attachmentid' in local_var_params and local_var_params['attachmentid'] is not None:  # noqa: E501
             query_params.append(('attachmentid', local_var_params['attachmentid']))  # noqa: E501
-        if 'displaytext' in local_var_params:
+        if 'displaytext' in local_var_params and local_var_params['displaytext'] is not None:  # noqa: E501
             query_params.append(('displaytext', local_var_params['displaytext']))  # noqa: E501
 
         header_params = {}
@@ -4738,28 +4738,28 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'filename' is set
-        if ('filename' not in local_var_params or
-                local_var_params['filename'] is None):
+        if self.api_client.client_side_validation and ('filename' not in local_var_params or  # noqa: E501
+                                                        local_var_params['filename'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `filename` when calling `business_object_upload_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `business_object_upload_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_upload_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'offset' is set
-        if ('offset' not in local_var_params or
-                local_var_params['offset'] is None):
+        if self.api_client.client_side_validation and ('offset' not in local_var_params or  # noqa: E501
+                                                        local_var_params['offset'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `offset` when calling `business_object_upload_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'totalsize' is set
-        if ('totalsize' not in local_var_params or
-                local_var_params['totalsize'] is None):
+        if self.api_client.client_side_validation and ('totalsize' not in local_var_params or  # noqa: E501
+                                                        local_var_params['totalsize'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `totalsize` when calling `business_object_upload_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in local_var_params or
-                local_var_params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
+                                                        local_var_params['body'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `body` when calling `business_object_upload_business_object_attachment_by_id_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4777,9 +4777,9 @@ class BusinessObjectApi(object):
             path_params['totalsize'] = local_var_params['totalsize']  # noqa: E501
 
         query_params = []
-        if 'attachmentid' in local_var_params:
+        if 'attachmentid' in local_var_params and local_var_params['attachmentid'] is not None:  # noqa: E501
             query_params.append(('attachmentid', local_var_params['attachmentid']))  # noqa: E501
-        if 'displaytext' in local_var_params:
+        if 'displaytext' in local_var_params and local_var_params['displaytext'] is not None:  # noqa: E501
             query_params.append(('displaytext', local_var_params['displaytext']))  # noqa: E501
 
         header_params = {}
@@ -4898,28 +4898,28 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'filename' is set
-        if ('filename' not in local_var_params or
-                local_var_params['filename'] is None):
+        if self.api_client.client_side_validation and ('filename' not in local_var_params or  # noqa: E501
+                                                        local_var_params['filename'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `filename` when calling `business_object_upload_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_upload_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `business_object_upload_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'offset' is set
-        if ('offset' not in local_var_params or
-                local_var_params['offset'] is None):
+        if self.api_client.client_side_validation and ('offset' not in local_var_params or  # noqa: E501
+                                                        local_var_params['offset'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `offset` when calling `business_object_upload_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'totalsize' is set
-        if ('totalsize' not in local_var_params or
-                local_var_params['totalsize'] is None):
+        if self.api_client.client_side_validation and ('totalsize' not in local_var_params or  # noqa: E501
+                                                        local_var_params['totalsize'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `totalsize` when calling `business_object_upload_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in local_var_params or
-                local_var_params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
+                                                        local_var_params['body'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `body` when calling `business_object_upload_business_object_attachment_by_name_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -4937,9 +4937,9 @@ class BusinessObjectApi(object):
             path_params['totalsize'] = local_var_params['totalsize']  # noqa: E501
 
         query_params = []
-        if 'attachmentid' in local_var_params:
+        if 'attachmentid' in local_var_params and local_var_params['attachmentid'] is not None:  # noqa: E501
             query_params.append(('attachmentid', local_var_params['attachmentid']))  # noqa: E501
-        if 'displaytext' in local_var_params:
+        if 'displaytext' in local_var_params and local_var_params['displaytext'] is not None:  # noqa: E501
             query_params.append(('displaytext', local_var_params['displaytext']))  # noqa: E501
 
         header_params = {}
@@ -5058,28 +5058,28 @@ class BusinessObjectApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'filename' is set
-        if ('filename' not in local_var_params or
-                local_var_params['filename'] is None):
+        if self.api_client.client_side_validation and ('filename' not in local_var_params or  # noqa: E501
+                                                        local_var_params['filename'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `filename` when calling `business_object_upload_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `business_object_upload_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `business_object_upload_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'offset' is set
-        if ('offset' not in local_var_params or
-                local_var_params['offset'] is None):
+        if self.api_client.client_side_validation and ('offset' not in local_var_params or  # noqa: E501
+                                                        local_var_params['offset'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `offset` when calling `business_object_upload_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'totalsize' is set
-        if ('totalsize' not in local_var_params or
-                local_var_params['totalsize'] is None):
+        if self.api_client.client_side_validation and ('totalsize' not in local_var_params or  # noqa: E501
+                                                        local_var_params['totalsize'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `totalsize` when calling `business_object_upload_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in local_var_params or
-                local_var_params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in local_var_params or  # noqa: E501
+                                                        local_var_params['body'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `body` when calling `business_object_upload_business_object_attachment_by_name_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -5097,9 +5097,9 @@ class BusinessObjectApi(object):
             path_params['totalsize'] = local_var_params['totalsize']  # noqa: E501
 
         query_params = []
-        if 'attachmentid' in local_var_params:
+        if 'attachmentid' in local_var_params and local_var_params['attachmentid'] is not None:  # noqa: E501
             query_params.append(('attachmentid', local_var_params['attachmentid']))  # noqa: E501
-        if 'displaytext' in local_var_params:
+        if 'displaytext' in local_var_params and local_var_params['displaytext'] is not None:  # noqa: E501
             query_params.append(('displaytext', local_var_params['displaytext']))  # noqa: E501
 
         header_params = {}

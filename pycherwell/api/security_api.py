@@ -104,8 +104,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'applicationtype' is set
-        if ('applicationtype' not in local_var_params or
-                local_var_params['applicationtype'] is None):
+        if self.api_client.client_side_validation and ('applicationtype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['applicationtype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `applicationtype` when calling `security_get_client_security_settings_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -414,12 +414,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupid' is set
-        if ('groupid' not in local_var_params or
-                local_var_params['groupid'] is None):
+        if self.api_client.client_side_validation and ('groupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupid` when calling `security_get_security_group_business_object_permissions_by_bus_ob_id_v1`")  # noqa: E501
         # verify the required parameter 'bus_ob_id' is set
-        if ('bus_ob_id' not in local_var_params or
-                local_var_params['bus_ob_id'] is None):
+        if self.api_client.client_side_validation and ('bus_ob_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['bus_ob_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `bus_ob_id` when calling `security_get_security_group_business_object_permissions_by_bus_ob_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -530,12 +530,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupid' is set
-        if ('groupid' not in local_var_params or
-                local_var_params['groupid'] is None):
+        if self.api_client.client_side_validation and ('groupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupid` when calling `security_get_security_group_business_object_permissions_by_bus_ob_id_v2`")  # noqa: E501
         # verify the required parameter 'bus_ob_id' is set
-        if ('bus_ob_id' not in local_var_params or
-                local_var_params['bus_ob_id'] is None):
+        if self.api_client.client_side_validation and ('bus_ob_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['bus_ob_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `bus_ob_id` when calling `security_get_security_group_business_object_permissions_by_bus_ob_id_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -646,12 +646,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupname' is set
-        if ('groupname' not in local_var_params or
-                local_var_params['groupname'] is None):
+        if self.api_client.client_side_validation and ('groupname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupname` when calling `security_get_security_group_business_object_permissions_by_bus_ob_name_v1`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `security_get_security_group_business_object_permissions_by_bus_ob_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -762,12 +762,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupname' is set
-        if ('groupname' not in local_var_params or
-                local_var_params['groupname'] is None):
+        if self.api_client.client_side_validation and ('groupname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupname` when calling `security_get_security_group_business_object_permissions_by_bus_ob_name_v2`")  # noqa: E501
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `security_get_security_group_business_object_permissions_by_bus_ob_name_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -876,8 +876,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'bus_ob_id' is set
-        if ('bus_ob_id' not in local_var_params or
-                local_var_params['bus_ob_id'] is None):
+        if self.api_client.client_side_validation and ('bus_ob_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['bus_ob_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `bus_ob_id` when calling `security_get_security_group_business_object_permissions_for_current_user_by_bus_ob_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -984,8 +984,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'bus_ob_id' is set
-        if ('bus_ob_id' not in local_var_params or
-                local_var_params['bus_ob_id'] is None):
+        if self.api_client.client_side_validation and ('bus_ob_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['bus_ob_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `bus_ob_id` when calling `security_get_security_group_business_object_permissions_for_current_user_by_bus_ob_id_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1092,8 +1092,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `security_get_security_group_business_object_permissions_for_current_user_by_bus_ob_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1200,8 +1200,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `security_get_security_group_business_object_permissions_for_current_user_by_bus_ob_name_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1510,12 +1510,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupid' is set
-        if ('groupid' not in local_var_params or
-                local_var_params['groupid'] is None):
+        if self.api_client.client_side_validation and ('groupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupid` when calling `security_get_security_group_rights_by_group_id_and_category_id_v1`")  # noqa: E501
         # verify the required parameter 'categoryid' is set
-        if ('categoryid' not in local_var_params or
-                local_var_params['categoryid'] is None):
+        if self.api_client.client_side_validation and ('categoryid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryid` when calling `security_get_security_group_rights_by_group_id_and_category_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1626,12 +1626,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupid' is set
-        if ('groupid' not in local_var_params or
-                local_var_params['groupid'] is None):
+        if self.api_client.client_side_validation and ('groupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupid` when calling `security_get_security_group_rights_by_group_id_and_category_id_v2`")  # noqa: E501
         # verify the required parameter 'categoryid' is set
-        if ('categoryid' not in local_var_params or
-                local_var_params['categoryid'] is None):
+        if self.api_client.client_side_validation and ('categoryid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryid` when calling `security_get_security_group_rights_by_group_id_and_category_id_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1742,12 +1742,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupname' is set
-        if ('groupname' not in local_var_params or
-                local_var_params['groupname'] is None):
+        if self.api_client.client_side_validation and ('groupname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupname` when calling `security_get_security_group_rights_by_group_name_and_category_name_v1`")  # noqa: E501
         # verify the required parameter 'categoryname' is set
-        if ('categoryname' not in local_var_params or
-                local_var_params['categoryname'] is None):
+        if self.api_client.client_side_validation and ('categoryname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryname` when calling `security_get_security_group_rights_by_group_name_and_category_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1858,12 +1858,12 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupname' is set
-        if ('groupname' not in local_var_params or
-                local_var_params['groupname'] is None):
+        if self.api_client.client_side_validation and ('groupname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupname` when calling `security_get_security_group_rights_by_group_name_and_category_name_v2`")  # noqa: E501
         # verify the required parameter 'categoryname' is set
-        if ('categoryname' not in local_var_params or
-                local_var_params['categoryname'] is None):
+        if self.api_client.client_side_validation and ('categoryname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryname` when calling `security_get_security_group_rights_by_group_name_and_category_name_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1972,8 +1972,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'categoryid' is set
-        if ('categoryid' not in local_var_params or
-                local_var_params['categoryid'] is None):
+        if self.api_client.client_side_validation and ('categoryid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryid` when calling `security_get_security_group_rights_for_current_user_by_category_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2080,8 +2080,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'categoryid' is set
-        if ('categoryid' not in local_var_params or
-                local_var_params['categoryid'] is None):
+        if self.api_client.client_side_validation and ('categoryid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryid` when calling `security_get_security_group_rights_for_current_user_by_category_id_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -2188,8 +2188,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'categoryname' is set
-        if ('categoryname' not in local_var_params or
-                local_var_params['categoryname'] is None):
+        if self.api_client.client_side_validation and ('categoryname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryname` when calling `security_get_security_group_rights_for_current_user_by_category_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2296,8 +2296,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'categoryname' is set
-        if ('categoryname' not in local_var_params or
-                local_var_params['categoryname'] is None):
+        if self.api_client.client_side_validation and ('categoryname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['categoryname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `categoryname` when calling `security_get_security_group_rights_for_current_user_by_category_name_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -2604,8 +2604,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupid' is set
-        if ('groupid' not in local_var_params or
-                local_var_params['groupid'] is None):
+        if self.api_client.client_side_validation and ('groupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupid` when calling `security_get_users_in_security_group_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2712,8 +2712,8 @@ class SecurityApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'groupid' is set
-        if ('groupid' not in local_var_params or
-                local_var_params['groupid'] is None):
+        if self.api_client.client_side_validation and ('groupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['groupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `groupid` when calling `security_get_users_in_security_group_v2`")  # noqa: E501
 
         collection_formats = {}

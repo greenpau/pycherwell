@@ -104,8 +104,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'standinkey' is set
-        if ('standinkey' not in local_var_params or
-                local_var_params['standinkey'] is None):
+        if self.api_client.client_side_validation and ('standinkey' not in local_var_params or  # noqa: E501
+                                                        local_var_params['standinkey'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `standinkey` when calling `core_delete_gallery_image_by_stand_in_key_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -212,8 +212,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'name' is set
-        if ('name' not in local_var_params or
-                local_var_params['name'] is None):
+        if self.api_client.client_side_validation and ('name' not in local_var_params or  # noqa: E501
+                                                        local_var_params['name'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `name` when calling `core_get_gallery_image_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -223,9 +223,9 @@ class CoreApi(object):
             path_params['name'] = local_var_params['name']  # noqa: E501
 
         query_params = []
-        if 'width' in local_var_params:
+        if 'width' in local_var_params and local_var_params['width'] is not None:  # noqa: E501
             query_params.append(('width', local_var_params['width']))  # noqa: E501
-        if 'height' in local_var_params:
+        if 'height' in local_var_params and local_var_params['height'] is not None:  # noqa: E501
             query_params.append(('height', local_var_params['height']))  # noqa: E501
 
         header_params = {}
@@ -330,16 +330,16 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `core_get_gallery_images_folder_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `core_get_gallery_images_folder_v1`")  # noqa: E501
         # verify the required parameter 'folder' is set
-        if ('folder' not in local_var_params or
-                local_var_params['folder'] is None):
+        if self.api_client.client_side_validation and ('folder' not in local_var_params or  # noqa: E501
+                                                        local_var_params['folder'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `folder` when calling `core_get_gallery_images_folder_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -353,7 +353,7 @@ class CoreApi(object):
             path_params['folder'] = local_var_params['folder']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -456,12 +456,12 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `core_get_gallery_images_scope_owner_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `core_get_gallery_images_scope_owner_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -473,7 +473,7 @@ class CoreApi(object):
             path_params['scopeowner'] = local_var_params['scopeowner']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -574,8 +574,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `core_get_gallery_images_scope_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -585,7 +585,7 @@ class CoreApi(object):
             path_params['scope'] = local_var_params['scope']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -689,7 +689,7 @@ class CoreApi(object):
         path_params = {}
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -788,8 +788,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'stand_in_key' is set
-        if ('stand_in_key' not in local_var_params or
-                local_var_params['stand_in_key'] is None):
+        if self.api_client.client_side_validation and ('stand_in_key' not in local_var_params or  # noqa: E501
+                                                        local_var_params['stand_in_key'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `stand_in_key` when calling `core_get_stored_value_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -902,16 +902,16 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `core_get_stored_values_folder_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `core_get_stored_values_folder_v1`")  # noqa: E501
         # verify the required parameter 'folder' is set
-        if ('folder' not in local_var_params or
-                local_var_params['folder'] is None):
+        if self.api_client.client_side_validation and ('folder' not in local_var_params or  # noqa: E501
+                                                        local_var_params['folder'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `folder` when calling `core_get_stored_values_folder_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -925,7 +925,7 @@ class CoreApi(object):
             path_params['folder'] = local_var_params['folder']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1028,12 +1028,12 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `core_get_stored_values_scope_owner_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `core_get_stored_values_scope_owner_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1045,7 +1045,7 @@ class CoreApi(object):
             path_params['scopeowner'] = local_var_params['scopeowner']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1146,8 +1146,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `core_get_stored_values_scope_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1157,7 +1157,7 @@ class CoreApi(object):
             path_params['scope'] = local_var_params['scope']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1261,7 +1261,7 @@ class CoreApi(object):
         path_params = {}
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1460,8 +1460,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_gallery_image_request' is set
-        if ('save_gallery_image_request' not in local_var_params or
-                local_var_params['save_gallery_image_request'] is None):
+        if self.api_client.client_side_validation and ('save_gallery_image_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_gallery_image_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_gallery_image_request` when calling `core_save_gallery_image_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1572,8 +1572,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_stored_value_request' is set
-        if ('save_stored_value_request' not in local_var_params or
-                local_var_params['save_stored_value_request'] is None):
+        if self.api_client.client_side_validation and ('save_stored_value_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_stored_value_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_stored_value_request` when calling `core_save_stored_value_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1684,8 +1684,8 @@ class CoreApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'culturecode' is set
-        if ('culturecode' not in local_var_params or
-                local_var_params['culturecode'] is None):
+        if self.api_client.client_side_validation and ('culturecode' not in local_var_params or  # noqa: E501
+                                                        local_var_params['culturecode'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `culturecode` when calling `core_set_culture_v1`")  # noqa: E501
 
         collection_formats = {}

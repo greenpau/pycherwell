@@ -31,6 +31,12 @@ except ImportError:
     # Python 2
     import httplib as http_client
 
+__author__ = "Paul Greenberg @greenpau"
+__version__ = u'1.0.1'
+__maintainer__ = "Paul Greenberg"
+__email__ = "greenpau@outlook.com"
+__status__ = "Alpha"
+
 class CherwellClient(object):
     '''
     This class implements the client application.

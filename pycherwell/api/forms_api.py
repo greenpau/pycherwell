@@ -110,12 +110,12 @@ class FormsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `forms_get_mobile_form_for_bus_ob_by_id_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `forms_get_mobile_form_for_bus_ob_by_id_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -127,9 +127,9 @@ class FormsApi(object):
             path_params['publicid'] = local_var_params['publicid']  # noqa: E501
 
         query_params = []
-        if 'foredit' in local_var_params:
+        if 'foredit' in local_var_params and local_var_params['foredit'] is not None:  # noqa: E501
             query_params.append(('foredit', local_var_params['foredit']))  # noqa: E501
-        if 'formid' in local_var_params:
+        if 'formid' in local_var_params and local_var_params['formid'] is not None:  # noqa: E501
             query_params.append(('formid', local_var_params['formid']))  # noqa: E501
 
         header_params = {}
@@ -234,12 +234,12 @@ class FormsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobid' is set
-        if ('busobid' not in local_var_params or
-                local_var_params['busobid'] is None):
+        if self.api_client.client_side_validation and ('busobid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobid` when calling `forms_get_mobile_form_for_bus_ob_by_id_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `forms_get_mobile_form_for_bus_ob_by_id_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -251,9 +251,9 @@ class FormsApi(object):
             path_params['busobrecid'] = local_var_params['busobrecid']  # noqa: E501
 
         query_params = []
-        if 'foredit' in local_var_params:
+        if 'foredit' in local_var_params and local_var_params['foredit'] is not None:  # noqa: E501
             query_params.append(('foredit', local_var_params['foredit']))  # noqa: E501
-        if 'formid' in local_var_params:
+        if 'formid' in local_var_params and local_var_params['formid'] is not None:  # noqa: E501
             query_params.append(('formid', local_var_params['formid']))  # noqa: E501
 
         header_params = {}
@@ -358,12 +358,12 @@ class FormsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `forms_get_mobile_form_for_bus_ob_by_name_and_public_id_v1`")  # noqa: E501
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `forms_get_mobile_form_for_bus_ob_by_name_and_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -375,9 +375,9 @@ class FormsApi(object):
             path_params['publicid'] = local_var_params['publicid']  # noqa: E501
 
         query_params = []
-        if 'foredit' in local_var_params:
+        if 'foredit' in local_var_params and local_var_params['foredit'] is not None:  # noqa: E501
             query_params.append(('foredit', local_var_params['foredit']))  # noqa: E501
-        if 'formid' in local_var_params:
+        if 'formid' in local_var_params and local_var_params['formid'] is not None:  # noqa: E501
             query_params.append(('formid', local_var_params['formid']))  # noqa: E501
 
         header_params = {}
@@ -482,12 +482,12 @@ class FormsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'busobname' is set
-        if ('busobname' not in local_var_params or
-                local_var_params['busobname'] is None):
+        if self.api_client.client_side_validation and ('busobname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobname` when calling `forms_get_mobile_form_for_bus_ob_by_name_and_rec_id_v1`")  # noqa: E501
         # verify the required parameter 'busobrecid' is set
-        if ('busobrecid' not in local_var_params or
-                local_var_params['busobrecid'] is None):
+        if self.api_client.client_side_validation and ('busobrecid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['busobrecid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `busobrecid` when calling `forms_get_mobile_form_for_bus_ob_by_name_and_rec_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -499,9 +499,9 @@ class FormsApi(object):
             path_params['busobrecid'] = local_var_params['busobrecid']  # noqa: E501
 
         query_params = []
-        if 'foredit' in local_var_params:
+        if 'foredit' in local_var_params and local_var_params['foredit'] is not None:  # noqa: E501
             query_params.append(('foredit', local_var_params['foredit']))  # noqa: E501
-        if 'formid' in local_var_params:
+        if 'formid' in local_var_params and local_var_params['formid'] is not None:  # noqa: E501
             query_params.append(('formid', local_var_params['formid']))  # noqa: E501
 
         header_params = {}

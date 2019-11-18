@@ -104,8 +104,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_batch_delete_request' is set
-        if ('user_batch_delete_request' not in local_var_params or
-                local_var_params['user_batch_delete_request'] is None):
+        if self.api_client.client_side_validation and ('user_batch_delete_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_batch_delete_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_batch_delete_request` when calling `users_delete_user_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -216,8 +216,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_batch_delete_request' is set
-        if ('user_batch_delete_request' not in local_var_params or
-                local_var_params['user_batch_delete_request'] is None):
+        if self.api_client.client_side_validation and ('user_batch_delete_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_batch_delete_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_batch_delete_request` when calling `users_delete_user_batch_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -328,8 +328,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'userrecordid' is set
-        if ('userrecordid' not in local_var_params or
-                local_var_params['userrecordid'] is None):
+        if self.api_client.client_side_validation and ('userrecordid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['userrecordid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `userrecordid` when calling `users_delete_user_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -436,8 +436,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'userrecordid' is set
-        if ('userrecordid' not in local_var_params or
-                local_var_params['userrecordid'] is None):
+        if self.api_client.client_side_validation and ('userrecordid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['userrecordid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `userrecordid` when calling `users_delete_user_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -546,8 +546,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'loginidfilter' is set
-        if ('loginidfilter' not in local_var_params or
-                local_var_params['loginidfilter'] is None):
+        if self.api_client.client_side_validation and ('loginidfilter' not in local_var_params or  # noqa: E501
+                                                        local_var_params['loginidfilter'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `loginidfilter` when calling `users_get_list_of_users`")  # noqa: E501
 
         collection_formats = {}
@@ -555,9 +555,9 @@ class UsersApi(object):
         path_params = {}
 
         query_params = []
-        if 'loginidfilter' in local_var_params:
+        if 'loginidfilter' in local_var_params and local_var_params['loginidfilter'] is not None:  # noqa: E501
             query_params.append(('loginidfilter', local_var_params['loginidfilter']))  # noqa: E501
-        if 'stoponerror' in local_var_params:
+        if 'stoponerror' in local_var_params and local_var_params['stoponerror'] is not None:  # noqa: E501
             query_params.append(('stoponerror', local_var_params['stoponerror']))  # noqa: E501
 
         header_params = {}
@@ -656,8 +656,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_batch_read_request' is set
-        if ('user_batch_read_request' not in local_var_params or
-                local_var_params['user_batch_read_request'] is None):
+        if self.api_client.client_side_validation and ('user_batch_read_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_batch_read_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_batch_read_request` when calling `users_get_user_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -768,8 +768,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'loginid' is set
-        if ('loginid' not in local_var_params or
-                local_var_params['loginid'] is None):
+        if self.api_client.client_side_validation and ('loginid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['loginid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `loginid` when calling `users_get_user_by_login_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -878,12 +878,12 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'loginid' is set
-        if ('loginid' not in local_var_params or
-                local_var_params['loginid'] is None):
+        if self.api_client.client_side_validation and ('loginid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['loginid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `loginid` when calling `users_get_user_by_login_id_v2`")  # noqa: E501
         # verify the required parameter 'loginidtype' is set
-        if ('loginidtype' not in local_var_params or
-                local_var_params['loginidtype'] is None):
+        if self.api_client.client_side_validation and ('loginidtype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['loginidtype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `loginidtype` when calling `users_get_user_by_login_id_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -891,9 +891,9 @@ class UsersApi(object):
         path_params = {}
 
         query_params = []
-        if 'loginid' in local_var_params:
+        if 'loginid' in local_var_params and local_var_params['loginid'] is not None:  # noqa: E501
             query_params.append(('loginid', local_var_params['loginid']))  # noqa: E501
-        if 'loginidtype' in local_var_params:
+        if 'loginidtype' in local_var_params and local_var_params['loginidtype'] is not None:  # noqa: E501
             query_params.append(('loginidtype', local_var_params['loginidtype']))  # noqa: E501
 
         header_params = {}
@@ -994,12 +994,12 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'loginid' is set
-        if ('loginid' not in local_var_params or
-                local_var_params['loginid'] is None):
+        if self.api_client.client_side_validation and ('loginid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['loginid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `loginid` when calling `users_get_user_by_login_id_v3`")  # noqa: E501
         # verify the required parameter 'loginidtype' is set
-        if ('loginidtype' not in local_var_params or
-                local_var_params['loginidtype'] is None):
+        if self.api_client.client_side_validation and ('loginidtype' not in local_var_params or  # noqa: E501
+                                                        local_var_params['loginidtype'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `loginidtype` when calling `users_get_user_by_login_id_v3`")  # noqa: E501
 
         collection_formats = {}
@@ -1007,9 +1007,9 @@ class UsersApi(object):
         path_params = {}
 
         query_params = []
-        if 'loginid' in local_var_params:
+        if 'loginid' in local_var_params and local_var_params['loginid'] is not None:  # noqa: E501
             query_params.append(('loginid', local_var_params['loginid']))  # noqa: E501
-        if 'loginidtype' in local_var_params:
+        if 'loginidtype' in local_var_params and local_var_params['loginidtype'] is not None:  # noqa: E501
             query_params.append(('loginidtype', local_var_params['loginidtype']))  # noqa: E501
 
         header_params = {}
@@ -1108,8 +1108,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `users_get_user_by_public_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1216,8 +1216,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'publicid' is set
-        if ('publicid' not in local_var_params or
-                local_var_params['publicid'] is None):
+        if self.api_client.client_side_validation and ('publicid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['publicid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `publicid` when calling `users_get_user_by_public_id_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1324,8 +1324,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'recid' is set
-        if ('recid' not in local_var_params or
-                local_var_params['recid'] is None):
+        if self.api_client.client_side_validation and ('recid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['recid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `recid` when calling `users_get_user_by_rec_id`")  # noqa: E501
 
         collection_formats = {}
@@ -1432,8 +1432,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_batch_save_request' is set
-        if ('user_batch_save_request' not in local_var_params or
-                local_var_params['user_batch_save_request'] is None):
+        if self.api_client.client_side_validation and ('user_batch_save_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_batch_save_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_batch_save_request` when calling `users_save_user_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1544,8 +1544,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_batch_save_v2_request' is set
-        if ('user_batch_save_v2_request' not in local_var_params or
-                local_var_params['user_batch_save_v2_request'] is None):
+        if self.api_client.client_side_validation and ('user_batch_save_v2_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_batch_save_v2_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_batch_save_v2_request` when calling `users_save_user_batch_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1656,8 +1656,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_save_request' is set
-        if ('user_save_request' not in local_var_params or
-                local_var_params['user_save_request'] is None):
+        if self.api_client.client_side_validation and ('user_save_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_save_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_save_request` when calling `users_save_user_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1768,8 +1768,8 @@ class UsersApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_save_v2_request' is set
-        if ('user_save_v2_request' not in local_var_params or
-                local_var_params['user_save_v2_request'] is None):
+        if self.api_client.client_side_validation and ('user_save_v2_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_save_v2_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_save_v2_request` when calling `users_save_user_v2`")  # noqa: E501
 
         collection_formats = {}

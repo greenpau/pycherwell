@@ -17,17 +17,20 @@ import time
 from pycherwell.app_client import CherwellClient
 
 __author__ = "Paul Greenberg @greenpau"
-__version__ = "1.0"
+__version__ = u'1.0.1'
 __maintainer__ = "Paul Greenberg"
 __email__ = "greenpau@outlook.com"
 __status__ = "Alpha"
+__pkg_name__ = str(os.path.basename(__file__))
+__project_url = 'https://github.com/greenpau/pycherwell'
+__project_description__ = 'Cherwell API Client'
 
 def main():
     '''
     Main function.
     '''
-    descr = str(os.path.basename(__file__)) + ' - Cherwell API Client \n\n'
-    epil = '\ndocumentation: https://github.com/greenpau/pycherwell\n\n'
+    descr = '%s - %s\n\n' % (__pkg_name__, __project_description__)
+    epil = '\ndocumentation: %s\n\n' % (__project_url)
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
                                      add_help=True, description=descr, epilog=epil)
 

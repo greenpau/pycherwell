@@ -104,8 +104,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'quick_search_configuration_request' is set
-        if ('quick_search_configuration_request' not in local_var_params or
-                local_var_params['quick_search_configuration_request'] is None):
+        if self.api_client.client_side_validation and ('quick_search_configuration_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['quick_search_configuration_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `quick_search_configuration_request` when calling `searches_get_quick_search_configuration_for_bus_obs_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -318,8 +318,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'quick_search_request' is set
-        if ('quick_search_request' not in local_var_params or
-                local_var_params['quick_search_request'] is None):
+        if self.api_client.client_side_validation and ('quick_search_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['quick_search_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `quick_search_request` when calling `searches_get_quick_search_results_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -327,7 +327,7 @@ class SearchesApi(object):
         path_params = {}
 
         query_params = []
-        if 'include_links' in local_var_params:
+        if 'include_links' in local_var_params and local_var_params['include_links'] is not None:  # noqa: E501
             query_params.append(('includeLinks', local_var_params['include_links']))  # noqa: E501
 
         header_params = {}
@@ -438,8 +438,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'quick_search_specific_request' is set
-        if ('quick_search_specific_request' not in local_var_params or
-                local_var_params['quick_search_specific_request'] is None):
+        if self.api_client.client_side_validation and ('quick_search_specific_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['quick_search_specific_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `quick_search_specific_request` when calling `searches_get_quick_search_specific_results_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -447,11 +447,11 @@ class SearchesApi(object):
         path_params = {}
 
         query_params = []
-        if 'include_schema' in local_var_params:
+        if 'include_schema' in local_var_params and local_var_params['include_schema'] is not None:  # noqa: E501
             query_params.append(('includeSchema', local_var_params['include_schema']))  # noqa: E501
-        if 'include_location_fields' in local_var_params:
+        if 'include_location_fields' in local_var_params and local_var_params['include_location_fields'] is not None:  # noqa: E501
             query_params.append(('includeLocationFields', local_var_params['include_location_fields']))  # noqa: E501
-        if 'include_links' in local_var_params:
+        if 'include_links' in local_var_params and local_var_params['include_links'] is not None:  # noqa: E501
             query_params.append(('includeLinks', local_var_params['include_links']))  # noqa: E501
 
         header_params = {}
@@ -562,8 +562,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'quick_search_specific_request' is set
-        if ('quick_search_specific_request' not in local_var_params or
-                local_var_params['quick_search_specific_request'] is None):
+        if self.api_client.client_side_validation and ('quick_search_specific_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['quick_search_specific_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `quick_search_specific_request` when calling `searches_get_quick_search_specific_results_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -571,11 +571,11 @@ class SearchesApi(object):
         path_params = {}
 
         query_params = []
-        if 'include_schema' in local_var_params:
+        if 'include_schema' in local_var_params and local_var_params['include_schema'] is not None:  # noqa: E501
             query_params.append(('includeSchema', local_var_params['include_schema']))  # noqa: E501
-        if 'include_location_fields' in local_var_params:
+        if 'include_location_fields' in local_var_params and local_var_params['include_location_fields'] is not None:  # noqa: E501
             query_params.append(('includeLocationFields', local_var_params['include_location_fields']))  # noqa: E501
-        if 'include_links' in local_var_params:
+        if 'include_links' in local_var_params and local_var_params['include_links'] is not None:  # noqa: E501
             query_params.append(('includeLinks', local_var_params['include_links']))  # noqa: E501
 
         header_params = {}
@@ -688,20 +688,20 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v1`")  # noqa: E501
         # verify the required parameter 'folder' is set
-        if ('folder' not in local_var_params or
-                local_var_params['folder'] is None):
+        if self.api_client.client_side_validation and ('folder' not in local_var_params or  # noqa: E501
+                                                        local_var_params['folder'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `folder` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -717,7 +717,7 @@ class SearchesApi(object):
             path_params['folder'] = local_var_params['folder']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -824,20 +824,20 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v2`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v2`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v2`")  # noqa: E501
         # verify the required parameter 'folder' is set
-        if ('folder' not in local_var_params or
-                local_var_params['folder'] is None):
+        if self.api_client.client_side_validation and ('folder' not in local_var_params or  # noqa: E501
+                                                        local_var_params['folder'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `folder` when calling `searches_get_search_items_by_association_scope_scope_owner_folder_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -853,7 +853,7 @@ class SearchesApi(object):
             path_params['folder'] = local_var_params['folder']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -958,16 +958,16 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_scope_scope_owner_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_items_by_association_scope_scope_owner_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_items_by_association_scope_scope_owner_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -981,7 +981,7 @@ class SearchesApi(object):
             path_params['scopeowner'] = local_var_params['scopeowner']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1086,16 +1086,16 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_scope_scope_owner_v2`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_items_by_association_scope_scope_owner_v2`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_items_by_association_scope_scope_owner_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1109,7 +1109,7 @@ class SearchesApi(object):
             path_params['scopeowner'] = local_var_params['scopeowner']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1212,12 +1212,12 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_scope_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_items_by_association_scope_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1229,7 +1229,7 @@ class SearchesApi(object):
             path_params['scope'] = local_var_params['scope']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1332,12 +1332,12 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_scope_v2`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_items_by_association_scope_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1349,7 +1349,7 @@ class SearchesApi(object):
             path_params['scope'] = local_var_params['scope']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1450,8 +1450,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1461,7 +1461,7 @@ class SearchesApi(object):
             path_params['association'] = local_var_params['association']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1562,8 +1562,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_items_by_association_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1573,7 +1573,7 @@ class SearchesApi(object):
             path_params['association'] = local_var_params['association']  # noqa: E501
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1677,7 +1677,7 @@ class SearchesApi(object):
         path_params = {}
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1781,7 +1781,7 @@ class SearchesApi(object):
         path_params = {}
 
         query_params = []
-        if 'links' in local_var_params:
+        if 'links' in local_var_params and local_var_params['links'] is not None:  # noqa: E501
             query_params.append(('links', local_var_params['links']))  # noqa: E501
 
         header_params = {}
@@ -1880,8 +1880,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'search_results_request' is set
-        if ('search_results_request' not in local_var_params or
-                local_var_params['search_results_request'] is None):
+        if self.api_client.client_side_validation and ('search_results_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['search_results_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `search_results_request` when calling `searches_get_search_results_ad_hoc_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2008,20 +2008,20 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_results_by_id_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_results_by_id_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_results_by_id_v1`")  # noqa: E501
         # verify the required parameter 'searchid' is set
-        if ('searchid' not in local_var_params or
-                local_var_params['searchid'] is None):
+        if self.api_client.client_side_validation and ('searchid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['searchid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `searchid` when calling `searches_get_search_results_by_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2037,15 +2037,15 @@ class SearchesApi(object):
             path_params['searchid'] = local_var_params['searchid']  # noqa: E501
 
         query_params = []
-        if 'search_term' in local_var_params:
+        if 'search_term' in local_var_params and local_var_params['search_term'] is not None:  # noqa: E501
             query_params.append(('searchTerm', local_var_params['search_term']))  # noqa: E501
-        if 'pagenumber' in local_var_params:
+        if 'pagenumber' in local_var_params and local_var_params['pagenumber'] is not None:  # noqa: E501
             query_params.append(('pagenumber', local_var_params['pagenumber']))  # noqa: E501
-        if 'pagesize' in local_var_params:
+        if 'pagesize' in local_var_params and local_var_params['pagesize'] is not None:  # noqa: E501
             query_params.append(('pagesize', local_var_params['pagesize']))  # noqa: E501
-        if 'includeschema' in local_var_params:
+        if 'includeschema' in local_var_params and local_var_params['includeschema'] is not None:  # noqa: E501
             query_params.append(('includeschema', local_var_params['includeschema']))  # noqa: E501
-        if 'results_as_simple_results_list' in local_var_params:
+        if 'results_as_simple_results_list' in local_var_params and local_var_params['results_as_simple_results_list'] is not None:  # noqa: E501
             query_params.append(('resultsAsSimpleResultsList', local_var_params['results_as_simple_results_list']))  # noqa: E501
 
         header_params = {}
@@ -2160,20 +2160,20 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_results_by_name_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_results_by_name_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_results_by_name_v1`")  # noqa: E501
         # verify the required parameter 'searchname' is set
-        if ('searchname' not in local_var_params or
-                local_var_params['searchname'] is None):
+        if self.api_client.client_side_validation and ('searchname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['searchname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `searchname` when calling `searches_get_search_results_by_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2189,15 +2189,15 @@ class SearchesApi(object):
             path_params['searchname'] = local_var_params['searchname']  # noqa: E501
 
         query_params = []
-        if 'search_term' in local_var_params:
+        if 'search_term' in local_var_params and local_var_params['search_term'] is not None:  # noqa: E501
             query_params.append(('searchTerm', local_var_params['search_term']))  # noqa: E501
-        if 'pagenumber' in local_var_params:
+        if 'pagenumber' in local_var_params and local_var_params['pagenumber'] is not None:  # noqa: E501
             query_params.append(('pagenumber', local_var_params['pagenumber']))  # noqa: E501
-        if 'pagesize' in local_var_params:
+        if 'pagesize' in local_var_params and local_var_params['pagesize'] is not None:  # noqa: E501
             query_params.append(('pagesize', local_var_params['pagesize']))  # noqa: E501
-        if 'includeschema' in local_var_params:
+        if 'includeschema' in local_var_params and local_var_params['includeschema'] is not None:  # noqa: E501
             query_params.append(('includeschema', local_var_params['includeschema']))  # noqa: E501
-        if 'results_as_simple_results_list' in local_var_params:
+        if 'results_as_simple_results_list' in local_var_params and local_var_params['results_as_simple_results_list'] is not None:  # noqa: E501
             query_params.append(('resultsAsSimpleResultsList', local_var_params['results_as_simple_results_list']))  # noqa: E501
 
         header_params = {}
@@ -2296,8 +2296,8 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'export_search_results_request' is set
-        if ('export_search_results_request' not in local_var_params or
-                local_var_params['export_search_results_request'] is None):
+        if self.api_client.client_side_validation and ('export_search_results_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['export_search_results_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `export_search_results_request` when calling `searches_get_search_results_export_ad_hoc_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2422,24 +2422,24 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_results_export_by_id_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_results_export_by_id_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_results_export_by_id_v1`")  # noqa: E501
         # verify the required parameter 'searchid' is set
-        if ('searchid' not in local_var_params or
-                local_var_params['searchid'] is None):
+        if self.api_client.client_side_validation and ('searchid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['searchid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `searchid` when calling `searches_get_search_results_export_by_id_v1`")  # noqa: E501
         # verify the required parameter 'exportformat' is set
-        if ('exportformat' not in local_var_params or
-                local_var_params['exportformat'] is None):
+        if self.api_client.client_side_validation and ('exportformat' not in local_var_params or  # noqa: E501
+                                                        local_var_params['exportformat'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `exportformat` when calling `searches_get_search_results_export_by_id_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2457,11 +2457,11 @@ class SearchesApi(object):
             path_params['exportformat'] = local_var_params['exportformat']  # noqa: E501
 
         query_params = []
-        if 'search_term' in local_var_params:
+        if 'search_term' in local_var_params and local_var_params['search_term'] is not None:  # noqa: E501
             query_params.append(('searchTerm', local_var_params['search_term']))  # noqa: E501
-        if 'pagenumber' in local_var_params:
+        if 'pagenumber' in local_var_params and local_var_params['pagenumber'] is not None:  # noqa: E501
             query_params.append(('pagenumber', local_var_params['pagenumber']))  # noqa: E501
-        if 'pagesize' in local_var_params:
+        if 'pagesize' in local_var_params and local_var_params['pagesize'] is not None:  # noqa: E501
             query_params.append(('pagesize', local_var_params['pagesize']))  # noqa: E501
 
         header_params = {}
@@ -2574,24 +2574,24 @@ class SearchesApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'association' is set
-        if ('association' not in local_var_params or
-                local_var_params['association'] is None):
+        if self.api_client.client_side_validation and ('association' not in local_var_params or  # noqa: E501
+                                                        local_var_params['association'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `association` when calling `searches_get_search_results_export_by_name_v1`")  # noqa: E501
         # verify the required parameter 'scope' is set
-        if ('scope' not in local_var_params or
-                local_var_params['scope'] is None):
+        if self.api_client.client_side_validation and ('scope' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scope'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scope` when calling `searches_get_search_results_export_by_name_v1`")  # noqa: E501
         # verify the required parameter 'scopeowner' is set
-        if ('scopeowner' not in local_var_params or
-                local_var_params['scopeowner'] is None):
+        if self.api_client.client_side_validation and ('scopeowner' not in local_var_params or  # noqa: E501
+                                                        local_var_params['scopeowner'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `scopeowner` when calling `searches_get_search_results_export_by_name_v1`")  # noqa: E501
         # verify the required parameter 'searchname' is set
-        if ('searchname' not in local_var_params or
-                local_var_params['searchname'] is None):
+        if self.api_client.client_side_validation and ('searchname' not in local_var_params or  # noqa: E501
+                                                        local_var_params['searchname'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `searchname` when calling `searches_get_search_results_export_by_name_v1`")  # noqa: E501
         # verify the required parameter 'exportformat' is set
-        if ('exportformat' not in local_var_params or
-                local_var_params['exportformat'] is None):
+        if self.api_client.client_side_validation and ('exportformat' not in local_var_params or  # noqa: E501
+                                                        local_var_params['exportformat'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `exportformat` when calling `searches_get_search_results_export_by_name_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -2609,11 +2609,11 @@ class SearchesApi(object):
             path_params['exportformat'] = local_var_params['exportformat']  # noqa: E501
 
         query_params = []
-        if 'search_term' in local_var_params:
+        if 'search_term' in local_var_params and local_var_params['search_term'] is not None:  # noqa: E501
             query_params.append(('searchTerm', local_var_params['search_term']))  # noqa: E501
-        if 'pagenumber' in local_var_params:
+        if 'pagenumber' in local_var_params and local_var_params['pagenumber'] is not None:  # noqa: E501
             query_params.append(('pagenumber', local_var_params['pagenumber']))  # noqa: E501
-        if 'pagesize' in local_var_params:
+        if 'pagesize' in local_var_params and local_var_params['pagesize'] is not None:  # noqa: E501
             query_params.append(('pagesize', local_var_params['pagesize']))  # noqa: E501
 
         header_params = {}

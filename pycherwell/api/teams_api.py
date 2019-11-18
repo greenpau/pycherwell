@@ -104,8 +104,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'add_user_to_team_by_batch_request' is set
-        if ('add_user_to_team_by_batch_request' not in local_var_params or
-                local_var_params['add_user_to_team_by_batch_request'] is None):
+        if self.api_client.client_side_validation and ('add_user_to_team_by_batch_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['add_user_to_team_by_batch_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `add_user_to_team_by_batch_request` when calling `teams_add_user_to_team_by_batch_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -216,8 +216,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'add_user_to_team_request' is set
-        if ('add_user_to_team_request' not in local_var_params or
-                local_var_params['add_user_to_team_request'] is None):
+        if self.api_client.client_side_validation and ('add_user_to_team_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['add_user_to_team_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `add_user_to_team_request` when calling `teams_add_user_to_team_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -324,8 +324,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'add_user_to_team_request' is set
-        if ('add_user_to_team_request' not in local_var_params or
-                local_var_params['add_user_to_team_request'] is None):
+        if self.api_client.client_side_validation and ('add_user_to_team_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['add_user_to_team_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `add_user_to_team_request` when calling `teams_add_user_to_team_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -436,8 +436,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'teamid' is set
-        if ('teamid' not in local_var_params or
-                local_var_params['teamid'] is None):
+        if self.api_client.client_side_validation and ('teamid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['teamid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `teamid` when calling `teams_delete_team_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -540,8 +540,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'teamid' is set
-        if ('teamid' not in local_var_params or
-                local_var_params['teamid'] is None):
+        if self.api_client.client_side_validation and ('teamid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['teamid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `teamid` when calling `teams_get_team_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -848,8 +848,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_record_id' is set
-        if ('user_record_id' not in local_var_params or
-                local_var_params['user_record_id'] is None):
+        if self.api_client.client_side_validation and ('user_record_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_record_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_record_id` when calling `teams_get_users_teams_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -956,8 +956,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'user_record_id' is set
-        if ('user_record_id' not in local_var_params or
-                local_var_params['user_record_id'] is None):
+        if self.api_client.client_side_validation and ('user_record_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_record_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `user_record_id` when calling `teams_get_users_teams_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1266,12 +1266,12 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'workgroupid' is set
-        if ('workgroupid' not in local_var_params or
-                local_var_params['workgroupid'] is None):
+        if self.api_client.client_side_validation and ('workgroupid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['workgroupid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `workgroupid` when calling `teams_remove_customer_from_workgroup_v1`")  # noqa: E501
         # verify the required parameter 'customerrecordid' is set
-        if ('customerrecordid' not in local_var_params or
-                local_var_params['customerrecordid'] is None):
+        if self.api_client.client_side_validation and ('customerrecordid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['customerrecordid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `customerrecordid` when calling `teams_remove_customer_from_workgroup_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1382,12 +1382,12 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'team_id' is set
-        if ('team_id' not in local_var_params or
-                local_var_params['team_id'] is None):
+        if self.api_client.client_side_validation and ('team_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['team_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `team_id` when calling `teams_remove_user_from_team_v1`")  # noqa: E501
         # verify the required parameter 'userrecordid' is set
-        if ('userrecordid' not in local_var_params or
-                local_var_params['userrecordid'] is None):
+        if self.api_client.client_side_validation and ('userrecordid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['userrecordid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `userrecordid` when calling `teams_remove_user_from_team_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1494,12 +1494,12 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'team_id' is set
-        if ('team_id' not in local_var_params or
-                local_var_params['team_id'] is None):
+        if self.api_client.client_side_validation and ('team_id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['team_id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `team_id` when calling `teams_remove_user_from_team_v2`")  # noqa: E501
         # verify the required parameter 'userrecordid' is set
-        if ('userrecordid' not in local_var_params or
-                local_var_params['userrecordid'] is None):
+        if self.api_client.client_side_validation and ('userrecordid' not in local_var_params or  # noqa: E501
+                                                        local_var_params['userrecordid'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `userrecordid` when calling `teams_remove_user_from_team_v2`")  # noqa: E501
 
         collection_formats = {}
@@ -1608,8 +1608,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_team_member_request' is set
-        if ('save_team_member_request' not in local_var_params or
-                local_var_params['save_team_member_request'] is None):
+        if self.api_client.client_side_validation and ('save_team_member_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_team_member_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_team_member_request` when calling `teams_save_team_member_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1720,8 +1720,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'team_save_request' is set
-        if ('team_save_request' not in local_var_params or
-                local_var_params['team_save_request'] is None):
+        if self.api_client.client_side_validation and ('team_save_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['team_save_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `team_save_request` when calling `teams_save_team_v1`")  # noqa: E501
 
         collection_formats = {}
@@ -1832,8 +1832,8 @@ class TeamsApi(object):
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'save_workgroup_member_request' is set
-        if ('save_workgroup_member_request' not in local_var_params or
-                local_var_params['save_workgroup_member_request'] is None):
+        if self.api_client.client_side_validation and ('save_workgroup_member_request' not in local_var_params or  # noqa: E501
+                                                        local_var_params['save_workgroup_member_request'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `save_workgroup_member_request` when calling `teams_save_workgroup_member_v1`")  # noqa: E501
 
         collection_formats = {}
