@@ -25,10 +25,14 @@ class AppConfiguration(object):
 
     def __init__(self, config_file, profile):
         ''' Initializes the class. '''
+        self.app_name = 'pycherwell'
+        self.app_version = '1.0'
         self.config_file = config_file
+        if not self.config_file:
+            self.config_file = '~/.%s.rc' % (self.app_name)
         self.profile = profile
         self.settings = {}
-        self.log = logging.getLogger('cherwell-config')
+        self.log = logging.getLogger('%s-config' % (self.app_name))
         handler = logging.StreamHandler(sys.stderr)
         formatter = logging.Formatter('[%(asctime)s] %(levelname)s %(name)s@%(lineno)d: %(message)s')
         handler.setFormatter(formatter)
@@ -46,7 +50,7 @@ class AppConfiguration(object):
         ]
         self.env_key_pairs = []
         for k in self.cfg_keys:
-            self.env_key_pairs.append(('CHERWELL_%s' % (k.upper()), k))
+            self.env_key_pairs.append(('%s_%s' % (self.app_name, k.upper()), k))
         self.verify_ssl = False
         self.ssl_ca_cert = False
         self.assert_hostname = None
@@ -55,16 +59,19 @@ class AppConfiguration(object):
         self.cert_file = None
         self.key_file = None
         self.safe_chars_for_path_param = ''
-        self.token_file_name = os.path.expanduser('~/.pycherwell.token')
-        self.token = None
+        self.app_conf_file_names = {
+            'token': os.path.expanduser('~/.%s.token' % (self.app_name)),
+            'summaries': os.path.expanduser('~/.%s.summaries' % (self.app_name)),
+        }
+        self.app = {}
+        for k in self.app_conf_file_names:
+            self.app[k] = None
         return
 
 
     def load(self):
         cfg_file = self.config_file
         ''' Load configuration from a configuration file in RC format. '''
-        if not self.config_file:
-            cfg_file = '~/.pycherwell.rc'
         cfg_file = os.path.expanduser(cfg_file)
         self.log.debug('configuration file: %s', cfg_file)
 
@@ -216,25 +223,60 @@ class AppConfiguration(object):
         return 'Authorization'
 
     def get_auth_header_value(self):
-        return 'Bearer %s' % (self.token['access_token'])
+        return 'Bearer %s' % (self.app['token']['access_token'])
 
     def get_user_agent(self):
-        return 'pycherwell/1.0'
+        return '%s/%s' % (self.app_name, self.app_version)
 
     def get_auth_token(self):
-        self.log.debug('Authentication token file path: %s', self.token_file_name)
-        if os.path.exists(self.token_file_name):
-            if os.stat(self.token_file_name).st_size > 100:
-                with open(self.token_file_name, 'r') as token_file:
-                    self.token = json.load(token_file)
-                    self.log.debug('Authentication token: %s', self.token)
-        return self.token
+        self.load_app_section('token')
+        self.log.debug('Authentication token: %s', self.app['token'])
+        if self.app['token'] is not None:
+            if 'expires_at_timestamp' not in self.app['token']:
+                self.app['token'] = None
+                self.wipe_app_section('token')
+                return self.app['token']
+            if int(time.time()) > self.app['token']['expires_at_timestamp']:
+                self.app['token'] = None
+                self.wipe_app_section('token')
+                return self.app['token']
+        return self.app['token']
 
-    def save_token(self, data):
-        self.log.debug('Saving auth token in %s', self.token_file_name)
-        data['expires_in_timestamp'] = int(time.time()) + data['expires_in']
-        self.token = data
-        with open(self.token_file_name, 'w') as f:
+    def load_app_section(self, section):
+        if section not in self.app_conf_file_names:
+            self.log.error('The app config %s section is unsupported', section)
+            return
+        if section in self.app:
+            if self.app[section] is not None:
+                return
+        fn = self.app_conf_file_names[section]
+        if os.path.exists(fn):
+            if os.stat(fn).st_size > 100:
+                with open(fn, 'r') as f:
+                    self.app[section] = json.load(f)
+                self.log.debug('Loaded app config %s section from %s', section, fn)
+        return
+
+    def save_app_section(self, section, data):
+        if section not in self.app_conf_file_names:
+            self.log.error('The app config %s section is unsupported', section)
+            return
+        fn = self.app_conf_file_names[section]
+        self.log.debug('Saving app config %s section from %s', section, fn)
+        if section == 'token':
+            data['expires_at_timestamp'] = int(time.time()) + data['expires_in']
+        with open(fn, 'w') as f:
             json.dump(data, f)
             f.write('\n')
+        self.app[section] = data
+        return
+
+    def wipe_app_section(self, section):
+        if section not in self.app_conf_file_names:
+            self.log.error('The app config %s section is unsupported', section)
+            return
+        fn = self.app_conf_file_names[section]
+        with open(fn, 'w') as f:
+            pass
+        self.app[section] = None
         return

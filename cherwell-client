@@ -42,6 +42,7 @@ def main():
     action_arg_group = parser.add_argument_group('Actions')
     action_group = action_arg_group.add_mutually_exclusive_group(required=True)
     action_group.add_argument('--get-service-info', dest='get_service_info', action='store_true', help='get service info')
+    action_group.add_argument('--get-business-object-summaries', dest='get_business_object_summaries', action='store_true', help='get business object summaries')
     action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get incidents')
     action_group.add_argument('--get-incident', dest='get_incident_by_id', metavar='ID', type=int,
                               help='get incident by id')
@@ -54,6 +55,10 @@ def main():
                                   default=None, help='limit the number of output items')
     filter_arg_group.add_argument('--without-header', dest='without_header',
                                   action='store_true', help='outputs data as a list of objects')
+    filter_arg_group.add_argument('--summary-type', dest='summary_type',
+                                  choices=['All', 'Major', 'Lookup', 'Supporting', 'Groups'],
+                                  default='Major',
+                                  help='Summary Object Type filter')
     main_group.add_argument('--format', dest='output_format', choices=['json', 'csv', 'yaml'],
                             default="json", help='Output format')
     main_group.add_argument('--debug', dest='enable_debug', action='store_true',
@@ -84,6 +89,10 @@ def main():
     data = None
     if args.get_service_info:
         data = cli.get_service_info(opts)
+    elif args.get_business_object_summaries:
+        if args.summary_type:
+            opts['summary_type'] = args.summary_type
+        data = cli.get_business_object_summaries(opts)
     elif args.get_incidents:
         data = cli.get_incidents(opts)
     elif args.get_incident_by_id:

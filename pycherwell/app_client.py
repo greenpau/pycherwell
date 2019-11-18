@@ -14,14 +14,13 @@ import re
 import json
 import yaml
 import logging
+import pprint
 
 # python 2 and python 3 compatibility library
 import six
 from six.moves.urllib.parse import quote
 
-#import pycherwell
-#from pycherwell.rest import ApiException
-from pycherwell import ApiClient, Configuration, ServiceApi, ApiException
+from pycherwell import ApiClient, Configuration, ServiceApi, BusinessObjectApi, ApiException
 from pycherwell.app_configuration import AppConfiguration
 import urllib3
 urllib3.disable_warnings()
@@ -49,14 +48,14 @@ class CherwellClient(object):
         self.api_configuration = None
         self.api_client = None
         self.profile='default'
-        self.config_file="~/.pycherwell.rc"
+        self.config_file=None
         self._is_configured = False
         self.auth_token = None
         self.user_agent = None
         self._authenticated = False
         return
 
-    def set_config_file(self, config_file = "~/.pycherwell.rc"):
+    def set_config_file(self, config_file):
         self.config_file = config_file
 
     def set_profile(self, profile='default'):
@@ -114,6 +113,12 @@ class CherwellClient(object):
         self._configure()
         return self.user_agent
 
+    @staticmethod
+    def _wrap_return(opts, container, data):
+        if 'without_header' in opts:
+            return data
+        return {container: data}
+
     def get_service_info(self, opts={}):
         data = {}
         api_response = None
@@ -122,20 +127,64 @@ class CherwellClient(object):
             api_instance = ServiceApi(self.api_client)
             api_response = api_instance.service_get_service_info_v1()
         except ApiException as e:
-            self.log.error('Exception when calling ServiceApi->service_get_service_info_v1: %s' % e)
+            self.log.error('Exception when calling ServiceApi->service_get_service_info_v1: %s', e)
+            return data
+        '''
         data['api_version'] = api_response.api_version
         data['csm_culture'] = api_response.csm_culture
         data['csm_version'] = api_response.csm_version
         data['system_date_time'] = str(api_response.system_date_time)
-        return {'service_info': data}
+        '''
+        data = api_response.to_dict()
+        data['system_date_time'] = str(data['system_date_time'])
+        return self._wrap_return(opts, 'service_info', data)
+
+    def get_business_object_summaries(self, opts={}):
+        data = []
+        api_response = None
+        summary_type = 'Major'
+        if 'summary_type' in opts:
+            if opts['summary_type'] not in ['All', 'Major', 'Lookup', 'Supporting', 'Groups']:
+                raise Exception('client', 'Unsupported summary type: %s' % (opts['summary_type']))
+            summary_type = opts['summary_type']
+        self._enable()
+        try:
+            api_instance = BusinessObjectApi(self.api_client)
+            api_response = api_instance.business_object_get_business_object_summaries_v1(summary_type)
+        except ApiException as e:
+            self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summaries_v1: %s', e)
+            return data
+        for entry in api_response:
+            data.append(entry.to_dict())
+        if 'save_app_section' in opts and summary_type == 'All':
+            self.config.save_app_section('summaries', data)
+        return self._wrap_return(opts, 'business_object_summaries', data)
 
     def get_incident(self, opts={}):
+        data = {}
+        api_response = None
         if 'incident_id' not in opts:
             raise Exception('client', 'incident_id not found')
-        incident_id = opts['incident_id']
+        incident_id = str(opts['incident_id'])
         self._enable()
-        data = incident_id
+        if not self.config.app['summaries']:
+            self.get_business_object_summaries({'summary_type': 'All', 'save_app_section': True})
 
+
+        
+        raise Exception('xxx', self.config.app['summaries'])
+            
+        raise Exception('xxx', 'xxx')
+
+        try:
+            api_instance = BusinessObjectApi(self.api_client)
+            api_response = api_instance.business_object_get_business_object_summary_by_id_v1(incident_id)
+        except ApiException as e:
+            self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summary_by_id_v1: %s', e)
+            return data
+        import pprint
+        pprint.pprint(api_response)
+        data = api_response
         return data
 
     def _authenticate(self):
@@ -171,5 +220,5 @@ class CherwellClient(object):
             raise Exception('client', 'access_token is not in the response from authenticator')
         self.auth_token = data
         self._authenticated = True
-        self.config.save_token(data)
+        self.config.save_app_section('token', data)
         return
