@@ -62,6 +62,8 @@ def main():
                                   choices=['All', 'Major', 'Lookup', 'Supporting', 'Groups'],
                                   default='Major',
                                   help='Summary Object Type filter')
+    main_group.add_argument('--rebase', dest='rebase', action='store_true',
+                              help='Force specific action')
     main_group.add_argument('--format', dest='output_format', choices=['json', 'csv', 'yaml'],
                             default="json", help='Output format')
     main_group.add_argument('--debug', dest='enable_debug', action='store_true',
@@ -95,6 +97,9 @@ def main():
     elif args.get_business_object_summaries:
         if args.summary_type:
             opts['summary_type'] = args.summary_type
+        if args.rebase:
+            opts['summary_type'] = 'All'
+            opts['save_app_section'] = True
         data = cli.get_business_object_summaries(opts)
     elif args.get_incidents:
         data = cli.get_incidents(opts)

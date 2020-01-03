@@ -167,7 +167,7 @@ class AppConfiguration(object):
     def get_auth_req_fields(self):
         fields = {}
         fields['grant_type'] = 'password'
-        if self.settings['auth_mode'] == 'LDAP':
+        if self.settings['auth_mode'].lower() in ['internal', 'ldap']:
             fields['client_id'] = self.settings['client_id']
             fields['username'] = self.settings['username']
             fields['password'] = self.settings['password']
@@ -252,6 +252,33 @@ class AppConfiguration(object):
                 return self.app['token']
         return self.app['token']
 
+
+    def enrich_app_section(self, section):
+        if section not in ['business_objects']:
+            return
+        ref_section = section + '_ref'
+        if ref_section not in self.app:
+            self.app[ref_section] = {}
+        mandatory_fields = ['bus_ob_id', 'name', 'major']
+        for entry in self.app[section]:
+            is_valid_entry = True
+            for f in mandatory_fields:
+                if f not in entry:
+                    is_valid_entry = False
+                    break
+            if not is_valid_entry:
+                continue
+            if entry['major'] != True:
+                continue
+            self.app[ref_section][entry['name']] = entry
+        return
+
+    def get_business_object(self, name):
+        if name in self.app['business_objects_ref']:
+            return self.app['business_objects_ref'][name]['bus_ob_id']
+        return None
+
+
     def load_app_section(self, section):
         if section not in self.app_conf_file_names:
             self.log.error('The app config %s section is unsupported', section)
@@ -265,6 +292,7 @@ class AppConfiguration(object):
                 with open(fn, 'r') as f:
                     self.app[section] = json.load(f)
                 self.log.debug('Loaded app config %s section from %s', section, fn)
+                self.enrich_app_section(section)
         return
 
     def save_app_section(self, section, data):
@@ -281,7 +309,8 @@ class AppConfiguration(object):
         if section == 'token':
             data['expires_at_timestamp'] = int(time.time()) + data['expires_in']
         with open(fn, 'w') as f:
-            json.dump(data, f)
+            formatted_data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+            f.write(formatted_data)
             f.write('\n')
         self.app[section] = data
         return

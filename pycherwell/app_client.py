@@ -102,6 +102,7 @@ class CherwellClient(object):
             header_value=self.config.get_auth_header_value(),
         )
         self.api_client.user_agent = self.config.get_user_agent()
+        self.config.load_app_section('business_objects')
         return
 
     def debug(self):
@@ -174,22 +175,20 @@ class CherwellClient(object):
         incident_id = str(opts['incident_id'])
         self._enable()
         if not self.config.app['business_objects']:
+            self.log.info('Getting Business Objects data')
             self.get_business_object_summaries({'summary_type': 'All', 'save_app_section': True})
 
-
-        
-        raise Exception('xxx', self.config.app['business_objects'])
-            
-        raise Exception('xxx', 'xxx')
+        item_oid = self.config.get_business_object('Incident')
+        if not item_oid:
+            raise Exception('internal','Failed to find business object ID for Incident')
 
         try:
             api_instance = BusinessObjectApi(self.api_client)
-            api_response = api_instance.business_object_get_business_object_summary_by_id_v1(incident_id)
+            #api_response = api_instance.business_object_get_business_object_summary_by_id_v1(incident_id)
+            api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(item_oid, incident_id)
         except ApiException as e:
             self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summary_by_id_v1: %s', e)
             return data
-        import pprint
-        pprint.pprint(api_response)
         data = api_response
         return data
 
