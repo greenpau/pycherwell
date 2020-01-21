@@ -22,20 +22,29 @@ VERSION = "1.0.1"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil"]
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+try:
+    with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
+except:
+    with open(path.join(this_directory, 'README.md')) as f:
+        long_description = f.read()
+
+REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil", "requests"]
 
 setup(
     name=NAME,
     version=VERSION,
-    description="Cherwell REST API",
+    description="Cherwell REST API Client and Library",
     author="Paul Greenberg",
     author_email="See AUTHORS.",
     url="https://github.com/greenpau/pycherwell",
     keywords=["OpenAPI", "OpenAPI-Generator", "Cherwell REST API"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
+    scripts=['cherwell-client'],
     include_package_data=True,
-    long_description="""\
-    Unofficial Python Cherwell REST API library.  # noqa: E501
-    """
+    long_description=long_description,
+    long_description_content_type='text/markdown'
 )

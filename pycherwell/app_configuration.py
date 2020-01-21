@@ -11,7 +11,10 @@ import os
 import sys
 import stat
 import logging
-import ConfigParser
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser  # ver. < 3.0
 import base64
 import re
 import pprint

@@ -1,5 +1,34 @@
 # Getting Started with Cherwell API Client
 
+## Installation
+
+If necessary, upgrade `pip`:
+
+```bash
+python3 -m pip install --upgrade pip setuptools wheel twine
+```
+
+Install with PyPI:
+
+```bash
+pip3 install pycherwell --user
+```
+
+Install from source:
+
+```bash
+git clone https://github.com/greenpau/pycherwell.git
+cd pycherwell
+python3 setup.py install --user --record installed_files.txt
+```
+
+If necessary, uninstall `pycherwell`:
+
+```bash
+pip3 uninstall pycherwell
+cat installed_files.txt | xargs sudo rm -rf
+```
+
 ## Configuration Files
 
 LDAP Configuration file: `~/.cherwell/config`:
