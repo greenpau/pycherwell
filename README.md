@@ -1,5 +1,7 @@
 # Getting Started with Cherwell API Client
 
+![Cherwell API](./logo.png?raw=true "Cherwell API")
+
 ## Installation
 
 If necessary, upgrade `pip`:
