@@ -38,7 +38,7 @@ setup(
     version=VERSION,
     description="Cherwell REST API Client and Library",
     author="Paul Greenberg",
-    author_email="See AUTHORS.",
+    author_email="greenpau@outlook.com",
     url="https://github.com/greenpau/pycherwell",
     keywords=["OpenAPI", "OpenAPI-Generator", "Cherwell REST API"],
     install_requires=REQUIRES,
