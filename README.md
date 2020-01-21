@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/pycherwell.svg)](https://badge.fury.io/py/pycherwell)
+
 # Getting Started with Cherwell API Client
 
 ![Cherwell API](./logo.png?raw=true "Cherwell API")
