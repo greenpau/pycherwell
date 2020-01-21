@@ -1,4 +1,4 @@
-.PHONY: clean package release pypi-test-upload pypi-prod-upload
+.PHONY: clean package release pypi-test-upload pypi-prod-upload logo
 
 PKG_NAME="pycherwell"
 PKG_NAME_EGG := $(subst -,_,$(PKG_NAME))
@@ -31,3 +31,6 @@ pypi-test-upload:
 
 pypi-prod-upload:
 	@$(PYBIN) -m twine upload dist/*
+
+logo:
+	@convert -background black -fill white -font DejaVu-Sans-Bold -size 640x320! -gravity center -pointsize 96 label:'Cherwell\nAPI' PNG32:logo.png
