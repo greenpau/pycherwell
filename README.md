@@ -23,6 +23,7 @@ Install from source:
 ```bash
 git clone https://github.com/greenpau/pycherwell.git
 cd pycherwell
+pip3 install -r requirements.txt --user
 python3 setup.py install --user --record installed_files.txt
 ```
 
