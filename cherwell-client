@@ -88,7 +88,7 @@ def main():
 
     if args.display_version:
         version = cli.get_version()
-        args.output.write(version + '\n')
+        args.output.write('%s %s\n' % (version, sys.version))
         return
 
     data = None
