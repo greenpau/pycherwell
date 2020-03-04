@@ -168,7 +168,19 @@ class CherwellClient(object):
         return self._wrap_return(opts, 'business_object_summaries', data)
 
     def get_incident(self, opts={}):
-        data = {}
+        """lookup an incident by human visible id (publicid).
+
+        Note: only a single dict is returned.
+
+        Args:
+            opts: List of options to perform lookup.
+
+        Returns:
+            returns a single dict containing the incident information.
+
+        """
+
+        obj_list = None
         api_response = None
         if 'incident_id' not in opts:
             raise Exception('client', 'incident_id not found')
@@ -184,13 +196,17 @@ class CherwellClient(object):
 
         try:
             api_instance = BusinessObjectApi(self.api_client)
-            #api_response = api_instance.business_object_get_business_object_summary_by_id_v1(incident_id)
             api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(item_oid, incident_id)
         except ApiException as e:
             self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summary_by_id_v1: %s', e)
-            return data
-        data = api_response
-        return data
+            return
+        obj_list = api_response
+
+        if len(obj_list) == 0:
+            self.log.debug("Cannot find any Business Object with incident_id: {0}".format(incident_id))
+            return {}
+        obj = obj_list[0]
+        return obj.to_dict()
 
     def _authenticate(self):
         ''' Get cached authentication parameters '''
