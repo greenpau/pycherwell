@@ -14,6 +14,7 @@ import re
 import json
 import yaml
 import logging
+import textwrap
 from pprint import pprint
 
 # python 2 and python 3 compatibility library
@@ -216,8 +217,9 @@ class CherwellClient(object):
                 self.log.warn("Incident ID %s has no data: %s", incident_id, obj)
                 return
             if opts['output_format'] == 'text':
-                rows.append(['Field', 'Value'])
-                rows.extend(self._serialize_kv(obj['fields'], ('display_name', 'value')))
+                incident_type = self._get_field_value(obj['fields'], ('display_name', 'value', 'Incident Type'))
+                rows.append(['', '%s # %s' % (incident_type, incident_id)])
+                rows.extend(self._serialize_kv(obj['fields'], ('display_name', 'value'), opts))
             elif opts['output_format'] == 'csv':
                 rows.append(self._get_csv_headers(obj['fields'], 'display_name'))
                 rows.append(self._get_csv_columns(obj['fields'], obj['fields']))
@@ -226,6 +228,14 @@ class CherwellClient(object):
             return rows
         return obj
 
+
+    def _get_field_value(self, entry, pair):
+        for f in entry:
+            if pair[0] not in f or pair[1] not in f:
+                continue
+            if f[pair[0]] == pair[2]:
+                return f[pair[1]]
+        return ""
 
     def _get_csv_columns(self, header, entry):
         """Returns list of column headers.
@@ -282,24 +292,35 @@ class CherwellClient(object):
         return headers
 
 
-    def _serialize_kv(self, entry, pair):
+    def _serialize_kv(self, entry, pair, opts={}):
         """Converts a list of objects (dict) to list of two-element lists.
 
         Args:
             entry: List of objects (dictionaries).
             pair: The names of key and values.
+            opts: Upstream parameters and options.
 
         Returns:
             returns a single dict containing the incident information.
 
         """
+        width = None
+
+        if 'terminal_columns' in opts and opts['terminal_columns'] > 0:
+            if 'output_format' in opts and opts['output_format'] == 'text':
+                width = {}
+                width[0] = 30
+                width[1] = opts['terminal_columns'] - width[0] - 10
 
         rows = []
         for f in entry:
             row = []
             for i in [0, 1]:
                 if pair[i] in f:
-                    row.append(str(f[pair[i]]))
+                    v = str(f[pair[i]])
+                    if width:
+                        v = "\n".join(textwrap.wrap(v, width=width[i]))
+                    row.append(v)
                     continue
                 row.append('-')
             rows.append(row)

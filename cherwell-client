@@ -80,8 +80,8 @@ def main():
         opts['without_header'] = args.without_header
     try:
         tr, tc = os.popen('stty size', 'r').read().split()
-        opts['terminal_rows'] = tr
-        opts['terminal_columns'] = tc
+        opts['terminal_rows'] = int(tr)
+        opts['terminal_columns'] = int(tc)
     except:
         opts['terminal_rows'] = 0
         opts['terminal_columns'] = 0
