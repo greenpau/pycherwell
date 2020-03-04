@@ -64,7 +64,7 @@ def main():
                                   help='Summary Object Type filter')
     main_group.add_argument('--rebase', dest='rebase', action='store_true',
                               help='Force specific action')
-    main_group.add_argument('--format', dest='output_format', choices=['json', 'csv', 'yaml'],
+    main_group.add_argument('--format', dest='output_format', choices=['json', 'csv', 'yaml', 'text'],
                             default="json", help='Output format')
     main_group.add_argument('--debug', dest='enable_debug', action='store_true',
                               help='Enable debugging')
@@ -109,12 +109,21 @@ def main():
     else:
         raise Exception('parser', 'unsupported argument')
 
+    if not data:
+        return
+
     if args.output_format == 'yaml':
         yaml.dump(data, args.output, default_flow_style=False)
     elif args.output_format == 'csv':
-        args.output.write(data)
+        import csv
+        writer = csv.writer(args.output, dialect='excel-tab')
+        writer.writerows(data)
+    elif args.output_format == 'text':
+        from terminaltables import AsciiTable
+        table = AsciiTable(data)
+        args.output.write(table.table)
     else:
-        json.dump(data, args.output, sort_keys=True, indent=4, separators=(',', ': '))
+        json.dump(data, args.output, sort_keys=True, indent=4, separators=(',', ': '), default=str)
     args.output.write('\n')
     return
 

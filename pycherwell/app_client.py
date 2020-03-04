@@ -14,7 +14,7 @@ import re
 import json
 import yaml
 import logging
-import pprint
+from pprint import pprint
 
 # python 2 and python 3 compatibility library
 import six
@@ -192,21 +192,118 @@ class CherwellClient(object):
 
         item_oid = self.config.get_business_object('Incident')
         if not item_oid:
-            raise Exception('internal','Failed to find business object ID for Incident')
+            raise Exception('internal','Failed to find business object ID of Incident Type')
 
         try:
             api_instance = BusinessObjectApi(self.api_client)
             api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(item_oid, incident_id)
         except ApiException as e:
+            if 'RECORDNOTFOUND' in str(e):
+                self.log.warn("Incident ID %s not found", incident_id)
+                return
             self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summary_by_id_v1: %s', e)
             return
         obj_list = api_response
 
         if len(obj_list) == 0:
-            self.log.debug("Cannot find any Business Object with incident_id: {0}".format(incident_id))
-            return {}
-        obj = obj_list[0]
-        return obj.to_dict()
+            self.log.warn("Incident ID %s not found", incident_id)
+            return
+
+        obj = obj_list[0].to_dict()
+        if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
+            rows = []
+            if 'fields' not in obj:
+                self.log.warn("Incident ID %s has no data: %s", incident_id, obj)
+                return
+            if opts['output_format'] == 'text':
+                rows.append(['Field', 'Value'])
+                rows.extend(self._serialize_kv(obj['fields'], ('display_name', 'value')))
+            elif opts['output_format'] == 'csv':
+                rows.append(self._get_csv_headers(obj['fields'], 'display_name'))
+                rows.append(self._get_csv_columns(obj['fields'], obj['fields']))
+            else:
+                pass
+            return rows
+        return obj
+
+
+    def _get_csv_columns(self, header, entry):
+        """Returns list of column headers.
+
+        Args:
+            header: List of business objects.
+            entry: List of business objects.
+
+        Returns:
+            Returns a CSV row.
+
+        """
+
+        ref_entry = {}
+        for f in entry:
+            if 'field_id' not in f:
+                continue
+            ref_entry[f['field_id']] = f
+                
+        row = []
+        for f in header:
+            if 'field_id' not in f:
+                continue
+            if f['field_id'] not in ref_entry:
+                row.append('')
+                continue
+            if 'value' not in ref_entry[f['field_id']]:
+                row.append('')
+                continue
+            row.append(ref_entry[f['field_id']]['value'])
+        return row
+
+
+    def _get_csv_headers(self, entry, name):
+        """Returns list of column headers.
+
+        Args:
+            entry: List of objects (dictionaries).
+            name: The reference to the key containing column name.
+
+        Returns:
+            Returns list of strings.
+
+        """
+
+        headers = []
+        for f in entry:
+            if 'field_id' not in f:
+                continue
+            if 'name' not in f:
+                headers.append(f['field_id'])
+                continue
+            headers.append(f[name])
+        return headers
+
+
+    def _serialize_kv(self, entry, pair):
+        """Converts a list of objects (dict) to list of two-element lists.
+
+        Args:
+            entry: List of objects (dictionaries).
+            pair: The names of key and values.
+
+        Returns:
+            returns a single dict containing the incident information.
+
+        """
+
+        rows = []
+        for f in entry:
+            row = []
+            for i in [0, 1]:
+                if pair[i] in f:
+                    row.append(str(f[pair[i]]))
+                    continue
+                row.append('-')
+            rows.append(row)
+        return rows
 
     def _authenticate(self):
         ''' Get cached authentication parameters '''
