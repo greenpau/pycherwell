@@ -13,6 +13,8 @@ import argparse
 import yaml
 import json
 import time
+import csv
+from terminaltables import AsciiTable
 
 from pycherwell.app_client import CherwellClient
 
@@ -76,6 +78,13 @@ def main():
         opts['limit'] = args.limit
     if args.without_header:
         opts['without_header'] = args.without_header
+    try:
+        tr, tc = os.popen('stty size', 'r').read().split()
+        opts['terminal_rows'] = tr
+        opts['terminal_columns'] = tc
+    except:
+        opts['terminal_rows'] = 0
+        opts['terminal_columns'] = 0
         
     cli = CherwellClient()
     if args.enable_debug:
@@ -115,11 +124,9 @@ def main():
     if args.output_format == 'yaml':
         yaml.dump(data, args.output, default_flow_style=False)
     elif args.output_format == 'csv':
-        import csv
         writer = csv.writer(args.output, dialect='excel-tab')
         writer.writerows(data)
     elif args.output_format == 'text':
-        from terminaltables import AsciiTable
         table = AsciiTable(data)
         args.output.write(table.table)
     else:
