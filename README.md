@@ -1,4 +1,5 @@
 [![PyPI version](https://badge.fury.io/py/pycherwell.svg)](https://badge.fury.io/py/pycherwell)
+![app](https://github.com/greenpau/pycherwell/workflows/app/badge.svg?branch=master)
 
 # Cherwell API Client
 

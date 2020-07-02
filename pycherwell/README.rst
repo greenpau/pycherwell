@@ -1,4 +1,4 @@
-|PyPI version|
+|PyPI version| |app|
 
 Cherwell API Client
 ===================
@@ -153,3 +153,4 @@ Get the list of teams:
 
 .. |PyPI version| image:: https://badge.fury.io/py/pycherwell.svg
    :target: https://badge.fury.io/py/pycherwell
+.. |app| image:: https://github.com/greenpau/pycherwell/workflows/app/badge.svg?branch=master

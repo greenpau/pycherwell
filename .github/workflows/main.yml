@@ -36,4 +36,4 @@ jobs:
         pytest
     - name: Test client
       run: |
-        ./cherwell-client -v
+        ./cherwell-client -h
