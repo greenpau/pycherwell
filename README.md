@@ -2,7 +2,7 @@
 
 # Getting Started with Cherwell API Client
 
-![Cherwell API](./logo.png?raw=true "Cherwell API")
+![Cherwell API](https://raw.githubusercontent.com/greenpau/pycherwell/master/logo.png "Cherwell API")
 
 ## Installation
 

@@ -1,6 +1,12 @@
+|PyPI version|
+
 Getting Started with Cherwell API Client
 ========================================
 
+.. figure:: ./logo.png?raw=true
+   :alt: Cherwell API
+
+   Cherwell API
 Installation
 ------------
 
@@ -22,6 +28,7 @@ Install from source:
 
     git clone https://github.com/greenpau/pycherwell.git
     cd pycherwell
+    pip3 install -r requirements.txt --user
     python3 setup.py install --user --record installed_files.txt
 
 If necessary, uninstall ``pycherwell``:
@@ -123,3 +130,5 @@ The following command gives information about Cherwell Incident 1234567:
 
     cherwell-client --get-incident 1234567 --debug --format yaml
 
+.. |PyPI version| image:: https://badge.fury.io/py/pycherwell.svg
+   :target: https://badge.fury.io/py/pycherwell
