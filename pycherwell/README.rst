@@ -3,7 +3,7 @@
 Getting Started with Cherwell API Client
 ========================================
 
-.. figure:: ./logo.png?raw=true
+.. figure:: https://raw.githubusercontent.com/greenpau/pycherwell/master/logo.png
    :alt: Cherwell API
 
    Cherwell API
