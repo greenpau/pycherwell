@@ -22,6 +22,7 @@ import six
 from six.moves.urllib.parse import quote
 
 from pycherwell import ApiClient, Configuration, ServiceApi, BusinessObjectApi, ApiException, TeamsApi
+from pycherwell import SearchesApi, SearchResultsRequest, FilterInfo
 from pycherwell.app_configuration import AppConfiguration
 import urllib3
 urllib3.disable_warnings()
@@ -283,11 +284,54 @@ class CherwellClient(object):
         self.config.save_app_section('teams', api_response['teams'])
         return teams
 
+    def _get_field_by_name(self, fieldName, busObName, busObId):
+        raise Exception('parameters', 'failed locating field_id of %s for %s (%s)' % (fieldName, busObName, busObId))
+
+    def _build_filter(self, s, busObName, busObId):
+        parts = s.split(':')
+        if len(parts) != 3:
+            raise Exception('parameters', 'invalid filter string: %s' % (s))
+        field_id = self._get_field_by_name(parts[0], busObName, busObId)
+        kwargs = {
+            'field_id': field_id,
+            'operator': parts[1],
+            'value': parts[2],
+        }
+        return FilterInfo(**kwargs)
+
     def get_incidents(self, opts={}):
         incidents = []
         api_response = None
         self._enable()
         self._ensure_required_sections(['business_objects', 'teams'], opts)
+
+        busObName = 'Incident'
+        busObId = self.config.get_business_object(busObName)
+        if not busObId:
+            raise Exception('internal','Failed to find business object ID of Incident Type')
+
+        kwargs = {'bus_ob_id': busObId}
+
+        if 'search_conditions' in opts:
+            busObFilters = []
+            for search_condition in opts['search_conditions']:
+                busObFilter = self._build_filter(search_condition, busObName, busObId)
+                if busObFilter:
+                    busObFilters.append(busObFilter)
+            if busObFilters:
+                kwargs['filters'] = busObFilters
+
+        try:
+            search_request = SearchResultsRequest(**kwargs)
+            api_instance = SearchesApi(self.api_client)
+            api_response = api_instance.searches_get_search_results_ad_hoc_v1(search_request)
+        except ApiException as e:
+            self.log.error('Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: %s', e)
+            return teams
+        api_response = api_response.to_dict()
+        pprint(api_response)
+
+
         self.log.error('unsupported operations')
         return incidents
 

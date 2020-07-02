@@ -58,6 +58,10 @@ def main():
     filter_arg_group = parser.add_argument_group('Miscellaneous')
     filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
                                   action='append', help='Object filters, e.g. field:regex')
+
+    filter_arg_group.add_argument('--search-condition', dest='search_conditions', metavar='FIELD_NAME:OPERATOR:VALUE',
+                                  action='append', help='Search conditions')
+
     filter_arg_group.add_argument('--limit', dest='limit', metavar='NUMBER', type=int,
                                   default=None, help='limit the number of output items')
     filter_arg_group.add_argument('--without-header', dest='without_header',
@@ -87,6 +91,8 @@ def main():
     except:
         opts['terminal_rows'] = 0
         opts['terminal_columns'] = 0
+    if args.search_conditions:
+        opts['search_conditions'] = args.search_conditions
         
     cli = CherwellClient()
     if args.enable_debug:
