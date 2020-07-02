@@ -51,6 +51,8 @@ def main():
     action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get incidents')
     action_group.add_argument('--get-incident', dest='get_incident_by_id', metavar='ID', type=int,
                               help='get incident by id')
+    action_group.add_argument('--get-teams', dest='get_teams',
+        action='store_true', help='get teams')
     action_group.add_argument('--version', dest='display_version', action='store_true',
                               help='Display version')
     filter_arg_group = parser.add_argument_group('Miscellaneous')
@@ -115,6 +117,8 @@ def main():
     elif args.get_incident_by_id:
         opts['incident_id'] = args.get_incident_by_id
         data = cli.get_incident(opts)
+    elif args.get_teams:
+        data = cli.get_teams(opts)
     else:
         raise Exception('parser', 'unsupported argument')
 

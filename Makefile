@@ -1,4 +1,4 @@
-.PHONY: clean package release pypi-test-upload pypi-prod-upload logo
+.PHONY: clean package release pypi-test-upload pypi-prod-upload logo docs
 
 PKG_NAME="pycherwell"
 PKG_NAME_EGG := $(subst -,_,$(PKG_NAME))
@@ -12,8 +12,10 @@ clean:
 	@find . -name \*.pyc -delete
 	@rm -rf dist/ ${PKG_NAME_EGG}.egg-info *.egg build/
 
-package: clean
+docs:
 	@pandoc --from=markdown --to=rst --output=${PKG_NAME}/README.rst README.md
+
+package: clean docs
 	@cp LICENSE.txt ${PKG_NAME}/LICENSE.txt
 	@$(PYBIN) setup.py sdist bdist_wheel
 	@rm -rf ${PKG_NAME_EGG}.egg-info *.egg build/

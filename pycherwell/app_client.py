@@ -21,7 +21,7 @@ from pprint import pprint
 import six
 from six.moves.urllib.parse import quote
 
-from pycherwell import ApiClient, Configuration, ServiceApi, BusinessObjectApi, ApiException
+from pycherwell import ApiClient, Configuration, ServiceApi, BusinessObjectApi, ApiException, TeamsApi
 from pycherwell.app_configuration import AppConfiguration
 import urllib3
 urllib3.disable_warnings()
@@ -89,7 +89,7 @@ class CherwellClient(object):
         self.user_agent = self.config.get_user_agent()
         return
 
-    def _enable(self):
+    def _enable(self, opts={}):
         if not self._is_configured:
             self._configure()
             self._is_configured = True
@@ -103,7 +103,12 @@ class CherwellClient(object):
             header_value=self.config.get_auth_header_value(),
         )
         self.api_client.user_agent = self.config.get_user_agent()
-        self.config.load_app_section('business_objects')
+        app_sections = [
+            'business_objects',
+            'teams',
+        ]
+        for app_section in app_sections:
+            self.config.load_app_section(app_section)
         return
 
     def debug(self):
@@ -228,6 +233,37 @@ class CherwellClient(object):
             return rows
         return obj
 
+    def get_teams(self, opts={}):
+        teams = []
+        api_response = None
+        self._enable()
+        try:
+            api_instance = TeamsApi(self.api_client)
+            api_response = api_instance.teams_get_teams_v2()
+        except ApiException as e:
+            self.log.error('Exception when calling TeamsApi->teams_get_teams_v2: %s', e)
+            return teams
+        api_response = api_response.to_dict()
+        if 'teams' not in api_response:
+            self.log.error('The response from TeamsApi->teams_get_teams_v2() did not contain teams key')
+            return teams
+        if len(api_response['teams']) == 0:
+            self.log.error('The response from TeamsApi->teams_get_teams_v2() had no teams')
+            return teams
+
+        if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
+            teams.append(['Team Name', 'UUID'])
+
+        for team in api_response['teams']:
+            if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
+                try:
+                    teams.append([team['team_name'], team['team_id']])
+                except:
+                    pass
+            else:
+                teams.append(team)
+        self.config.save_app_section('teams', api_response['teams'])
+        return teams
 
     def _get_field_value(self, entry, pair):
         for f in entry:

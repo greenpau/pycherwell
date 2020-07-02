@@ -1,10 +1,12 @@
 [![PyPI version](https://badge.fury.io/py/pycherwell.svg)](https://badge.fury.io/py/pycherwell)
 
-# Getting Started with Cherwell API Client
+# Cherwell API Client
 
 ![Cherwell API](https://raw.githubusercontent.com/greenpau/pycherwell/master/logo.png "Cherwell API")
 
-## Installation
+## Getting Started
+
+### Installation
 
 If necessary, upgrade `pip`:
 
@@ -34,7 +36,7 @@ pip3 uninstall pycherwell
 cat installed_files.txt | xargs sudo rm -rf
 ```
 
-## Configuration Files
+### Configuration
 
 LDAP Configuration file: `~/.cherwell/config`:
 
@@ -62,7 +64,7 @@ port = "443"
 protocol = "https"
 ```
 
-## Basic Usage
+### Testing
 
 The following command checks whether the services is available:
 
@@ -82,6 +84,10 @@ The expected output is:
     }
 }
 ```
+
+## Usage Instructions
+
+### Business Objects
 
 The following commands fetches business object summaries. It is a reference to
 the IDs for business objects themselves, their fields, states, etc.
@@ -116,9 +122,18 @@ unless the invocation includes `--rebase` argument.
 cherwell-client --get-business-object-summaries --rebase
 ```
 
+### Incidents
 
 The following command gives information about Cherwell Incident 1234567:
 
 ```bash
 cherwell-client --get-incident 1234567 --debug --format yaml
+```
+
+### Teams
+
+Get the list of teams:
+
+```bash
+cherwell-client --get-teams --format text
 ```

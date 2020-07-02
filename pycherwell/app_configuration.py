@@ -75,6 +75,7 @@ class AppConfiguration(object):
         self.app_conf_file_names = {
             'token': os.path.join(self.app_conf_dir, 'token.json'),
             'business_objects': os.path.join(self.app_conf_dir, 'business_objects.json'),
+            'teams': os.path.join(self.app_conf_dir, 'teams'),
         }
         self.app = {}
         for k in self.app_conf_file_names:
@@ -285,10 +286,10 @@ class AppConfiguration(object):
     def load_app_section(self, section):
         if section not in self.app_conf_file_names:
             self.log.error('The app config %s section is unsupported', section)
-            return
+            return False
         if section in self.app:
             if self.app[section] is not None:
-                return
+                return True
         fn = self.app_conf_file_names[section]
         if os.path.exists(fn):
             if os.stat(fn).st_size > 100:
@@ -296,7 +297,7 @@ class AppConfiguration(object):
                     self.app[section] = json.load(f)
                 self.log.debug('Loaded app config %s section from %s', section, fn)
                 self.enrich_app_section(section)
-        return
+        return True
 
     def save_app_section(self, section, data):
         if section not in self.app_conf_file_names:
