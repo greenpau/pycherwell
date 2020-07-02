@@ -108,8 +108,28 @@ class CherwellClient(object):
             'teams',
         ]
         for app_section in app_sections:
-            self.config.load_app_section(app_section)
+            loaded = self.config.load_app_section(app_section)
+            self.log.debug('the %s section data was not loaded from cache', app_section)
         return
+
+    def _ensure_required_sections(self, app_sections=[], opts={}):
+        for app_section in app_sections:
+            self.log.debug('ensuring required section exists: %s', app_section)
+            if self.config.app[app_section]:
+                continue
+            if app_section == "business_objects":
+                self.get_business_object_summaries({
+                    'save_app_section': True,
+                    'summary_type': 'All'
+                })
+            elif app_section == "teams":
+                self.get_teams()
+            else:
+                raise Exception('client', '_ensure_required_sections does not support %s section' % (app_section))
+
+            loaded = self.config.load_app_section(app_section)
+            if not loaded:
+                raise Exception('client', '_ensure_required_sections() failed to load %s section' % (app_section))
 
     def debug(self):
         if self.debug_enabled:
@@ -192,9 +212,7 @@ class CherwellClient(object):
             raise Exception('client', 'incident_id not found')
         incident_id = str(opts['incident_id'])
         self._enable()
-        if not self.config.app['business_objects']:
-            self.log.info('Getting Business Objects data')
-            self.get_business_object_summaries({'summary_type': 'All', 'save_app_section': True})
+        self._ensure_required_sections(['business_objects'])
 
         item_oid = self.config.get_business_object('Incident')
         if not item_oid:
@@ -264,6 +282,14 @@ class CherwellClient(object):
                 teams.append(team)
         self.config.save_app_section('teams', api_response['teams'])
         return teams
+
+    def get_incidents(self, opts={}):
+        incidents = []
+        api_response = None
+        self._enable()
+        self._ensure_required_sections(['business_objects', 'teams'], opts)
+        self.log.error('unsupported operations')
+        return incidents
 
     def _get_field_value(self, entry, pair):
         for f in entry:
