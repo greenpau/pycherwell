@@ -379,7 +379,7 @@ class CherwellClient(object):
             api_response = api_instance.searches_get_search_results_ad_hoc_v1(search_request)
         except ApiException as e:
             self.log.error('Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: %s', e)
-            return teams
+            return incidents
         api_response = api_response.to_dict()
         incidents = api_response['business_objects']
         if 'output_format' not in opts:
