@@ -113,9 +113,9 @@ class CherwellClient(object):
             self.log.debug('the %s section data was not loaded from cache', app_section)
         return
 
-    def _ensure_required_sections(self, app_sections=[], opts={}):
+    def _ensure_required_business_objects(self, app_sections=[], opts={}):
         for app_section in app_sections:
-            self.log.debug('ensuring required section exists: %s', app_section)
+            self.log.debug('ensuring required section exists in cache: %s', app_section)
             if self.config.app[app_section]:
                 continue
             if app_section == "business_objects":
@@ -126,11 +126,23 @@ class CherwellClient(object):
             elif app_section == "teams":
                 self.get_teams()
             else:
-                raise Exception('client', '_ensure_required_sections does not support %s section' % (app_section))
+                raise Exception('client', '_ensure_required_business_objects does not support %s section' % (app_section))
 
             loaded = self.config.load_app_section(app_section)
             if not loaded:
-                raise Exception('client', '_ensure_required_sections() failed to load %s section' % (app_section))
+                raise Exception('client', '_ensure_required_business_objects() failed to load %s section' % (app_section))
+
+    def _ensure_required_business_object_fields(self, business_objects=[], opts={}):
+        for business_object_name in business_objects:
+            self.log.debug('ensuring business object fields exist in cache: %s', business_object_name)
+            business_object_id = self.config.get_business_object_id(business_object_name)
+            if not business_object_id:
+                raise Exception('client', 'failed finding ID for BO %s' % (business_object_name))
+
+            business_object_fields = self.get_business_object_fields({'business_object_id': business_object_id})
+            if not business_object_fields:
+                raise Exception('client', '_ensure_required_business_object_fields() failed for BO %s' % (business_object_name))
+        return
 
     def debug(self):
         if self.debug_enabled:
@@ -194,6 +206,36 @@ class CherwellClient(object):
             self.config.save_app_section('business_objects', data)
         return self._wrap_return(opts, 'business_object_summaries', data)
 
+
+    def get_business_object_fields(self, opts={}):
+        self._enable()
+        if 'business_object_id' not in opts:
+            raise Exception('client', 'get_business_object_fields() requires business_object_id')
+        business_object_id = opts['business_object_id']
+        if 'business_object_fields_ref' in self.config.app:
+            if business_object_id in self.config.app['business_object_fields_ref']:
+                return self.config.app['business_object_fields_ref'][business_object_id]
+        loaded = self.config.load_app_data('business_object_fields_ref', business_object_id)
+        if loaded:
+            return self.config.app['business_object_fields_ref'][business_object_id]
+        api_response = None
+        try:
+            api_instance = BusinessObjectApi(self.api_client)
+            api_response = api_instance.business_object_get_business_object_schema_v1(business_object_id)
+        except ApiException as e:
+            self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summaries_v1: %s', e)
+            return False
+        api_response = api_response.to_dict()
+        if 'field_definitions' not in api_response:
+            err = 'field_definitions not found in API response'
+            self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summaries_v1: %s', err)
+            return False
+
+        self.config.save_app_data('business_object_fields_ref', business_object_id, api_response['field_definitions'])
+        return self.config.app['business_object_fields_ref'][business_object_id]
+
+
+
     def get_incident(self, opts={}):
         """lookup an incident by human visible id (publicid).
 
@@ -213,15 +255,15 @@ class CherwellClient(object):
             raise Exception('client', 'incident_id not found')
         incident_id = str(opts['incident_id'])
         self._enable()
-        self._ensure_required_sections(['business_objects'])
+        self._ensure_required_business_objects(['business_objects'])
 
-        item_oid = self.config.get_business_object('Incident')
-        if not item_oid:
+        busObId = self.config.get_business_object_id('Incident')
+        if not busObId:
             raise Exception('internal','Failed to find business object ID of Incident Type')
 
         try:
             api_instance = BusinessObjectApi(self.api_client)
-            api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(item_oid, incident_id)
+            api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(busObId, incident_id)
         except ApiException as e:
             if 'RECORDNOTFOUND' in str(e):
                 self.log.warn("Incident ID %s not found", incident_id)
@@ -284,16 +326,13 @@ class CherwellClient(object):
         self.config.save_app_section('teams', api_response['teams'])
         return teams
 
-    def _get_field_by_name(self, fieldName, busObName, busObId):
-        raise Exception('parameters', 'failed locating field_id of %s for %s (%s)' % (fieldName, busObName, busObId))
-
-    def _build_filter(self, s, busObName, busObId):
+    def _build_filter(self, s, busObId):
         parts = s.split(':')
         if len(parts) != 3:
             raise Exception('parameters', 'invalid filter string: %s' % (s))
-        field_id = self._get_field_by_name(parts[0], busObName, busObId)
+        busObFieldId = self.config.get_business_object_field_id(busObId, parts[0])
         kwargs = {
-            'field_id': field_id,
+            'field_id': busObFieldId,
             'operator': parts[1],
             'value': parts[2],
         }
@@ -303,10 +342,12 @@ class CherwellClient(object):
         incidents = []
         api_response = None
         self._enable()
-        self._ensure_required_sections(['business_objects', 'teams'], opts)
+        self._ensure_required_business_objects(['business_objects', 'teams'], opts)
+        self._ensure_required_business_object_fields(['Incident'], opts)
 
+        busObFields = []
         busObName = 'Incident'
-        busObId = self.config.get_business_object(busObName)
+        busObId = self.config.get_business_object_id(busObName)
         if not busObId:
             raise Exception('internal','Failed to find business object ID of Incident Type')
 
@@ -315,11 +356,22 @@ class CherwellClient(object):
         if 'search_conditions' in opts:
             busObFilters = []
             for search_condition in opts['search_conditions']:
-                busObFilter = self._build_filter(search_condition, busObName, busObId)
+                busObFilter = self._build_filter(search_condition, busObId)
                 if busObFilter:
                     busObFilters.append(busObFilter)
             if busObFilters:
                 kwargs['filters'] = busObFilters
+
+        if 'search_fields' in opts:
+            busObFieldIds = []
+            for busObFieldName in opts['search_fields']:
+                if busObFieldName not in busObFields:
+                    busObFields.append(busObFieldName)
+                busObFieldId = self.config.get_business_object_field_id(busObId, busObFieldName)
+                if busObFieldId not in busObFieldIds:
+                    busObFieldIds.append(busObFieldId)
+            if busObFieldIds:
+                kwargs['fields'] = busObFieldIds
 
         try:
             search_request = SearchResultsRequest(**kwargs)
@@ -329,11 +381,64 @@ class CherwellClient(object):
             self.log.error('Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: %s', e)
             return teams
         api_response = api_response.to_dict()
-        pprint(api_response)
+        incidents = api_response['business_objects']
+        if 'output_format' not in opts:
+            return incidents
+        if opts['output_format'] not in ['csv', 'text']:
+            return incidents
 
+        if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
+            rows = []
+            if not busObFields:
+                for incident in incidents:
+                    if 'fields' not in incident:
+                        continue
+                    for field in incident['fields']:
+                        if 'display_name' not in field:
+                            continue
+                        if field['display_name'] in busObFields:
+                            continue
+                        v = self._clean_charset(field['display_name'])
+                        busObFields.append(v)
 
-        self.log.error('unsupported operations')
+            rows.append(busObFields)
+            for incident in incidents:
+                row = []
+                if 'fields' not in incident:
+                    continue
+                incident_field_ref = {}
+                incident_fields = incident['fields']
+                for incident_field in incident_fields:
+                    if 'value' not in incident_field:
+                        continue
+                    if incident_field['value'] == '':
+                        continue
+                    for k in ['display_name', 'name']:
+                        if k not in incident_field:
+                            continue
+                        if incident_field[k] not in busObFields:
+                            continue
+                        incident_field_ref[incident_field[k]] = incident_field['value']
+                for k in busObFields:
+                    if k not in incident_field_ref:
+                        row.append('---')
+                        continue
+                    v = self._clean_charset(incident_field_ref[k])
+                    row.append(v)
+                rows.append(row)
+            return rows
+
         return incidents
+
+    @staticmethod
+    def _clean_charset(s):
+        s = str(s)
+        arr = s.split('\n')
+        if len(arr) == 1:
+            return s.rstrip()
+        for i, v in enumerate(arr):
+            arr[i] = v.rstrip()
+        return '\n'.join(arr)
 
     def _get_field_value(self, entry, pair):
         for f in entry:
