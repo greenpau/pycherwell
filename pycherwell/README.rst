@@ -136,7 +136,64 @@ argument.
 Incidents
 ~~~~~~~~~
 
-The following command gives information about Cherwell Incident 1234567:
+The following command returns incidents owned by "Application
+Development" team:
+
+.. code:: bash
+
+    cherwell-client --get-incidents --debug --search-condition "Owned By Team:eq:Application Development"
+
+The following command returns CSV list containing incident ID, type and
+status of all "Pending" items for "Application Development" team:
+
+.. code:: bash
+
+    cherwell-client --get-incidents \
+      --search-condition "Status:eq:Pending" \
+      --search-condition "Owned By Team:eq:Application Development" \
+      --search-field "IncidentID" --search-field "IncidentType" \
+      --search-field "Status" --format csv
+
+The following command returns CSV list of unresolved and not closed
+items for "Application Development" team:
+
+.. code:: bash
+
+    cherwell-client --get-incidents \
+      --search-condition "Owned By Team:eq:Application Development" \
+      --search-condition "Status:eq:Pending" \
+      --search-condition "Status:eq:Assigned" \
+      --search-condition "Status:eq:In Progress" \
+      --search-condition "Status:eq:New" \
+      --search-field "IncidentID" --search-field "IncidentType" --search-field "Status" \
+      --search-field "Service" --search-field "Category"  --search-field "Subcategory" \
+      --search-field "Customer Display Name" \
+      --search-field "Owned By" \
+      --search-field "Created Date Time" \
+      --search-field "Short Description" \
+      --format csv
+
+The following command is a variation of the one above:
+
+.. code:: bash
+
+    cherwell-client --get-incidents \
+      --search-condition "Service:eq:Application Support" \
+      --search-condition "Status:eq:Pending" \
+      --search-condition "Status:eq:Assigned" \
+      --search-condition "Status:eq:In Progress" \
+      --search-condition "Status:eq:New" \
+      --search-field "IncidentID" --search-field "IncidentType" --search-field "Status" \
+      --search-field "Service" --search-field "Category"  --search-field "Subcategory" \
+      --search-field "Customer Display Name" \
+      --search-field "Owned By" \
+      --search-field "Owned By Team" \
+      --search-field "Created Date Time" \
+      --search-field "Short Description" \
+      --format csv
+
+The following command returns information about Cherwell Incident
+1234567:
 
 .. code:: bash
 
