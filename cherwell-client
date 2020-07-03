@@ -41,7 +41,7 @@ def main():
                             help='the path to configuration file')
     main_group.add_argument('--profile', dest='profile', default=None,
                             help='the name of configuration file section')
-    main_group.add_argument('-o', metavar='output', dest='output', type=argparse.FileType('w'),
+    main_group.add_argument('-o', '--output', metavar='output', dest='output', type=argparse.FileType('w'),
                             default=sys.stdout, help='Write to output file (or stdout)')
 
     action_arg_group = parser.add_argument_group('Actions')
@@ -58,6 +58,12 @@ def main():
     filter_arg_group = parser.add_argument_group('Miscellaneous')
     filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
                                   action='append', help='Object filters, e.g. field:regex')
+
+    filter_arg_group.add_argument('--search-condition', dest='search_conditions', metavar='FIELD_NAME:OPERATOR:VALUE',
+                                  action='append', help='Search conditions')
+    filter_arg_group.add_argument('--search-field', dest='search_fields', metavar='FIELD_NAME',
+                                  action='append', help='Search fields')
+
     filter_arg_group.add_argument('--limit', dest='limit', metavar='NUMBER', type=int,
                                   default=None, help='limit the number of output items')
     filter_arg_group.add_argument('--without-header', dest='without_header',
@@ -87,7 +93,11 @@ def main():
     except:
         opts['terminal_rows'] = 0
         opts['terminal_columns'] = 0
-        
+    if args.search_conditions:
+        opts['search_conditions'] = args.search_conditions
+    if args.search_fields:
+        opts['search_fields'] = args.search_fields
+
     cli = CherwellClient()
     if args.enable_debug:
         cli.debug()
@@ -128,7 +138,7 @@ def main():
     if args.output_format == 'yaml':
         yaml.dump(data, args.output, default_flow_style=False)
     elif args.output_format == 'csv':
-        writer = csv.writer(args.output, dialect='excel-tab')
+        writer = csv.writer(args.output, dialect='excel')
         writer.writerows(data)
     elif args.output_format == 'text':
         table = AsciiTable(data)

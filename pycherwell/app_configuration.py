@@ -17,7 +17,7 @@ except ImportError:
     from ConfigParser import RawConfigParser  # ver. < 3.0
 import base64
 import re
-import pprint
+from pprint import pprint
 import time
 import json
 
@@ -277,11 +277,62 @@ class AppConfiguration(object):
             self.app[ref_section][entry['name']] = entry
         return
 
-    def get_business_object(self, name):
+    def get_business_object_id(self, name):
         if name in self.app['business_objects_ref']:
             return self.app['business_objects_ref'][name]['bus_ob_id']
         return None
 
+    def get_business_object_field_id(self, busObId, busObFieldName):
+        if 'business_object_fields_ref' not in self.app:
+            raise Exception('client', 'business_object_fields_ref not found')
+        if busObId not in self.app['business_object_fields_ref']:
+            raise Exception('client', 'BO %s not found in business_object_fields_ref' % (busObId))
+        for entry in self.app['business_object_fields_ref'][busObId]:
+            if 'field_id' not in entry or 'display_name' not in entry:
+                continue
+            for k in entry:
+                if k not in ['display_name', 'name']:
+                    continue
+                if entry[k] == busObFieldName:
+                    return entry['field_id']
+        raise Exception('client', 'field %s not found in BO %s fields in business_object_fields_ref' % (busObFieldName, busObId))
+
+    def load_app_data(self, partition, key):
+        fn = '%s_%s.json' % (partition, key)
+        fp = os.path.join(self.app_conf_dir, fn)
+        self.log.debug('loading app data for %s/%s from %s', partition, key, fp)
+        if not os.path.exists(fp):
+            return False
+        if os.stat(fp).st_size < 100:
+            return False
+        data = None
+        with open(fp, 'r') as fh:
+            data = json.load(fh)
+        if not data:
+            self.log.error('failed loading app data for %s/%s from %s', partition, key, fp)
+            return False
+        self.log.debug('loaded app data for %s/%s from %s', partition, key, fp)
+        if partition not in self.app:
+            self.app[partition] = {}
+        self.app[partition][key] = data
+        return True
+
+    def save_app_data(self, partition, key, data):
+        fn = '%s_%s.json' % (partition, key)
+        fp = os.path.join(self.app_conf_dir, fn)
+        self.log.debug('saving app data for %s/%s in %s', partition, key, fp)
+        try:
+            if not os.path.exists(self.app_conf_dir):
+                os.makedirs(self.app_conf_dir)
+        except:
+            pass
+        with open(fp, 'w') as f:
+            formatted_data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+            f.write(formatted_data)
+            f.write('\n')
+        if partition not in self.app:
+            self.app[partition] = {}
+        self.app[partition][key] = data
 
     def load_app_section(self, section):
         if section not in self.app_conf_file_names:
