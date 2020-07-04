@@ -69,6 +69,8 @@ def main():
     create_arg_group =  parser.add_argument_group('item creation arguments')
     create_arg_group.add_argument('--create-field', dest='create_fields', metavar='FIELD_NAME:VALUE',
                                   action='append', help='Field name and value for newly created items')
+    create_arg_group.add_argument('--create-as', dest='create_as', metavar='NAME',
+                                  help='The name of the item requester')
 
     filter_arg_group = parser.add_argument_group('miscellaneous')
     filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
@@ -110,6 +112,8 @@ def main():
         opts['search_fields'] = args.search_fields
     if args.create_fields:
         opts['create_fields'] = args.create_fields
+    if args.create_as:
+        opts['create_as'] = args.create_as
 
     cli = CherwellClient()
     if args.enable_debug:
