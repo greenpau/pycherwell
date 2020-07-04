@@ -13,6 +13,7 @@ import stat
 import re
 import json
 import yaml
+import copy
 import logging
 import textwrap
 from pprint import pprint
@@ -22,7 +23,7 @@ import six
 from six.moves.urllib.parse import quote
 
 from pycherwell import ApiClient, Configuration, ApiException
-from pycherwell import BusinessObjectApi, TemplateRequest
+from pycherwell import BusinessObjectApi, TemplateRequest, SaveRequest, FieldTemplateItem
 from pycherwell import SearchesApi, SearchResultsRequest, FilterInfo
 from pycherwell import TeamsApi
 from pycherwell import ServiceApi
@@ -408,24 +409,136 @@ class CherwellClient(object):
         }
         return FilterInfo(**kwargs)
 
-
     def create_incident(self, opts={}):
+        if 'create_as' not in opts:
+            return {'error': 'no create-as found when creating the incident'}
+        if 'create_fields' not in opts:
+            return {'error': 'no create-fields found when creating the incident'}
+
         api_response = None
         self._enable()
         self._ensure_required_business_objects(['business_objects', 'teams'], opts)
         self._ensure_required_business_object_fields(['Incident', 'Customer'], opts)
         self._ensure_required_business_object_templates(['Incident'], opts)
 
-        incidentBusObName = 'Incident'
-        incidentBusObId = self.config.get_business_object_id(incidentBusObName)
+        incidentBusObId = self.config.get_business_object_id('Incident')
         if not incidentBusObId:
-            raise Exception('internal','Failed to find %s business object ID' % (incidentBusObName))
-        customerBusObName = 'Customer'
-        customerBusObId = self.config.get_business_object_id(customerBusObName)
+            raise Exception('internal', 'Failed to find Incident business object ID')
+        customerBusObId = self.config.get_business_object_id('Customer')
         if not customerBusObId:
-            raise Exception('internal','Failed to find %s business object ID' % (customerBusObName))
+            raise Exception('internal', 'Failed to find %s business object ID' % ('Customer'))
+        incidentTemplate = self.get_business_object_template({'business_object_id': incidentBusObId})
+        if not incidentTemplate:
+            raise Exception('internal', 'Failed to find business object template for %s (%s)' % ('Incident', incidentBusObId))
 
-        return []
+        kwargs = {
+            'bus_ob_id': incidentBusObId,
+            'template': incidentTemplate,
+            'fields': opts['create_fields'],
+        }
+        result = self.create_business_object(**kwargs)
+
+        return result
+
+    def create_business_object(self, bus_ob_id=None, template=[], fields=[], opts={}):
+        response = {}
+        api_response = None
+        if not bus_ob_id:
+            raise Exception('internal', 'business object is None')
+        if len(template) == 0:
+            raise Exception('internal', 'business object template is empty')
+
+        # Build input fields reference.
+        input_fields = {}
+        for entry in fields:
+            parts = entry.split(':')
+            if len(parts) != 2:
+                if 'errors' not in response:
+                    response['errors'] = []
+                response['errors'].append('input field entry is invalid: %s' % (entry))
+                continue
+            if parts[0] in input_fields:
+                if 'errors' not in response:
+                    response['errors'] = []
+                response['errors'].append('input field entry is duplicate: %s' % (entry))
+                continue
+            input_fields[parts[0]] = {'value': parts[1]}
+        if 'Description' not in input_fields and 'ShortDescription' in input_fields:
+            input_fields['Description'] = input_fields['ShortDescription']
+        if 'ShortDescription' not in input_fields and 'Description' in input_fields:
+            input_fields['ShortDescription'] = str(input_fields['Description']).split('\n')[0]
+
+        if 'errors' in response:
+            return response
+
+        # Build template fields reference.
+        template_fields = {}
+        for entry in template:
+            if 'field_id' not in entry:
+                continue
+            for k in ['name', 'display_name']:
+                template_fields[entry[k]] = entry
+            if 'required' in entry and entry['required'] == True:
+                required_found = False
+                for k in ['name', 'display_name']:
+                    if entry[k] not in input_fields:
+                        continue
+                    required_found = True
+                if not required_found:
+                    if 'errors' not in response:
+                        response['errors'] = []
+                    response['errors'].append('required template field %s (%s) not found in input fields' % (entry['name'], entry['field_id']))
+
+        # Check whether input fields are valid
+        for k in input_fields:
+            if k not in template_fields:
+                if 'errors' not in response:
+                    response['errors'] = []
+                response['errors'].append('input field %s (%s) not found in template fields' % (k, input_fields[k]['value']))
+
+        #if 'errors' in response:
+        #    return response
+
+        # Build business object save request
+        request_fields = []
+        for k in input_fields:
+            #f = copy.deepcopy(template_fields[k])
+            #del f['required']
+            f = {}
+            f['value'] = input_fields[k]['value']
+            f['field_id'] = 'BO:%s,FI:%s' % (bus_ob_id, template_fields[k]['field_id'])
+            ti = FieldTemplateItem(**f)
+            request_fields.append(ti)
+
+        pprint(request_fields)
+        pprint('---------------------------')
+        #return response
+
+
+
+        # Perform request
+        try:
+            save_request = SaveRequest(bus_ob_id = bus_ob_id, fields=request_fields)
+            api_instance = BusinessObjectApi(self.api_client)
+            api_response = api_instance.business_object_save_business_object_v1(save_request)
+        except ApiException as e:
+            err_msg = None
+            if 'errors' not in response:
+                response['errors'] = []
+            try:
+                err_msg = json.loads(e.body)
+            except:
+                err_msg = 'Exception when calling BusinessObjectApi->business_object_save_business_object_v1: %s' % (e)
+            self.log.error(err_msg)
+            response['errors'].append(err_msg)
+            return response
+
+        api_response = api_response.to_dict()
+        pprint(api_response)
+
+
+        return response
+
 
     def get_incidents(self, opts={}):
         incidents = []
@@ -555,7 +668,7 @@ class CherwellClient(object):
             if 'field_id' not in f:
                 continue
             ref_entry[f['field_id']] = f
-                
+
         row = []
         for f in header:
             if 'field_id' not in f:
