@@ -706,6 +706,9 @@ class CherwellClient(object):
 
         return incidents
 
+    def add_journal_note(self, opts={}):
+        return {'status': 'success'}
+
     @staticmethod
     def _clean_charset(s):
         s = str(s)
