@@ -13,6 +13,7 @@ import stat
 import re
 import json
 import yaml
+import copy
 import logging
 import textwrap
 from pprint import pprint
@@ -21,8 +22,11 @@ from pprint import pprint
 import six
 from six.moves.urllib.parse import quote
 
-from pycherwell import ApiClient, Configuration, ServiceApi, BusinessObjectApi, ApiException, TeamsApi
+from pycherwell import ApiClient, Configuration, ApiException
+from pycherwell import BusinessObjectApi, TemplateRequest, SaveRequest, FieldTemplateItem
 from pycherwell import SearchesApi, SearchResultsRequest, FilterInfo
+from pycherwell import TeamsApi
+from pycherwell import ServiceApi
 from pycherwell.app_configuration import AppConfiguration
 import urllib3
 urllib3.disable_warnings()
@@ -144,6 +148,18 @@ class CherwellClient(object):
                 raise Exception('client', '_ensure_required_business_object_fields() failed for BO %s' % (business_object_name))
         return
 
+    def _ensure_required_business_object_templates(self, business_objects=[], opts={}):
+        for business_object_name in business_objects:
+            self.log.debug('ensuring business object templates exist in cache: %s', business_object_name)
+            business_object_id = self.config.get_business_object_id(business_object_name)
+            if not business_object_id:
+                raise Exception('client', 'failed finding ID for BO %s' % (business_object_name))
+
+            business_object_template = self.get_business_object_template({'business_object_id': business_object_id})
+            if not business_object_template:
+                raise Exception('client', '_ensure_required_business_object_templates() failed for BO %s' % (business_object_name))
+        return
+
     def debug(self):
         if self.debug_enabled:
             return
@@ -234,7 +250,62 @@ class CherwellClient(object):
         self.config.save_app_data('business_object_fields_ref', business_object_id, api_response['field_definitions'])
         return self.config.app['business_object_fields_ref'][business_object_id]
 
+    def get_business_object_template(self, opts={}):
+        self._enable()
+        if 'business_object_id' not in opts:
+            raise Exception('client', 'get_business_object_template() requires business_object_id')
+        business_object_id = opts['business_object_id']
+        if 'business_object_template_ref' in self.config.app:
+            if business_object_id in self.config.app['business_object_template_ref']:
+                return self.config.app['business_object_template_ref'][business_object_id]
+        loaded = self.config.load_app_data('business_object_template_ref', business_object_id)
+        if loaded:
+            return self.config.app['business_object_template_ref'][business_object_id]
 
+        template_fields = None
+        required_template_fields = {}
+
+        for i in [1, 2]:
+            api_response = None
+            kwargs = {
+                'bus_ob_id': business_object_id,
+                'include_all': True,
+                'include_required': True,
+            }
+            if i == 2:
+                kwargs['include_all'] = False
+            try:
+                template_request = TemplateRequest(**kwargs)
+                api_instance = BusinessObjectApi(self.api_client)
+                api_response = api_instance.business_object_get_business_object_template_v1(template_request)
+            except ApiException as e:
+                self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_template_v1: %s', e)
+                return False
+            api_response = api_response.to_dict()
+            if 'fields' not in api_response:
+                err = 'fields not found in API response'
+                self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_template_v1: %s', err)
+                return False
+
+            if i == 1:
+                template_fields = api_response['fields']
+                continue
+
+            for field in api_response['fields']:
+                if 'field_id' not in field:
+                    continue
+                required_template_fields[field['field_id']] = True
+
+        for i, field in enumerate(template_fields):
+            if 'field_id' not in field:
+                continue
+            if field['field_id'] in required_template_fields:
+                template_fields[i]['required'] = True
+            else:
+                template_fields[i]['required'] = False
+
+        self.config.save_app_data('business_object_template_ref', business_object_id, template_fields)
+        return self.config.app['business_object_template_ref'][business_object_id]
 
     def get_incident(self, opts={}):
         """lookup an incident by human visible id (publicid).
@@ -338,10 +409,215 @@ class CherwellClient(object):
         }
         return FilterInfo(**kwargs)
 
+    def create_incident(self, opts={}):
+        if 'create_as' not in opts:
+            return {'error': 'no create-as found when creating the incident'}
+        if 'create_fields' not in opts:
+            return {'error': 'no create-fields found when creating the incident'}
+
+        api_response = None
+        self._enable()
+        self._ensure_required_business_objects(['business_objects', 'teams'], opts)
+        self._ensure_required_business_object_fields(['Incident', 'Customer'], opts)
+        self._ensure_required_business_object_templates(['Incident'], opts)
+
+        incidentBusObId = self.config.get_business_object_id('Incident')
+        if not incidentBusObId:
+            raise Exception('internal', 'Failed to find Incident business object ID')
+        customerBusObId = self.config.get_business_object_id('Customer')
+        if not customerBusObId:
+            raise Exception('internal', 'Failed to find %s business object ID' % ('Customer'))
+        incidentTemplate = self.get_business_object_template({'business_object_id': incidentBusObId})
+        if not incidentTemplate:
+            raise Exception('internal', 'Failed to find business object template for %s (%s)' % ('Incident', incidentBusObId))
+
+        incidentFields = opts['create_fields']
+
+        # customerBusOb = self.get_business_object('Customer', ...
+        requestors = self.get_requestors({'search_conditions': opts['create_as']})
+        if len(requestors) == 0:
+            return {
+                'error': 'requestor not found',
+                'requestor_criteria': opts['create_as'],
+            }
+        elif len(requestors) > 1:
+            return {
+                'error': 'multiple requestors found',
+                'requestor_criteria': opts['create_as'],
+                'requestor_matches': requestors,
+            }
+        else:
+            pass
+
+        requestor = requestors[0]
+        if  'bus_ob_rec_id' not in requestor:
+            return {
+                'error': 'requestor business object has no bus_ob_rec_id',
+                'requestor': requestor,
+            }
+
+        incidentFields.append('Customer ID:%s' % (requestor['bus_ob_rec_id']))
+
+        kwargs = {
+            'bus_ob_id': incidentBusObId,
+            'template': incidentTemplate,
+            'fields': incidentFields,
+        }
+        result = self.create_business_object(**kwargs)
+
+        return result
+
+    def create_business_object(self, bus_ob_id=None, template=[], fields=[], opts={}):
+        response = {}
+        api_response = None
+        if not bus_ob_id:
+            raise Exception('internal', 'business object is None')
+        if len(template) == 0:
+            raise Exception('internal', 'business object template is empty')
+
+        # Build input fields reference.
+        input_fields = {}
+        for entry in fields:
+            parts = entry.split(':')
+            if len(parts) != 2:
+                if 'errors' not in response:
+                    response['errors'] = []
+                response['errors'].append('input field entry is invalid: %s' % (entry))
+                continue
+            if parts[0] in input_fields:
+                if 'errors' not in response:
+                    response['errors'] = []
+                response['errors'].append('input field entry is duplicate: %s' % (entry))
+                continue
+            input_fields[parts[0]] = {'value': parts[1]}
+        if 'Description' not in input_fields and 'ShortDescription' in input_fields:
+            input_fields['Description'] = input_fields['ShortDescription']
+        if 'ShortDescription' not in input_fields and 'Description' in input_fields:
+            input_fields['ShortDescription'] = str(input_fields['Description']).split('\n')[0]
+
+        if 'errors' in response:
+            return response
+
+        # Build template fields reference.
+        template_fields = {}
+        for entry in template:
+            if 'field_id' not in entry:
+                continue
+            for k in ['name', 'display_name']:
+                template_fields[entry[k]] = entry
+            if 'required' in entry and entry['required'] == True:
+                # required_found = False
+                required_found = True
+                for k in ['name', 'display_name']:
+                    if entry[k] not in input_fields:
+                        continue
+                    required_found = True
+                if not required_found:
+                    if 'errors' not in response:
+                        response['errors'] = []
+                    response['errors'].append('required template field %s (%s) not found in input fields' % (entry['name'], entry['field_id']))
+
+        # Check whether input fields are valid
+        for k in input_fields:
+            if k not in template_fields:
+                if 'errors' not in response:
+                    response['errors'] = []
+                response['errors'].append('input field %s (%s) not found in template fields' % (k, input_fields[k]['value']))
+
+        if 'errors' in response:
+            return response
+
+        # Build business object save request
+        request_fields = []
+        for k in input_fields:
+            f = copy.deepcopy(template_fields[k])
+            del f['required']
+            f['value'] = input_fields[k]['value']
+            f['field_id'] = 'BO:%s,FI:%s' % (bus_ob_id, template_fields[k]['field_id'])
+            f['dirty'] = True
+            ti = FieldTemplateItem(**f)
+            request_fields.append(ti)
+
+        # Perform request
+        try:
+            save_request = SaveRequest(bus_ob_id = bus_ob_id, fields=request_fields)
+            api_instance = BusinessObjectApi(self.api_client)
+            api_response = api_instance.business_object_save_business_object_v1(save_request)
+        except ApiException as e:
+            err_msg = None
+            if 'errors' not in response:
+                response['errors'] = []
+            try:
+                err_msg = json.loads(e.body)
+            except:
+                err_msg = 'Exception when calling BusinessObjectApi->business_object_save_business_object_v1: %s' % (e)
+            response['errors'].append(err_msg)
+            return response
+
+        api_response = api_response.to_dict()
+        for k in api_response:
+            response[k] = api_response[k]
+        return response
+
+    def get_requestors(self, opts={}):
+        response = {}
+        if 'search_conditions' not in opts:
+            raise Exception('internal', 'search conditions are required for searching requestor')
+        api_response = None
+        self._enable()
+        self._ensure_required_business_objects(['business_objects'], opts)
+        self._ensure_required_business_object_fields(['Customer'], opts)
+
+        customerBusObId = self.config.get_business_object_id('Customer')
+        if not customerBusObId:
+            raise Exception('internal', 'Failed to find Customer business object ID')
+
+        kwargs = {
+            'bus_ob_id': customerBusObId,
+        }
+
+        busObFilters = []
+        for search_condition in opts['search_conditions']:
+            busObFilter = self._build_filter(search_condition, customerBusObId)
+            if busObFilter:
+                busObFilters.append(busObFilter)
+        if not busObFilters:
+            raise Exception('internal', 'failed to build search filters for Customer business object')
+
+        kwargs = {
+            'bus_ob_id': customerBusObId,
+            'filters': busObFilters,
+        }
+
+        try:
+            search_request = SearchResultsRequest(**kwargs)
+            api_instance = SearchesApi(self.api_client)
+            api_response = api_instance.searches_get_search_results_ad_hoc_v1(search_request)
+        except ApiException as e:
+            err_msg = None
+            if 'errors' not in response:
+                response['errors'] = []
+            try:
+                err_msg = json.loads(e.body)
+            except:
+                err_msg = 'Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: %s' % (e)
+            response['errors'].append(err_msg)
+            return response
+
+        api_response = api_response.to_dict()
+        if 'business_objects' not in api_response:
+            err_msg = 'Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: business_objects not found'
+            response['errors'] = [err_msg]
+            return response
+
+        return api_response['business_objects']
+
+
     def get_incidents(self, opts={}):
         incidents = []
         api_response = None
         self._enable()
+
         self._ensure_required_business_objects(['business_objects', 'teams'], opts)
         self._ensure_required_business_object_fields(['Incident'], opts)
 
@@ -349,7 +625,7 @@ class CherwellClient(object):
         busObName = 'Incident'
         busObId = self.config.get_business_object_id(busObName)
         if not busObId:
-            raise Exception('internal','Failed to find business object ID of Incident Type')
+            raise Exception('internal','Failed to find %s business object ID' % (busObName))
 
         kwargs = {'bus_ob_id': busObId}
 
@@ -465,7 +741,7 @@ class CherwellClient(object):
             if 'field_id' not in f:
                 continue
             ref_entry[f['field_id']] = f
-                
+
         row = []
         for f in header:
             if 'field_id' not in f:

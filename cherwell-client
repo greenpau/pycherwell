@@ -44,25 +44,37 @@ def main():
     main_group.add_argument('-o', '--output', metavar='output', dest='output', type=argparse.FileType('w'),
                             default=sys.stdout, help='Write to output file (or stdout)')
 
-    action_arg_group = parser.add_argument_group('Actions')
+    action_arg_group = parser.add_argument_group('actions')
     action_group = action_arg_group.add_mutually_exclusive_group(required=True)
     action_group.add_argument('--get-service-info', dest='get_service_info', action='store_true', help='get service info')
     action_group.add_argument('--get-business-object-summaries', dest='get_business_object_summaries', action='store_true', help='get business object summaries')
     action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get incidents')
     action_group.add_argument('--get-incident', dest='get_incident_by_id', metavar='ID', type=int,
                               help='get incident by id')
-    action_group.add_argument('--get-teams', dest='get_teams',
-        action='store_true', help='get teams')
+    action_group.add_argument('--get-teams', dest='get_teams', action='store_true', help='get teams')
+    action_group.add_argument('--get-requestors', dest='get_requestors', action='store_true', help='get requestor')
+
+    action_group.add_argument('--create-incident', dest='create_incident', action='store_true',
+                              help='create an incident')
+
     action_group.add_argument('--version', dest='display_version', action='store_true',
                               help='Display version')
-    filter_arg_group = parser.add_argument_group('Miscellaneous')
+
+    search_arg_group =  parser.add_argument_group('search arguments')
+    search_arg_group.add_argument('--search-condition', dest='search_conditions', metavar='FIELD_NAME:OPERATOR:VALUE',
+                                  action='append', help='Search conditions')
+    search_arg_group.add_argument('--search-field', dest='search_fields', metavar='FIELD_NAME',
+                                  action='append', help='Search fields')
+
+    create_arg_group =  parser.add_argument_group('item creation arguments')
+    create_arg_group.add_argument('--create-field', dest='create_fields', metavar='FIELD_NAME:VALUE',
+                                  action='append', help='Field name and value for newly created items')
+    create_arg_group.add_argument('--create-as', dest='create_as', metavar='FIELD_NAME:OPERATOR:VALUE',
+                                  action='append', help='Requestor conditions')
+
+    filter_arg_group = parser.add_argument_group('miscellaneous')
     filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
                                   action='append', help='Object filters, e.g. field:regex')
-
-    filter_arg_group.add_argument('--search-condition', dest='search_conditions', metavar='FIELD_NAME:OPERATOR:VALUE',
-                                  action='append', help='Search conditions')
-    filter_arg_group.add_argument('--search-field', dest='search_fields', metavar='FIELD_NAME',
-                                  action='append', help='Search fields')
 
     filter_arg_group.add_argument('--limit', dest='limit', metavar='NUMBER', type=int,
                                   default=None, help='limit the number of output items')
@@ -72,6 +84,7 @@ def main():
                                   choices=['All', 'Major', 'Lookup', 'Supporting', 'Groups'],
                                   default='Major',
                                   help='Summary Object Type filter')
+
     main_group.add_argument('--rebase', dest='rebase', action='store_true',
                               help='Force specific action')
     main_group.add_argument('--format', dest='output_format', choices=['json', 'csv', 'yaml', 'text'],
@@ -97,6 +110,10 @@ def main():
         opts['search_conditions'] = args.search_conditions
     if args.search_fields:
         opts['search_fields'] = args.search_fields
+    if args.create_fields:
+        opts['create_fields'] = args.create_fields
+    if args.create_as:
+        opts['create_as'] = args.create_as
 
     cli = CherwellClient()
     if args.enable_debug:
@@ -129,6 +146,10 @@ def main():
         data = cli.get_incident(opts)
     elif args.get_teams:
         data = cli.get_teams(opts)
+    elif args.create_incident:
+        data = cli.create_incident(opts)
+    elif args.get_requestors:
+        data = cli.get_requestors(opts)
     else:
         raise Exception('parser', 'unsupported argument')
 

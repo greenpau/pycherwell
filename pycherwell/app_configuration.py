@@ -272,8 +272,8 @@ class AppConfiguration(object):
                     break
             if not is_valid_entry:
                 continue
-            if entry['major'] != True:
-                continue
+            #if entry['major'] != True:
+            #    continue
             self.app[ref_section][entry['name']] = entry
         return
 
