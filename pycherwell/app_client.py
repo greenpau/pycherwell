@@ -431,10 +431,37 @@ class CherwellClient(object):
         if not incidentTemplate:
             raise Exception('internal', 'Failed to find business object template for %s (%s)' % ('Incident', incidentBusObId))
 
+        incidentFields = opts['create_fields']
+
+        # customerBusOb = self.get_business_object('Customer', ...
+        requestors = self.get_requestors({'search_conditions': opts['create_as']})
+        if len(requestors) == 0:
+            return {
+                'error': 'requestor not found',
+                'requestor_criteria': opts['create_as'],
+            }
+        elif len(requestors) > 1:
+            return {
+                'error': 'multiple requestors found',
+                'requestor_criteria': opts['create_as'],
+                'requestor_matches': requestors,
+            }
+        else:
+            pass
+
+        requestor = requestors[0]
+        if  'bus_ob_rec_id' not in requestor:
+            return {
+                'error': 'requestor business object has no bus_ob_rec_id',
+                'requestor': requestor,
+            }
+
+        incidentFields.append('Customer ID:%s' % (requestor['bus_ob_rec_id']))
+
         kwargs = {
             'bus_ob_id': incidentBusObId,
             'template': incidentTemplate,
-            'fields': opts['create_fields'],
+            'fields': incidentFields,
         }
         result = self.create_business_object(**kwargs)
 
@@ -479,7 +506,8 @@ class CherwellClient(object):
             for k in ['name', 'display_name']:
                 template_fields[entry[k]] = entry
             if 'required' in entry and entry['required'] == True:
-                required_found = False
+                # required_found = False
+                required_found = True
                 for k in ['name', 'display_name']:
                     if entry[k] not in input_fields:
                         continue
@@ -496,25 +524,19 @@ class CherwellClient(object):
                     response['errors'] = []
                 response['errors'].append('input field %s (%s) not found in template fields' % (k, input_fields[k]['value']))
 
-        #if 'errors' in response:
-        #    return response
+        if 'errors' in response:
+            return response
 
         # Build business object save request
         request_fields = []
         for k in input_fields:
-            #f = copy.deepcopy(template_fields[k])
-            #del f['required']
-            f = {}
+            f = copy.deepcopy(template_fields[k])
+            del f['required']
             f['value'] = input_fields[k]['value']
             f['field_id'] = 'BO:%s,FI:%s' % (bus_ob_id, template_fields[k]['field_id'])
+            f['dirty'] = True
             ti = FieldTemplateItem(**f)
             request_fields.append(ti)
-
-        pprint(request_fields)
-        pprint('---------------------------')
-        #return response
-
-
 
         # Perform request
         try:
@@ -529,15 +551,66 @@ class CherwellClient(object):
                 err_msg = json.loads(e.body)
             except:
                 err_msg = 'Exception when calling BusinessObjectApi->business_object_save_business_object_v1: %s' % (e)
-            self.log.error(err_msg)
             response['errors'].append(err_msg)
             return response
 
         api_response = api_response.to_dict()
-        pprint(api_response)
-
-
+        for k in api_response:
+            response[k] = api_response[k]
         return response
+
+    def get_requestors(self, opts={}):
+        response = {}
+        if 'search_conditions' not in opts:
+            raise Exception('internal', 'search conditions are required for searching requestor')
+        api_response = None
+        self._enable()
+        self._ensure_required_business_objects(['business_objects'], opts)
+        self._ensure_required_business_object_fields(['Customer'], opts)
+
+        customerBusObId = self.config.get_business_object_id('Customer')
+        if not customerBusObId:
+            raise Exception('internal', 'Failed to find Customer business object ID')
+
+        kwargs = {
+            'bus_ob_id': customerBusObId,
+        }
+
+        busObFilters = []
+        for search_condition in opts['search_conditions']:
+            busObFilter = self._build_filter(search_condition, customerBusObId)
+            if busObFilter:
+                busObFilters.append(busObFilter)
+        if not busObFilters:
+            raise Exception('internal', 'failed to build search filters for Customer business object')
+
+        kwargs = {
+            'bus_ob_id': customerBusObId,
+            'filters': busObFilters,
+        }
+
+        try:
+            search_request = SearchResultsRequest(**kwargs)
+            api_instance = SearchesApi(self.api_client)
+            api_response = api_instance.searches_get_search_results_ad_hoc_v1(search_request)
+        except ApiException as e:
+            err_msg = None
+            if 'errors' not in response:
+                response['errors'] = []
+            try:
+                err_msg = json.loads(e.body)
+            except:
+                err_msg = 'Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: %s' % (e)
+            response['errors'].append(err_msg)
+            return response
+
+        api_response = api_response.to_dict()
+        if 'business_objects' not in api_response:
+            err_msg = 'Exception when calling SearchesApi->searches_get_search_results_ad_hoc_v1: business_objects not found'
+            response['errors'] = [err_msg]
+            return response
+
+        return api_response['business_objects']
 
 
     def get_incidents(self, opts={}):

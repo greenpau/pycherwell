@@ -125,6 +125,9 @@ cherwell-client --get-business-object-summaries --rebase
 
 ### Incidents
 
+
+#### Search
+
 The following command returns incidents owned by "Application Development" team:
 
 ```bash
@@ -186,10 +189,64 @@ The following command returns information about Cherwell Incident 1234567:
 cherwell-client --get-incident 1234567 --debug --format yaml
 ```
 
+#### Creation
+
+Create an incident:
+
+```bash
+cherwell-client --create-incident \
+  --create-field "ShortDescription:Review Pull Request #9 in App Repo" \
+  --create-field "Priority:3" \
+  --create-field "IncidentType:Incident" \
+  --create-field "Service:Application Development" \
+  --create-field "Category:Code Review" \
+  --create-field "Subcategory:Other" \
+  --create-as "FullName:eq:Smith, John" \
+  --debug
+```
+
+Create a service request:
+
+```bash
+cherwell-client --create-incident \
+  --create-field "ShortDescription:Release app v1.0.0" \
+  --create-field "Priority:3" \
+  --create-field "IncidentType:Service Request" \
+  --create-field "Service:Application Development" \
+  --create-field "Category:Release Management" \
+  --create-field "Subcategory:Release" \
+  --create-as "FullName:eq:Smith, John" \
+  --debug
+```
+
+The expected output is:
+
+```json
+{
+    "bus_ob_public_id": "293126",
+    "bus_ob_rec_id": "362965e244b242c5a3ba5a2b320baaa54632acf12b",
+    "cache_key": null,
+    "error_code": null,
+    "error_message": null,
+    "field_validation_errors": [],
+    "has_error": false,
+    "notification_triggers": []
+}
+```
+
 ### Teams
 
 Get the list of teams:
 
 ```bash
 cherwell-client --get-teams --format text
+```
+
+### People
+
+Get user information:
+
+```bash
+cherwell-client --get-requestors --search-condition "FullName:eq:Smith, John"
+cherwell-client --get-requestors --search-condition "FirstName:eq:John" --search-condition "LastName:eq:Smith"
 ```

@@ -51,8 +51,8 @@ def main():
     action_group.add_argument('--get-incidents', dest='get_incidents', action='store_true', help='get incidents')
     action_group.add_argument('--get-incident', dest='get_incident_by_id', metavar='ID', type=int,
                               help='get incident by id')
-    action_group.add_argument('--get-teams', dest='get_teams',
-        action='store_true', help='get teams')
+    action_group.add_argument('--get-teams', dest='get_teams', action='store_true', help='get teams')
+    action_group.add_argument('--get-requestors', dest='get_requestors', action='store_true', help='get requestor')
 
     action_group.add_argument('--create-incident', dest='create_incident', action='store_true',
                               help='create an incident')
@@ -69,8 +69,8 @@ def main():
     create_arg_group =  parser.add_argument_group('item creation arguments')
     create_arg_group.add_argument('--create-field', dest='create_fields', metavar='FIELD_NAME:VALUE',
                                   action='append', help='Field name and value for newly created items')
-    create_arg_group.add_argument('--create-as', dest='create_as', metavar='NAME',
-                                  help='The name of the item requester')
+    create_arg_group.add_argument('--create-as', dest='create_as', metavar='FIELD_NAME:OPERATOR:VALUE',
+                                  action='append', help='Requestor conditions')
 
     filter_arg_group = parser.add_argument_group('miscellaneous')
     filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
@@ -148,6 +148,8 @@ def main():
         data = cli.get_teams(opts)
     elif args.create_incident:
         data = cli.create_incident(opts)
+    elif args.get_requestors:
+        data = cli.get_requestors(opts)
     else:
         raise Exception('parser', 'unsupported argument')
 
