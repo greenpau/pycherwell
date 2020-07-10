@@ -57,6 +57,8 @@ def main():
     action_group.add_argument('--create-incident', dest='create_incident', action='store_true',
                               help='create an incident')
 
+    action_group.add_argument('--get-journal', dest='get_journal', action='store_true',
+                              help='get journal entries for an incident')
     action_group.add_argument('--add-journal-note', dest='add_journal_note', action='store_true',
                               help='add journal note')
 
@@ -165,6 +167,8 @@ def main():
         data = cli.get_requestors(opts)
     elif args.add_journal_note:
         data = cli.add_journal_note(opts)
+    elif args.get_journal:
+        data = cli.get_journal(opts)
     else:
         raise Exception('parser', 'unsupported argument')
 

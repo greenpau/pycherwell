@@ -320,50 +320,52 @@ class CherwellClient(object):
 
         """
 
-        obj_list = None
         api_response = None
         if 'incident_id' not in opts:
             raise Exception('client', 'incident_id not found')
         incident_id = str(opts['incident_id'])
         self._enable()
         self._ensure_required_business_objects(['business_objects'])
+        self._ensure_required_business_object_fields(['Incident'], opts)
 
         busObId = self.config.get_business_object_id('Incident')
         if not busObId:
             raise Exception('internal','Failed to find business object ID of Incident Type')
+        
+        apiName = 'BusinessObjectApi'
+        apiFunc = 'business_object_get_business_object_by_public_id_v1'
 
         try:
             api_instance = BusinessObjectApi(self.api_client)
-            api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(busObId, incident_id)
+            api_response = getattr(api_instance, apiFunc)(busObId, incident_id)
+            api_response = api_response.to_dict()
         except ApiException as e:
             if 'RECORDNOTFOUND' in str(e):
                 self.log.warn("Incident ID %s not found", incident_id)
                 return
-            self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summary_by_id_v1: %s', e)
+            self.log.error('Exception when calling %s->%s: %s', apiName, apiFunc, e)
             return
-        obj_list = api_response
 
-        if len(obj_list) == 0:
+        if 'bus_ob_public_id' not in api_response:
             self.log.warn("Incident ID %s not found", incident_id)
             return
 
-        obj = obj_list[0].to_dict()
         if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
             rows = []
-            if 'fields' not in obj:
-                self.log.warn("Incident ID %s has no data: %s", incident_id, obj)
+            if 'fields' not in api_response:
+                self.log.warn("Incident ID %s has no data: %s", incident_id, api_response)
                 return
             if opts['output_format'] == 'text':
-                incident_type = self._get_field_value(obj['fields'], ('display_name', 'value', 'Incident Type'))
+                incident_type = self._get_field_value(api_response['fields'], ('display_name', 'value', 'Incident Type'))
                 rows.append(['', '%s # %s' % (incident_type, incident_id)])
-                rows.extend(self._serialize_kv(obj['fields'], ('display_name', 'value'), opts))
+                rows.extend(self._serialize_kv(api_response['fields'], ('display_name', 'value'), opts))
             elif opts['output_format'] == 'csv':
-                rows.append(self._get_csv_headers(obj['fields'], 'display_name'))
-                rows.append(self._get_csv_columns(obj['fields'], obj['fields']))
+                rows.append(self._get_csv_headers(api_response['fields'], 'display_name'))
+                rows.append(self._get_csv_columns(api_response['fields'], api_response['fields']))
             else:
                 pass
             return rows
-        return obj
+        return api_response
 
     def get_teams(self, opts={}):
         teams = []
@@ -396,6 +398,41 @@ class CherwellClient(object):
                 teams.append(team)
         self.config.save_app_section('teams', api_response['teams'])
         return teams
+
+    def get_journal(self, opts={}):
+        api_response = None
+        if 'incident_id' not in opts:
+            raise Exception('client', 'incident_id not found')
+        incident_id = str(opts['incident_id'])
+        self._enable()
+        self._ensure_required_business_objects(['business_objects'])
+        self._ensure_required_business_object_fields(['Incident'], opts)
+
+        busObId = self.config.get_business_object_id('Incident')
+        if not busObId:
+            raise Exception('internal','Failed to find business object ID of Incident Type')
+
+        self.log.debug("Get journal entries for incident %s (%s)", incident_id, busObId)
+
+        apiName = 'BusinessObjectApi'
+        #apiFunc = 'business_object_get_business_object_by_public_id_v1'
+        apiFunc = 'business_object_get_business_object_summary_by_id_v1'
+
+        try:
+            api_instance = BusinessObjectApi(self.api_client)
+            #api_response = getattr(api_instance, apiFunc)(busObId, incident_id)
+            api_response = getattr(api_instance, apiFunc)(busObId)
+            pprint(api_response)
+            api_response = api_response.to_dict()
+        except ApiException as e:
+            if 'RECORDNOTFOUND' in str(e):
+                self.log.warn("Incident ID %s not found", incident_id)
+                return
+            self.log.error('Exception when calling %s->%s: %s', apiName, apiFunc, e)
+            return
+
+        return api_response
+
 
     def _build_filter(self, s, busObId):
         parts = s.split(':')
