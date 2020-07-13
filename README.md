@@ -183,6 +183,42 @@ cherwell-client --get-incidents \
   --format csv
 ```
 
+Query closed or resolved incidents starting on a specific day, e.g. `5/22/2020`:
+
+```bash
+cherwell-client --get-incidents \
+  --search-condition "Service:eq:Application Support" \
+  --search-condition "Status:eq:Closed" \
+  --search-condition "Status:eq:Resolved" \
+  --search-condition "Stat_DateTimeResolved:gt:5/22/2020 4:33 AM" \
+  --search-field "IncidentID" --search-field "IncidentType" --search-field "Status" \
+  --search-field "Service" --search-field "Category"  --search-field "Subcategory" \
+  --search-field "Customer Display Name" \
+  --search-field "Owned By" \
+  --search-field "Owned By Team" \
+  --search-field "Created Date Time" \
+  --search-field "Short Description" \
+  --format csv
+```
+
+Query closed or resolved incidents in the last 7 days:
+
+```bash
+cherwell-client --get-incidents \
+  --search-condition "Service:eq:Application Support" \
+  --search-condition "Status:eq:Closed" \
+  --search-condition "Status:eq:Resolved" \
+  --search-condition "Stat_DateTimeResolved:gt:7 days ago" \
+  --search-field "IncidentID" --search-field "IncidentType" --search-field "Status" \
+  --search-field "Service" --search-field "Category"  --search-field "Subcategory" \
+  --search-field "Customer Display Name" \
+  --search-field "Owned By" \
+  --search-field "Owned By Team" \
+  --search-field "Created Date Time" \
+  --search-field "Short Description" \
+  --format csv
+```
+
 The following command returns information about Cherwell Incident 1234567:
 
 ```bash

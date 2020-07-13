@@ -16,6 +16,7 @@ import yaml
 import copy
 import logging
 import textwrap
+from datetime import datetime, timedelta
 from pprint import pprint
 
 # python 2 and python 3 compatibility library
@@ -433,16 +434,54 @@ class CherwellClient(object):
 
         return api_response
 
+    @staticmethod
+    def _time_travel_snapshot(unit, count, measure='seconds'):
+        if unit not in ['minute', 'hour', 'day', 'week', 'month', 'quarter', 'year']:
+            return None
+        if unit == 'minute':
+            multiplier = 60
+        elif unit == 'hour':
+            multiplier = 3600
+        elif unit == 'day':
+            multiplier = 86400
+        elif unit == 'week':
+            multiplier = 604800
+        elif unit == 'month':
+            multiplier = 2.628e+6
+        elif unit == 'quarter':
+            multiplier = 7.884e+6
+        elif unit == 'year':
+            multiplier = 3.154e+7
+        seconds = int(count) * multiplier
+        return seconds
 
     def _build_filter(self, s, busObId):
         parts = s.split(':')
-        if len(parts) != 3:
+        if len(parts) < 3:
             raise Exception('parameters', 'invalid filter string: %s' % (s))
-        busObFieldId = self.config.get_business_object_field_id(busObId, parts[0])
+        field_id = parts[0]
+        conditional = parts[1]
+        value = None
+        if len(parts) == 3:
+            value = parts[2]
+        else:
+            value = ':'.join(parts[2:])
+        if ' ago' in value:
+            value = value.lower()
+            m = re.match('(?P<count>\d+)\s+(?P<unit>minute|hour|day|week|month|quarter|year)[s]?\s+ago$', value)
+            if not m:
+                raise Exception('parameters', 'invalid filter string: %s' % (s))
+            seconds = self._time_travel_snapshot(m.group('unit'), m.group('count'))
+            if not seconds:
+                raise Exception('parameters', 'invalid filter string: %s' % (s))
+            ts = datetime.now() - timedelta(seconds=seconds)
+            value = '%d/%d/%d 00:00:00 AM' % (ts.year, ts.month, ts.day)
+
+        busObFieldId = self.config.get_business_object_field_id(busObId, field_id)
         kwargs = {
             'field_id': busObFieldId,
-            'operator': parts[1],
-            'value': parts[2],
+            'operator': conditional,
+            'value': value,
         }
         return FilterInfo(**kwargs)
 
