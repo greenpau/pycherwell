@@ -407,29 +407,46 @@ class CherwellClient(object):
         incident_id = str(opts['incident_id'])
         self._enable()
         self._ensure_required_business_objects(['business_objects'])
-        self._ensure_required_business_object_fields(['Incident'], opts)
+        self._ensure_required_business_object_fields(['Incident', 'Journal'], opts)
 
         busObId = self.config.get_business_object_id('Incident')
         if not busObId:
-            raise Exception('internal','Failed to find business object ID of Incident Type')
-
-        self.log.debug("Get journal entries for incident %s (%s)", incident_id, busObId)
+            raise Exception('internal', 'Failed to find business object ID of Incident Type')
+        jbusObId = self.config.get_business_object_id('Journal')
+        if not jbusObId:
+             raise Exception('internal', 'Failed to find business object ID of Journal Type')
+        self.log.debug("Get journal (%s) for incident %s (%s)", jbusObId, incident_id, busObId)
 
         apiName = 'BusinessObjectApi'
-        #apiFunc = 'business_object_get_business_object_by_public_id_v1'
-        apiFunc = 'business_object_get_business_object_summary_by_id_v1'
+        apiFunc = 'business_object_get_business_object_by_public_id_v1'
 
         try:
+            # First, get business object id
             api_instance = BusinessObjectApi(self.api_client)
-            #api_response = getattr(api_instance, apiFunc)(busObId, incident_id)
-            api_response = getattr(api_instance, apiFunc)(busObId)
-            pprint(api_response)
+            api_response = getattr(api_instance, apiFunc)(busObId, incident_id)
             api_response = api_response.to_dict()
+            busRecId = api_response['bus_ob_rec_id']
+            # Next, search by the business object id
+            apiName = 'SearchesApi'
+            apiFunc = 'searches_get_search_results_ad_hoc_v1'
+            busObFilter = self._build_filter('RecID:eq:' + busRecId, busObId)
+            busObFilters = [busObFilter]
+            kwargs = {
+                'bus_ob_id': jbusObId,
+                'filters': busObFilters,
+                'include_all_fields': True,
+            }
+            search_request = SearchResultsRequest(**kwargs)
+            api_instance = SearchesApi(self.api_client)
+            api_response = getattr(api_instance, apiFunc)(search_request)
+            api_response = api_response.to_dict()
+            api_response = api_response['business_objects']
+            #pprint(api_response)
         except ApiException as e:
             if 'RECORDNOTFOUND' in str(e):
                 self.log.warn("Incident ID %s not found", incident_id)
                 return
-            self.log.error('Exception when calling %s->%s: %s', apiName, apiFunc, e)
+            self.log.error('Exception when calling %s() via %s API: %s', apiFunc, apiName, e)
             return
 
         return api_response
