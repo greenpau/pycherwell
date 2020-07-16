@@ -441,7 +441,6 @@ class CherwellClient(object):
             api_response = getattr(api_instance, apiFunc)(search_request)
             api_response = api_response.to_dict()
             api_response = api_response['business_objects']
-            #pprint(api_response)
         except ApiException as e:
             if 'RECORDNOTFOUND' in str(e):
                 self.log.warn("Incident ID %s not found", incident_id)
@@ -449,7 +448,63 @@ class CherwellClient(object):
             self.log.error('Exception when calling %s() via %s API: %s', apiFunc, apiName, e)
             return
 
-        return api_response
+        records = []
+        record_fields = [
+            'Created Date Time',
+            'Created By',
+            'Journal Type Name',
+            'Details',
+        ]
+        for record in api_response:
+            if 'fields' not in record:
+                continue
+            parsed_record = self._parse_record_fields(record['fields'], record_fields)
+            records.append(parsed_record)
+
+        if opts['output_format'] not in ['csv', 'text']:
+            return records
+
+        if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
+            rows = []
+            rows.append(record_fields)
+            opts['column_width_allocation'] = [10, 10, 10, 70]
+            if opts['output_format'] == 'text':
+                column_width_allocation = self._get_column_width(record_fields, records, opts)
+            for record in records:
+                row = []
+                for i, field in enumerate(record_fields):
+                    if field in record:
+                        v = record[field]
+                        if opts['output_format'] == 'text':
+                            if len(v) > column_width_allocation[i]:
+                                v = '\n'.join(textwrap.wrap(v, width=column_width_allocation[i]))
+                                v = v.replace('  ', '\n')
+                        row.append(v)
+                        continue
+                    row.append('---')
+                rows.append(row)
+            return rows
+        return records
+
+    @staticmethod
+    def _get_column_width(columns, entries, opts={}):
+        width = {}
+        max_width = 120
+        if 'terminal_columns' in opts and opts['terminal_columns'] > 0:
+            max_width = opts['terminal_columns'] - (len(columns) * 4)
+        for i, column in enumerate(columns):
+            column_width = max_width / 100 * opts['column_width_allocation'][i]
+            width[i] = int(column_width)
+        return width
+
+    @staticmethod
+    def _parse_record_fields(entries=[], fields=None):
+        record = {}
+        for entry in entries:
+            if fields and entry['display_name'] not in fields:
+                continue
+            record[entry['display_name']] = entry['value']
+        return record
 
     @staticmethod
     def _time_travel_snapshot(unit, count, measure='seconds'):

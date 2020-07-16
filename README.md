@@ -286,3 +286,11 @@ Get user information:
 cherwell-client --get-requestors --search-condition "FullName:eq:Smith, John"
 cherwell-client --get-requestors --search-condition "FirstName:eq:John" --search-condition "LastName:eq:Smith"
 ```
+
+### Journal
+
+The following command outputs journal entries for incident 1234567:
+
+```bash
+cherwell-client --get-journal --incident-id 1234567 --format text
+```

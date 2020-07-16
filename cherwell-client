@@ -182,6 +182,9 @@ def main():
         writer.writerows(data)
     elif args.output_format == 'text':
         table = AsciiTable(data)
+        if args.get_journal:
+            table.inner_heading_row_border = True
+            table.inner_row_border = True
         args.output.write(table.table)
     else:
         json.dump(data, args.output, sort_keys=True, indent=4, separators=(',', ': '), default=str)
