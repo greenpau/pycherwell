@@ -431,6 +431,11 @@ class CherwellClient(object):
             apiFunc = 'searches_get_search_results_ad_hoc_v1'
             busObFilter = self._build_filter('RecID:eq:' + busRecId, busObId)
             busObFilters = [busObFilter]
+            if 'search_conditions' in opts:
+                for search_condition in opts['search_conditions']:
+                    busObFilter = self._build_filter(search_condition, jbusObId)
+                    if busObFilter:
+                        busObFilters.append(busObFilter)
             kwargs = {
                 'bus_ob_id': jbusObId,
                 'filters': busObFilters,
