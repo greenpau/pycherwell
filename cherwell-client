@@ -57,6 +57,11 @@ def main():
     action_group.add_argument('--create-incident', dest='create_incident', action='store_true',
                               help='create an incident')
 
+    action_group.add_argument('--get-journal', dest='get_journal', action='store_true',
+                              help='get journal entries for an incident')
+    action_group.add_argument('--add-journal-note', dest='add_journal_note', action='store_true',
+                              help='add journal note')
+
     action_group.add_argument('--version', dest='display_version', action='store_true',
                               help='Display version')
 
@@ -72,7 +77,13 @@ def main():
     create_arg_group.add_argument('--create-as', dest='create_as', metavar='FIELD_NAME:OPERATOR:VALUE',
                                   action='append', help='Requestor conditions')
 
+    journal_arg_group =  parser.add_argument_group('journal arguments')
+    journal_arg_group.add_argument('--journal-note', dest='journal_note', metavar='TEXT',
+                                  help='the content of a journal note')
+
     filter_arg_group = parser.add_argument_group('miscellaneous')
+    filter_arg_group.add_argument('--incident-id', dest='incident_id', metavar='ID', type=int,
+                                help='incident id')
     filter_arg_group.add_argument('--filter', dest='obj_filters', metavar='KEY:VALUE',
                                   action='append', help='Object filters, e.g. field:regex')
 
@@ -114,6 +125,10 @@ def main():
         opts['create_fields'] = args.create_fields
     if args.create_as:
         opts['create_as'] = args.create_as
+    if args.incident_id:
+        opts['incident_id'] = args.incident_id
+    if args.journal_note:
+        opts['journal_note'] = args.journal_note
 
     cli = CherwellClient()
     if args.enable_debug:
@@ -150,6 +165,10 @@ def main():
         data = cli.create_incident(opts)
     elif args.get_requestors:
         data = cli.get_requestors(opts)
+    elif args.add_journal_note:
+        data = cli.add_journal_note(opts)
+    elif args.get_journal:
+        data = cli.get_journal(opts)
     else:
         raise Exception('parser', 'unsupported argument')
 
@@ -163,6 +182,9 @@ def main():
         writer.writerows(data)
     elif args.output_format == 'text':
         table = AsciiTable(data)
+        if args.get_journal:
+            table.inner_heading_row_border = True
+            table.inner_row_border = True
         args.output.write(table.table)
     else:
         json.dump(data, args.output, sort_keys=True, indent=4, separators=(',', ': '), default=str)

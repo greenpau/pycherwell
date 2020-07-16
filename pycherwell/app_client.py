@@ -16,6 +16,7 @@ import yaml
 import copy
 import logging
 import textwrap
+from datetime import datetime, timedelta
 from pprint import pprint
 
 # python 2 and python 3 compatibility library
@@ -320,50 +321,52 @@ class CherwellClient(object):
 
         """
 
-        obj_list = None
         api_response = None
         if 'incident_id' not in opts:
             raise Exception('client', 'incident_id not found')
         incident_id = str(opts['incident_id'])
         self._enable()
         self._ensure_required_business_objects(['business_objects'])
+        self._ensure_required_business_object_fields(['Incident'], opts)
 
         busObId = self.config.get_business_object_id('Incident')
         if not busObId:
             raise Exception('internal','Failed to find business object ID of Incident Type')
+        
+        apiName = 'BusinessObjectApi'
+        apiFunc = 'business_object_get_business_object_by_public_id_v1'
 
         try:
             api_instance = BusinessObjectApi(self.api_client)
-            api_response = api_instance.business_object_get_business_object_by_public_id_v1_with_http_info(busObId, incident_id)
+            api_response = getattr(api_instance, apiFunc)(busObId, incident_id)
+            api_response = api_response.to_dict()
         except ApiException as e:
             if 'RECORDNOTFOUND' in str(e):
                 self.log.warn("Incident ID %s not found", incident_id)
                 return
-            self.log.error('Exception when calling BusinessObjectApi->business_object_get_business_object_summary_by_id_v1: %s', e)
+            self.log.error('Exception when calling %s->%s: %s', apiName, apiFunc, e)
             return
-        obj_list = api_response
 
-        if len(obj_list) == 0:
+        if 'bus_ob_public_id' not in api_response:
             self.log.warn("Incident ID %s not found", incident_id)
             return
 
-        obj = obj_list[0].to_dict()
         if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
             rows = []
-            if 'fields' not in obj:
-                self.log.warn("Incident ID %s has no data: %s", incident_id, obj)
+            if 'fields' not in api_response:
+                self.log.warn("Incident ID %s has no data: %s", incident_id, api_response)
                 return
             if opts['output_format'] == 'text':
-                incident_type = self._get_field_value(obj['fields'], ('display_name', 'value', 'Incident Type'))
+                incident_type = self._get_field_value(api_response['fields'], ('display_name', 'value', 'Incident Type'))
                 rows.append(['', '%s # %s' % (incident_type, incident_id)])
-                rows.extend(self._serialize_kv(obj['fields'], ('display_name', 'value'), opts))
+                rows.extend(self._serialize_kv(api_response['fields'], ('display_name', 'value'), opts))
             elif opts['output_format'] == 'csv':
-                rows.append(self._get_csv_headers(obj['fields'], 'display_name'))
-                rows.append(self._get_csv_columns(obj['fields'], obj['fields']))
+                rows.append(self._get_csv_headers(api_response['fields'], 'display_name'))
+                rows.append(self._get_csv_columns(api_response['fields'], api_response['fields']))
             else:
                 pass
             return rows
-        return obj
+        return api_response
 
     def get_teams(self, opts={}):
         teams = []
@@ -397,15 +400,160 @@ class CherwellClient(object):
         self.config.save_app_section('teams', api_response['teams'])
         return teams
 
+    def get_journal(self, opts={}):
+        api_response = None
+        if 'incident_id' not in opts:
+            raise Exception('client', 'incident_id not found')
+        incident_id = str(opts['incident_id'])
+        self._enable()
+        self._ensure_required_business_objects(['business_objects'])
+        self._ensure_required_business_object_fields(['Incident', 'Journal'], opts)
+
+        busObId = self.config.get_business_object_id('Incident')
+        if not busObId:
+            raise Exception('internal', 'Failed to find business object ID of Incident Type')
+        jbusObId = self.config.get_business_object_id('Journal')
+        if not jbusObId:
+             raise Exception('internal', 'Failed to find business object ID of Journal Type')
+        self.log.debug("Get journal (%s) for incident %s (%s)", jbusObId, incident_id, busObId)
+
+        apiName = 'BusinessObjectApi'
+        apiFunc = 'business_object_get_business_object_by_public_id_v1'
+
+        try:
+            # First, get business object id
+            api_instance = BusinessObjectApi(self.api_client)
+            api_response = getattr(api_instance, apiFunc)(busObId, incident_id)
+            api_response = api_response.to_dict()
+            busRecId = api_response['bus_ob_rec_id']
+            # Next, search by the business object id
+            apiName = 'SearchesApi'
+            apiFunc = 'searches_get_search_results_ad_hoc_v1'
+            busObFilter = self._build_filter('RecID:eq:' + busRecId, busObId)
+            busObFilters = [busObFilter]
+            kwargs = {
+                'bus_ob_id': jbusObId,
+                'filters': busObFilters,
+                'include_all_fields': True,
+            }
+            search_request = SearchResultsRequest(**kwargs)
+            api_instance = SearchesApi(self.api_client)
+            api_response = getattr(api_instance, apiFunc)(search_request)
+            api_response = api_response.to_dict()
+            api_response = api_response['business_objects']
+        except ApiException as e:
+            if 'RECORDNOTFOUND' in str(e):
+                self.log.warn("Incident ID %s not found", incident_id)
+                return
+            self.log.error('Exception when calling %s() via %s API: %s', apiFunc, apiName, e)
+            return
+
+        records = []
+        record_fields = [
+            'Created Date Time',
+            'Created By',
+            'Journal Type Name',
+            'Details',
+        ]
+        for record in api_response:
+            if 'fields' not in record:
+                continue
+            parsed_record = self._parse_record_fields(record['fields'], record_fields)
+            records.append(parsed_record)
+
+        if opts['output_format'] not in ['csv', 'text']:
+            return records
+
+        if 'output_format' in opts and opts['output_format'] in ['csv', 'text']:
+            rows = []
+            rows.append(record_fields)
+            opts['column_width_allocation'] = [10, 10, 10, 70]
+            if opts['output_format'] == 'text':
+                column_width_allocation = self._get_column_width(record_fields, records, opts)
+            for record in records:
+                row = []
+                for i, field in enumerate(record_fields):
+                    if field in record:
+                        v = record[field]
+                        if opts['output_format'] == 'text':
+                            if len(v) > column_width_allocation[i]:
+                                v = '\n'.join(textwrap.wrap(v, width=column_width_allocation[i]))
+                                v = v.replace('  ', '\n')
+                        row.append(v)
+                        continue
+                    row.append('---')
+                rows.append(row)
+            return rows
+        return records
+
+    @staticmethod
+    def _get_column_width(columns, entries, opts={}):
+        width = {}
+        max_width = 120
+        if 'terminal_columns' in opts and opts['terminal_columns'] > 0:
+            max_width = opts['terminal_columns'] - (len(columns) * 4)
+        for i, column in enumerate(columns):
+            column_width = max_width / 100 * opts['column_width_allocation'][i]
+            width[i] = int(column_width)
+        return width
+
+    @staticmethod
+    def _parse_record_fields(entries=[], fields=None):
+        record = {}
+        for entry in entries:
+            if fields and entry['display_name'] not in fields:
+                continue
+            record[entry['display_name']] = entry['value']
+        return record
+
+    @staticmethod
+    def _time_travel_snapshot(unit, count, measure='seconds'):
+        if unit not in ['minute', 'hour', 'day', 'week', 'month', 'quarter', 'year']:
+            return None
+        if unit == 'minute':
+            multiplier = 60
+        elif unit == 'hour':
+            multiplier = 3600
+        elif unit == 'day':
+            multiplier = 86400
+        elif unit == 'week':
+            multiplier = 604800
+        elif unit == 'month':
+            multiplier = 2.628e+6
+        elif unit == 'quarter':
+            multiplier = 7.884e+6
+        elif unit == 'year':
+            multiplier = 3.154e+7
+        seconds = int(count) * multiplier
+        return seconds
+
     def _build_filter(self, s, busObId):
         parts = s.split(':')
-        if len(parts) != 3:
+        if len(parts) < 3:
             raise Exception('parameters', 'invalid filter string: %s' % (s))
-        busObFieldId = self.config.get_business_object_field_id(busObId, parts[0])
+        field_id = parts[0]
+        conditional = parts[1]
+        value = None
+        if len(parts) == 3:
+            value = parts[2]
+        else:
+            value = ':'.join(parts[2:])
+        if ' ago' in value:
+            value = value.lower()
+            m = re.match('(?P<count>\d+)\s+(?P<unit>minute|hour|day|week|month|quarter|year)[s]?\s+ago$', value)
+            if not m:
+                raise Exception('parameters', 'invalid filter string: %s' % (s))
+            seconds = self._time_travel_snapshot(m.group('unit'), m.group('count'))
+            if not seconds:
+                raise Exception('parameters', 'invalid filter string: %s' % (s))
+            ts = datetime.now() - timedelta(seconds=seconds)
+            value = '%d/%d/%d 00:00:00 AM' % (ts.year, ts.month, ts.day)
+
+        busObFieldId = self.config.get_business_object_field_id(busObId, field_id)
         kwargs = {
             'field_id': busObFieldId,
-            'operator': parts[1],
-            'value': parts[2],
+            'operator': conditional,
+            'value': value,
         }
         return FilterInfo(**kwargs)
 
@@ -705,6 +853,9 @@ class CherwellClient(object):
             return rows
 
         return incidents
+
+    def add_journal_note(self, opts={}):
+        return {'status': 'success'}
 
     @staticmethod
     def _clean_charset(s):

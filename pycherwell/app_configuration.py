@@ -368,6 +368,8 @@ class AppConfiguration(object):
             f.write(formatted_data)
             f.write('\n')
         self.app[section] = data
+        if section + '_ref' not in self.app:
+            self.enrich_app_section(section)
         return
 
     def wipe_app_section(self, section):

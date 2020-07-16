@@ -18,6 +18,7 @@ docs:
 
 package: clean docs
 	@cp LICENSE.txt ${PKG_NAME}/LICENSE.txt
+	@#python3 -m pip install --user --upgrade setuptools wheel
 	@$(PYBIN) setup.py sdist bdist_wheel
 	@rm -rf ${PKG_NAME_EGG}.egg-info *.egg build/
 	@find . -name \*.pyc -delete
