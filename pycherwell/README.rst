@@ -313,6 +313,16 @@ The following command outputs journal entries for incident 1234567:
 
     cherwell-client --get-journal --incident-id 1234567 --format text
 
+Additionally, journal entries could be filtered:
+
+.. code:: bash
+
+    cherwell-client --get-journal --incident-id 1234567 --format text \
+      --search-condition "Journal Type Name:eq:Journal - Note" \
+      --search-condition "Journal Type Name:eq:Journal - Customer Request" \
+      --search-condition "Journal Type Name:eq:Journal - History" \
+      --search-condition "Created Date Time:gt:7 days ago"
+
 .. |PyPI version| image:: https://badge.fury.io/py/pycherwell.svg
    :target: https://badge.fury.io/py/pycherwell
 .. |app| image:: https://github.com/greenpau/pycherwell/workflows/app/badge.svg?branch=master
