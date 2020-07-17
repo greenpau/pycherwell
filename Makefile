@@ -2,9 +2,11 @@
 
 PKG_NAME="pycherwell"
 PKG_NAME_EGG := $(subst -,_,$(PKG_NAME))
-PKG_VERSION=$(shell cat setup.py | grep "VERSION =" | cut -d"\"" -f2)
+PKG_VERSION=$(shell cat VERSION | head -1)
 PYBIN="python3"
 PIPBIN="pip3"
+GIT_COMMIT:=$(shell git describe --dirty --always)
+GIT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD -- | head -1)
 
 all:
 	@echo 'the only available options are: package' || false
@@ -26,9 +28,22 @@ package: clean docs
 
 release:
 	@tar -tvf dist/$(PKG_NAME)*.tar.gz
-	@git tag -a "v$(PKG_VERSION)" -m "Release $(PKG_VERSION)"
+	@echo "Making release"
+	@if [ $(GIT_BRANCH) != "master" ]; then echo "cannot release to non-master branch $(GIT_BRANCH)" && false; fi
+	@git diff-index --quiet HEAD -- || ( echo "git directory is dirty, commit changes first" && false )
+	@versioned -patch
+	@git add VERSION
+	@git commit -m 'updated VERSION file'
+	@versioned -sync setup.py
+	@echo "Patched version"
+	@git add setup.py
+	@git commit -m "released v`cat VERSION | head -1`"
+	@git tag -a v`cat VERSION | head -1` -m "v`cat VERSION | head -1`"
 	@git push
 	@git push --tags
+	@echo "If necessary, run the following commands:"
+	@echo "  git push --delete origin v$(PKG_VERSION)"
+	@echo "  git tag --delete v$(PKG_VERSION)"
 
 test:
 	@#$(PIPBIN) install flake8 pytest --user
