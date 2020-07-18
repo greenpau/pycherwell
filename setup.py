@@ -14,12 +14,15 @@
 from setuptools import setup, find_packages  # noqa: H301
 from os import path
 
+
 # To install the library, run the following
 #
 # python setup.py install
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
+
+__version__ = '1.0.7'
 
 this_directory = path.abspath(path.dirname(__file__))
 try:
@@ -33,7 +36,7 @@ REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil", "req
 
 setup(
     name='pycherwell',
-    version='1.0.7',
+    version=__version__,
     description="Cherwell REST API Client and Library",
     author="Paul Greenberg",
     author_email="greenpau@outlook.com",

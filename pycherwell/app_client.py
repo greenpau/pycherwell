@@ -173,8 +173,7 @@ class CherwellClient(object):
         self.output_format = output_format
 
     def get_version(self):
-        self._configure()
-        return self.user_agent
+        return __version__
 
     @staticmethod
     def _wrap_return(opts, container, data):

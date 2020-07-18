@@ -133,16 +133,17 @@ def main():
     cli = CherwellClient()
     if args.enable_debug:
         cli.debug()
+
+    if args.display_version:
+        version = cli.get_version()
+        args.output.write('%s %s\n%s\n' % (__pkg_name__, version, sys.version))
+        return
+
     if args.config_file:
         cli.set_config_file(args.config_file)
     if args.profile:
         cli.set_profile(args.profile)
     cli.set_output_format(args.output_format)
-
-    if args.display_version:
-        version = cli.get_version()
-        args.output.write('%s %s\n' % (version, sys.version))
-        return
 
     data = None
     if args.get_service_info:
