@@ -23,7 +23,7 @@ import json
 
 __pkg_name__ = 'pycherwell'
 __author__ = 'Paul Greenberg @greenpau'
-__version__ = u'1.0.1'
+__version__ = '1.0.8'
 __maintainer__ = 'Paul Greenberg'
 __email__ = 'greenpau@outlook.com'
 __status__ = 'Alpha'

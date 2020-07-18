@@ -22,7 +22,7 @@ from os import path
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-__version__ = '1.0.7'
+__version__ = '1.0.8'
 
 this_directory = path.abspath(path.dirname(__file__))
 try:
