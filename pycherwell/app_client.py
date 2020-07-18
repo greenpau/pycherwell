@@ -39,7 +39,7 @@ except ImportError:
     import httplib as http_client
 
 __author__ = "Paul Greenberg @greenpau"
-__version__ = '1.0.8'
+__version__ = '1.0.9'
 __maintainer__ = "Paul Greenberg"
 __email__ = "greenpau@outlook.com"
 __status__ = "Alpha"
