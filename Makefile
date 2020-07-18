@@ -34,7 +34,7 @@ release: clean docs
 	@git add VERSION
 	@git commit -m 'updated VERSION file'
 	@versioned -sync setup.py
-	@versioned -sync cherwell-client
+	@versioned -sync cherwell-client --format python
 	@versioned -sync pycherwell/__init__.py
 	@versioned -sync pycherwell/app_configuration.py
 	@versioned -sync pycherwell/app_client.py
