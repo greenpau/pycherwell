@@ -27,10 +27,9 @@ package: clean docs
 	@#tar -tvf dist/${PKG_NAME}*.tar.gz
 
 release: clean docs
-	@#tar -tvf dist/$(PKG_NAME)*.tar.gz
 	@echo "Making release"
 	@if [ $(GIT_BRANCH) != "master" ]; then echo "cannot release to non-master branch $(GIT_BRANCH)" && false; fi
-	@git diff-index --quiet HEAD -- || ( echo "git directory is dirty, commit changes first" && false )
+	@git diff-index HEAD -- || ( echo "git directory is dirty, commit changes first" && false )
 	@versioned -patch
 	@git add VERSION
 	@git commit -m 'updated VERSION file'
