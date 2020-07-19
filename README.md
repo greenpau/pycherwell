@@ -5,6 +5,24 @@
 
 ![Cherwell API](https://raw.githubusercontent.com/greenpau/pycherwell/master/logo.png "Cherwell API")
 
+<!-- begin-markdown-toc -->
+## Table of Contents
+
+* [Getting Started](#getting-started)
+  * [Installation](#installation)
+  * [Configuration](#configuration)
+  * [Testing](#testing)
+* [Usage Instructions](#usage-instructions)
+  * [Business Objects](#business-objects)
+  * [Incidents](#incidents)
+    * [Search](#search)
+    * [Creation](#creation)
+  * [Teams](#teams)
+  * [People](#people)
+  * [Journal](#journal)
+
+<!-- end-markdown-toc -->
+
 ## Getting Started
 
 ### Installation

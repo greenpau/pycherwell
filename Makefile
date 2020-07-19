@@ -16,6 +16,7 @@ clean:
 	@rm -rf dist/ ${PKG_NAME_EGG}.egg-info *.egg build/
 
 docs:
+	@versioned -toc
 	@pandoc --from=markdown --to=rst --output=${PKG_NAME}/README.rst README.md
 
 package: clean docs

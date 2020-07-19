@@ -7,6 +7,33 @@ Cherwell API Client
    :alt: Cherwell API
 
    Cherwell API
+
+.. raw:: html
+
+   <!-- begin-markdown-toc -->
+
+Table of Contents
+-----------------
+
+-  `Getting Started <#getting-started>`__
+-  `Installation <#installation>`__
+-  `Configuration <#configuration>`__
+-  `Testing <#testing>`__
+-  `Usage Instructions <#usage-instructions>`__
+-  `Business Objects <#business-objects>`__
+-  `Incidents <#incidents>`__
+
+   -  `Search <#search>`__
+   -  `Creation <#creation>`__
+
+-  `Teams <#teams>`__
+-  `People <#people>`__
+-  `Journal <#journal>`__
+
+.. raw:: html
+
+   <!-- end-markdown-toc -->
+
 Getting Started
 ---------------
 
